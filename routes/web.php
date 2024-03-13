@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\KasirDashboardController;
+use App\Http\Controllers\KasirTransaksiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,4 +19,5 @@ Route::get('/', function () {
     return view('login');
 });
 
-Route::resource('dashboard', DashboardController::class);
+Route::resource('kasir/dashboard', KasirDashboardController::class);
+Route::resource('kasir/transaksi', KasirTransaksiController::class);

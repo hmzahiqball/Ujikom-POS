@@ -47,7 +47,7 @@
         <div class="row flex-nowrap">
 
             <!-- Navbar -->
-            @include('layouts.navbar')
+            @include('layouts.sidebar')
             <div class="col py-3">
                 <!-- Main Content -->
                 @yield('content')

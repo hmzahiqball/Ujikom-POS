@@ -9,23 +9,27 @@
         </a>
         <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
             <li class="nav-item">
-                <a href="#" class="nav-link align-middle px-0">
+                <a href="{{ URL('/kasir/dashboard') }}" class="nav-link align-middle px-0">
                     <i class="fs-4 bi-speedometer2 text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Dashboard</span>
                 </a>
             </li>
             <li>
-                <a href="#" class="nav-link px-0 align-middle">
-                    <i class="fs-4 bi-table text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Orders</span></a>
+                <a href="{{ URL('/kasir/transaksi') }}" class="nav-link px-0 align-middle">
+                    <i class="fs-4 bi-cart text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Transaksi</span></a>
             </li>
             <li>
-                <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
-                    <i class="fs-4 bi-bootstrap text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Bootstrap</span></a>
-                <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
+                <a href="#" class="nav-link px-0 align-middle">
+                    <i class="fs-4 bi-person text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Tambah Member</span></a>
+            </li>
+            <li>
+                <a href="#submenutabel" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
+                    <i class="fs-4 bi-table text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Tabel Data</span></a>
+                <ul class="collapse nav flex-column ms-1" id="submenutabel" data-bs-parent="#menu">
                     <li class="w-100">
-                        <a href="#" class="nav-link px-0 text-abu"> <span class="d-none d-sm-inline text-abu">Item</span> 1</a>
+                        <a href="{{ URL('/kasir/dataproduk') }}" class="nav-link px-0 text-abu"><i class="fs-4 bi-table text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Data Produk</span></a>
                     </li>
                     <li>
-                        <a href="#" class="nav-link px-0 text-abu"> <span class="d-none d-sm-inline text-abu">Item</span> 2</a>
+                        <a href="{{ URL('/kasir/riwayattransaksi') }}" class="nav-link px-0 text-abu"><i class="fs-4 bi-table text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Riwayat Transaksi</span></a>
                     </li>
                 </ul>
             </li>
@@ -37,9 +41,9 @@
                 <span class="d-none d-sm-inline mx-1">loser</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                <li><a class="dropdown-item" href="#">New project...</a></li>
-                <li><a class="dropdown-item" href="#">Settings</a></li>
-                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li><a class="dropdown-item" href="{{ URL('/kasir/dashboard') }}">Dashboard</a></li>
+                <li><a class="dropdown-item" href="{{ URL('/kasir/transaksi') }}">Transaksi</a></li>
+                <li><a class="dropdown-item" href="#">Tambah Member</a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
