@@ -71,7 +71,7 @@
                       </div>
                       <div class="col-12">
                         <div class="d-grid">
-                            <a href="{{ URL('/kasir/transaksi') }}" class="btn btn-dark btn-lg"> Log In</a>
+                            <a href="{{ URL('/kasir/dashboard') }}" class="btn btn-dark btn-lg"> Log In</a>
                         </div>
                       </div>
                     </div>

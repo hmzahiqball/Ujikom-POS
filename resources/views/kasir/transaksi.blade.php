@@ -23,21 +23,25 @@
 
       <!-- Filter kategori -->
       <div class="mb-3">
-        <button type="button" class="btn btn-dark btn-circle" data-category="all" style="background-image: url('{{asset('images/product1.jpeg')}}');">All</button>
-        <button type="button" class="btn btn-dark btn-circle" data-category="jam" style="background-image: url('{{asset('images/product1.jpeg')}}');"></button>
-        <button type="button" class="btn btn-dark btn-circle" data-category="kamera" style="background-image: url('{{asset('images/product1.jpeg')}}');"></button>
-        <button type="button" class="btn btn-dark btn-circle" data-category="sepatu" style="background-image: url('{{asset('images/product1.jpeg')}}');"></button>
-        <button type="button" class="btn btn-dark btn-circle" data-category="headset" style="background-image: url('{{asset('images/product1.jpeg')}}');"></button>
+        <button type="button" class="btn btn-dark btn-circle" data-category="all">All</button>
+        <button type="button" class="btn btn-dark btn-circle" data-category="jam">Jaket</button>
+        <button type="button" class="btn btn-dark btn-circle" data-category="kamera">Kaos</button>
+        <button type="button" class="btn btn-dark btn-circle" data-category="sepatu">Celana</button>
+        <button type="button" class="btn btn-dark btn-circle" data-category="headset">Sepatu</button>
+        <button type="button" class="btn btn-dark btn-circle" data-category="headset">Acc</button>
       </div>
+      <div class="mb-3">
+        <input type="text" id="searchInput" class="form-control" placeholder="Cari produk...">
+    </div>
         <hr>
       <div class="row">
         <div class="col mb-3">
-          <div class="card" style="width: 180px;">
-            <img src="{{asset('images/product1.jpeg')}}" class="card-img-top" alt="Jam">
+          <div class="card" style="width: 180px;" id="cardproduct">
+            <img src="{{asset('images/product1.jpeg')}}" class="card-img-top" alt="Jaket1">
             <div class="card-body">
-              <h5 class="card-title product-name">Jam Rilix</h5>
+              <h5 class="card-title product-name">Jaket 1</h5>
               <p class="card-text">Rp. 100.000</p>
-              <button class="btn btn-success add-to-cart-button" data-name="Jam Rilix" data-price="10000000" data-stock="10">Add</button>
+              <button class="btn btn-success add-to-cart-button" data-name="Jaket 1" data-price="10000000" data-stock="10">Add</button>
               <span id="stokbrg" class="form-text">
                 Stok : 10
               </span>
@@ -45,12 +49,12 @@
           </div>
         </div>
         <div class="col mb-3">
-          <div class="card" style="width: 180px">
-            <img src="{{asset('images/product2.jpeg')}}" class="card-img-top" alt="Kamera">
+          <div class="card" style="width: 180px" id="cardproduct">
+            <img src="{{asset('images/product2.jpeg')}}" class="card-img-top" alt="Kaos1">
             <div class="card-body">
-              <h5 class="card-title">Kamera Canan</h5>
+              <h5 class="card-title">Kaos 1</h5>
               <p class="card-text">Rp. 7.299.000</p>
-              <button class="btn btn-success add-to-cart-button" data-name="Kamera Canan" data-price="7299000" data-stock="20">Add</button>
+              <button class="btn btn-success add-to-cart-button" data-name="Kaos 1" data-price="7299000" data-stock="20">Add</button>
               <span id="stokbrg" class="form-text">
                 Stok : 20
               </span>
@@ -58,12 +62,12 @@
           </div>
         </div>
         <div class="col mb-3">
-          <div class="card" style="width: 180px">
-            <img src="{{asset('images/product3.jpeg')}}" class="card-img-top" alt="Sepatu">
+          <div class="card" style="width: 180px" id="cardproduct">
+            <img src="{{asset('images/product3.jpeg')}}" class="card-img-top" alt="Jaket2">
             <div class="card-body">
-              <h5 class="card-title">Sepatu Naiki</h5>
+              <h5 class="card-title">Jaket 2</h5>
               <p class="card-text">Rp. 3.999.000</p>
-              <button class="btn btn-success add-to-cart-button" data-name="Sepatu Naiki" data-price="3999000" data-stock="30">Add</button>
+              <button class="btn btn-success add-to-cart-button" data-name="Jaket 2" data-price="3999000" data-stock="30">Add</button>
               <span id="stokbrg" class="form-text">
                 Stok : 30
               </span>
@@ -71,12 +75,12 @@
           </div>
         </div>
         <div class="col mb-3">
-          <div class="card" style="width: 180px">
-            <img src="{{asset('images/product4.jpeg')}}" class="card-img-top" alt="Headset">
+          <div class="card" style="width: 180px" id="cardproduct">
+            <img src="{{asset('images/product4.jpeg')}}" class="card-img-top" alt="Jaket3">
             <div class="card-body">
-              <h5 class="card-title">Headset Lenivi</h5>
+              <h5 class="card-title" id="judulcard">Jaket 3</h5>
               <p class="card-text">Rp. 199.000</p>
-              <button class="btn btn-success add-to-cart-button" data-name="Headset Lenivi" data-price="199000" data-stock="40">Add</button>
+              <button class="btn btn-success add-to-cart-button" data-name="Jaket 3" data-price="199000" data-stock="40">Add</button>
               <span id="stokbrg" class="form-text">
                 Stok : 40
               </span>
@@ -126,6 +130,7 @@
 @section('scripts')
 <script>
 $(document).ready(function(){
+
     // Function to add product to cart
     function addToCart(product) {
         var productName = product.data('name');
