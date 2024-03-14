@@ -1,8 +1,5 @@
 <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
     <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-        <button class="btn btn-sm btn-outline-light d-inline-block d-sm-none mt-2" id="sidebarToggle">
-            <i class="bi bi-arrow-bar-left"></i>
-        </button>
         <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
             <img src="{{ URL::asset('images/logo/favicon.png') }}" alt="Logo_Kasir" height="50" width="70">
             <span class="fs-3 d-none d-sm-inline text-abu">PKK SALE</span>
