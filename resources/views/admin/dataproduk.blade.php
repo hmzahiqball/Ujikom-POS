@@ -2,6 +2,9 @@
 <link rel="icon" href="{{ URL::asset('images/logo/favicon.png') }}" type="image/png" />
 @section('styles')
     <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+        }
     </style>
 @endsection
 @section('content')
@@ -24,32 +27,21 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($produk as $key => $item)
                             <tr>
-                                <td>1</td>
-                                <td>MK-001</td>
-                                <td>Makanan</td>
-                                <td>Makanan 01</td>
-                                <td>999</td>
-                                <td>Rp. 12.000</td>
-                                <td>Tersedia</td>
+                                <td>{{ $key + 1 }}</td>
+                                <td>{{ $item->kode_produk }}</td>
+                                <td>{{ $item->nama_kategori }}</td>
+                                <td>{{ $item->nama_produk }}</td>
+                                <td>{{ $item->stok_produk }}</td>
+                                <td>Rp. {{ number_format($item->harga_produk, 0, ',', '.') }}</td>
+                                <td>{{ $item->status_produk }}</td>
                                 <td>
                                     <button class="btn btn-primary mr-2" data-bs-toggle="modal" data-bs-target="#editprodukModal">Edit</button>
                                     <button class="btn btn-danger mr-2" data-bs-toggle="modal" data-bs-target="#deleteprodukModal">Delete</button>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>MN-001</td>
-                                <td>Minuman</td>
-                                <td>Minuman 01</td>
-                                <td>0</td>
-                                <td>Rp. 10.000</td>
-                                <td>Habis</td>
-                                <td>
-                                    <button class="btn btn-primary mr-2" data-bs-toggle="modal" data-bs-target="#editprodukModal">Edit</button>
-                                    <button class="btn btn-danger mr-2" data-bs-toggle="modal" data-bs-target="#deleteprodukModal">Delete</button>
-                                </td>
-                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

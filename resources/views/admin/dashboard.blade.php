@@ -1,4 +1,5 @@
 @extends('app')
+<link rel="icon" href="{{ asset('images/logo/favicon.png') }}" type="image/png" />
 @section('styles')
     <style>
         .icon-container {
@@ -20,6 +21,10 @@
         .card-text {
             font-size: 20px !important;
         }
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+        }
     </style>
 @endsection
 @section('content')
@@ -40,7 +45,7 @@
                                 </div>
                             </div>
                             <p class="mt-3 mb-0 text-muted text-sm">
-                                <span class="text-nowrap">28/05/2024</span>
+                                <span class="text-nowrap">{{ now()->format('d/m/Y') }}</span>
                             </p>
                         </div>
                     </div>
@@ -121,13 +126,13 @@
                                     <strong>Nama :</strong>
                                 </p>
                                 <p class="card-text">
-                                    Putra Suyapratama<br>
+                                    {{ Session::has('petugas') ? Session::get('petugas')->nama_petugas : 'Nama Petugas' }}<br>
                                 </p>
                                 <p class="card-text">
                                     <strong>Alamat Rumah :</strong>
                                 </p>
                                 <p class="card-text">
-                                    Luxemburg<br>
+                                    {{ Session::has('petugas') ? Session::get('petugas')->alamat_petugas : 'Alamat Petugas' }}<br>
                                 </p>
                             </div>
                             <div class="col-auto">
@@ -144,13 +149,13 @@
                                     <strong>E-Mail :</strong>
                                 </p>
                                 <p class="card-text">
-                                    email@gmail.com<br>
+                                    {{ Session::has('petugas') ? Session::get('petugas')->email_petugas : 'E-mail Petugas' }}<br>
                                 </p>
                                 <p class="card-text">
                                     <strong>Nomor Telepon :</strong>
                                 </p>
                                 <p class="card-text">
-                                    081234567890<br>
+                                    {{ Session::has('petugas') ? Session::get('petugas')->telp_petugas : 'No. Telp Petugas' }}<br>
                                 </p>
                             </div>
                         </div>
@@ -170,31 +175,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>PS-28052024</td>
-                                    <td>Rp. 999.999.999</td>
-                                    <td>28 Mei 2024</td>
-                                </tr>
-                                <tr>
-                                    <td>PS-28052024</td>
-                                    <td>Rp. 999.999.999</td>
-                                    <td>28 Mei 2024</td>
-                                </tr>
-                                <tr>
-                                    <td>PS-28052024</td>
-                                    <td>Rp. 999.999.999</td>
-                                    <td>28 Mei 2024</td>
-                                </tr>
-                                <tr>
-                                    <td>PS-28052024</td>
-                                    <td>Rp. 999.999.999</td>
-                                    <td>28 Mei 2024</td>
-                                </tr>
-                                <tr>
-                                    <td>PS-28052024</td>
-                                    <td>Rp. 999.999.999</td>
-                                    <td>28 Mei 2024</td>
-                                </tr>
                                 <tr>
                                     <td>PS-28052024</td>
                                     <td>Rp. 999.999.999</td>

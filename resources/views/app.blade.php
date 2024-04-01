@@ -51,7 +51,12 @@
         <div class="row flex-nowrap">
 
             <!-- Navbar -->
-            @include('layouts.adminsidebar')
+            <!-- Navbar -->
+            @if(Session::has('petugas') && Session::get('petugas')->role_petugas == 'Admin')
+                @include('layouts.adminsidebar')
+            @elseif(Session::has('petugas') && Session::get('petugas')->role_petugas == 'Kasir')
+                @include('layouts.sidebar')
+            @endif
             <div class="col py-3">
                 <!-- Main Content -->
                 @yield('content')

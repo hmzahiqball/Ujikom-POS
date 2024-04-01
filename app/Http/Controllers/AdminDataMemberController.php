@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdminDataMemberController extends Controller
 {
@@ -11,7 +12,8 @@ class AdminDataMemberController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard');
+        $get_member = DB::select('CALL sp_get_datamember()'); //mengambil data produk dari database melalui stored procedure di mysql
+        return view('admin.datamember' , ['member' => $get_member]);
     }
 
     /**

@@ -9,36 +9,36 @@
 @endsection
 @section('content')
     <div class="container">
-        <h3>Data Riwayat Transaksi</h3>
+        <h3>Data Member</h3>
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-striped table-hover table-bordered" id="tableTransaksi">
+                    <table class="table table-striped table-hover table-bordered" id="tableMember">
                         <thead class="table-dark">
                             <tr>
                                 <th>No.</th>
-                                <th>No. Transaksi</th>
-                                <th>Kasir</th>
-                                <th>Tanggal dan Waktu</th>
-                                <th>Member</th>
-                                <th>Total Transaksi</th>
-                                <th>Status Transaksi</th>
+                                <th>Status Member</th>
+                                <th>Nama Lengkap</th>
+                                <th>No. Telp</th>
+                                <th>Alamat Email</th>
+                                <th>Tanggal Lahir</th>
+                                <th>Jenis Kelamin</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($penjualan as $key => $item)
+                            @foreach($member as $key => $item)
                             <tr>
                                 <td>{{ $key + 1 }}</td>
-                                <td>{{ $item->no_transaksi }}</td>
-                                <td>{{ $item->nama_petugas }}</td>
-                                <td>{{ $item->tgl_transaksi }}</td>
+                                <td>{{ $item->status_member }}</td>
                                 <td>{{ $item->nama_member }}</td>
-                                <td>Rp. {{ number_format($item->total_transaksi, 0, ',', '.') }}</td>
-                                <td>{{ $item->status_transaksi }}</td>
+                                <td>{{ $item->telp_member }}</td>
+                                <td>{{ $item->email_member }}</td>
+                                <td>{{ $item->tgllahir_member }}</td>
+                                <td>{{ $item->gender_member }}</td>
                                 <td>
-                                    <button class="btn btn-secondary mr-2" data-bs-toggle="modal" data-bs-target="#viewpenjualanModal">View</button>
-                                    <button class="btn btn-danger mr-2" data-bs-toggle="modal" data-bs-target="#deletepenjualanModal">Delete</button>
+                                    <button class="btn btn-secondary mr-2" data-bs-toggle="modal" data-bs-target="#editmemberModal">View</button>
+                                    <button class="btn btn-danger mr-2" data-bs-toggle="modal" data-bs-target="#deletememberModal">Delete</button>
                                 </td>
                             </tr>
                             @endforeach
@@ -48,13 +48,13 @@
             </div>
         </div>
     </div>
-    @extends('admin.modal.viewpenjualan')
-    @extends('admin.modal.deletepenjualan')
+    {{-- @extends('admin.modal.editmember')
+    @extends('admin.modal.deletemember') --}}
 @endsection
 @section('scripts')
     <script>
         $(document).ready(function() {
-            $('#tableTransaksi').DataTable({
+            $('#tableMember').DataTable({
                 layout: {
                 topStart: {
                     buttons: ['copyHtml5', 'excelHtml5', 'csvHtml5', 'pdfHtml5']

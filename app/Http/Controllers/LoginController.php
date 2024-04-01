@@ -25,9 +25,14 @@ class LoginController extends Controller
         if (!empty($result)) {
             // Jika berhasil, kembalikan data petugas
             $petugas = $result[0];
-            Session::put('petugas', $petugas);
+            Session::put('tb_petugas', $petugas);
 
-            dd(session( 'petugas'));
+            // Redirect sesuai dengan role_petugas
+            if ($petugas->role_petugas == 'Admin') {
+                return redirect('admin/dashboard');
+            } elseif ($petugas->role_petugas == 'Kasir') {
+                return redirect('kasir/dashboard');
+            }
         } else {
             // Jika tidak berhasil, kembalikan pesan error
             return response()->json(['error' => 'Username atau password salah'], 401);

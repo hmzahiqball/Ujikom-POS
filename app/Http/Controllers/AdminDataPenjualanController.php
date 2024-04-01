@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdminDataPenjualanController extends Controller
 {
@@ -11,7 +12,8 @@ class AdminDataPenjualanController extends Controller
      */
     public function index()
     {
-        return view('admin.datapenjualan');
+        $get_penjualan = DB::select('CALL sp_get_datatransaksi()'); //mengambil data produk dari database melalui stored procedure di mysql
+        return view('admin.datapenjualan' , ['penjualan' => $get_penjualan]);
     }
 
     /**
