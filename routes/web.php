@@ -3,6 +3,15 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KasirDashboardController;
 use App\Http\Controllers\KasirTransaksiController;
+use App\Http\Controllers\KasirDataTableController;
+use App\Http\Controllers\KasirDataTransaksiController;
+
+
+use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\AdminDataProdukController;
+use App\Http\Controllers\AdminDataPetugasController;
+use App\Http\Controllers\AdminDataPenjualanController;
+use App\Http\Controllers\AdminDataMemberController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,3 +30,14 @@ Route::get('/', function () {
 
 Route::resource('kasir/dashboard', KasirDashboardController::class);
 Route::resource('kasir/transaksi', KasirTransaksiController::class);
+Route::resource('kasir/dataproduk', KasirDataTableController::class);
+Route::resource('kasir/riwayattransaksi', KasirDataTransaksiController::class);
+
+
+Route::resource('admin/dashboard', AdminDashboardController::class);
+Route::resource('admin/dataproduk', AdminDataProdukController::class);
+Route::resource('admin/datapetugas', AdminDataPetugasController::class);
+Route::resource('admin/datapenjualan', AdminDataPenjualanController::class);
+Route::resource('admin/datamember', AdminDataMemberController::class);
+
+

@@ -12,29 +12,29 @@
                 </a>
             </li>
             <li>
-                <a href="{{ URL('/kasir/transaksi') }}" class="nav-link px-0 align-middle">
-                    <i class="fs-4 bi-cart text-abu"></i> <span
-                        class="ms-1 d-none d-sm-inline text-abu">Transaksi</span></a>
-            </li>
-            <li>
-                <a href="#" class="nav-link px-0 align-middle" data-bs-toggle="modal" data-bs-target="#addmemberModal">
-                    <i class="fs-4 bi-person text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Tambah
-                        Member</span></a>
-            </li>
-            <li>
                 <a href="#submenutabel" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
                     <i class="fs-4 bi-table text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Tabel
                         Data</span></a>
                 <ul class="collapse nav flex-column ms-4" id="submenutabel" data-bs-parent="#menu">
-                    <li class="w-100">
-                        <a href="{{ URL('/kasir/dataproduk') }}" class="nav-link px-0 text-abu"><i
-                                class="fs-4 bi-table text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Data
+                    <li class="w-100 h-100">
+                        <a href="{{ URL('/admin/dataproduk') }}" class="nav-link px-0 text-abu"><i
+                                class="fa-solid fa-shirt text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Data
                                 Produk</span></a>
                     </li>
-                    <li>
-                        <a href="{{ URL('/kasir/riwayattransaksi') }}" class="nav-link px-0 text-abu"><i
-                                class="fs-4 bi-table text-abu"></i> <span
-                                class="ms-1 d-none d-sm-inline text-abu">Riwayat Transaksi</span></a>
+                    <li class="w-100 h-100">
+                        <a href="{{ URL('/admin/datapetugas') }}" class="nav-link px-0 text-abu"><i
+                                class="fa-solid fa-user text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Data
+                                Petugas</span></a>
+                    </li>
+                    <li class="w-100 h-100">
+                        <a href="{{ URL('/admin/datapenjualan') }}" class="nav-link px-0 text-abu"><i
+                                class="fa-solid fa-cart-shopping text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Data
+                                Penjualan</span></a>
+                    </li>
+                    <li class="w-100 h-100">
+                        <a href="{{ URL('/admin/datamember') }}" class="nav-link px-0 text-abu"><i
+                                class="fa-solid fa-user-tag text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Data
+                                Member</span></a>
                     </li>
                 </ul>
             </li>

@@ -217,7 +217,7 @@
             </div>
         </div>
     </div>
-    @extends('kasir.modal.addmember')
+    @extends('admin.modal.editproduk')
 @endsection
 @section('scripts')
     <script>

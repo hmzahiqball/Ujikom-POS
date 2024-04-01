@@ -2,9 +2,12 @@
 <html lang="en">
 <head>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Madimi+One&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
         .text-abu{
             color: #CCCCCC;
+        }
+        body {
+            font-family: 'Outfit', sans-serif;
         }
     </style>
     <meta charset="UTF-8">
@@ -12,13 +15,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Point Of Sale Putra</title>
     <!-- site icon -->
-    <link rel="icon" href="{{ URL::asset('images/logo/favicon.png') }}" type="image/png" />
+    <link rel="icon" href="{{ asset('images/logo/favicon.png') }}" type="image/png" />
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
     <!-- bootstrap css -->
     <link rel="stylesheet" href="{{ URL::asset('css/bootstrap.min.css') }}" />
     <!-- dataTables css -->
-    <link rel="stylesheet" href="{{ URL::asset('css/dataTables.dataTables.css') }}" />
-    <link rel="stylesheet" href="{{ URL::asset('css/buttons.dataTables.css') }}" />
+    <link rel="stylesheet" href="{{ URL::asset('css/dataTables.dataTables.min.css') }}" />
+    <link rel="stylesheet" href="{{ URL::asset('css/buttons.dataTables.min.css') }}" />
     <link rel="stylesheet" href="{{ URL::asset('css/dataTables.min.css') }}" />
     <!-- sweetalert2 css -->
     <link rel="stylesheet" href="{{ URL::asset('css/sweetalert2.css') }}" />
@@ -47,7 +51,7 @@
         <div class="row flex-nowrap">
 
             <!-- Navbar -->
-            @include('layouts.sidebar')
+            @include('layouts.adminsidebar')
             <div class="col py-3">
                 <!-- Main Content -->
                 @yield('content')
