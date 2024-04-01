@@ -47,10 +47,11 @@
                                 </div>
                             </div>
                         </div>
-                        <form action="#!">
+                        <form action="{{ URL::asset('/login') }}" method="POST">
+                            @csrf
                             <div class="row gy-3 gy-md-4 overflow-hidden">
                                 <div class="col-12">
-                                    <label for="email" class="form-label">Email <span
+                                    <label for="username" class="form-label">Email <span
                                             class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <span class="input-group-text">
@@ -60,7 +61,7 @@
                                                     d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z" />
                                             </svg>
                                         </span>
-                                        <input type="email" class="form-control" name="email" id="email"
+                                        <input type="text" class="form-control" name="input_usernamepetugas" id="username"
                                             required>
                                     </div>
                                 </div>
@@ -76,13 +77,13 @@
                                                 <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
                                             </svg>
                                         </span>
-                                        <input type="password" class="form-control" name="password" id="password"
+                                        <input type="password" class="form-control" name="input_passwordpetugas" id="password"
                                             value="" required>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="d-grid">
-                                        <a href="{{ URL('/admin/dashboard') }}" class="btn btn-dark btn-lg"> Log In</a>
+                                        <button type="submit" class="btn btn-dark btn-lg"> Log In</a>
                                     </div>
                                 </div>
                             </div>

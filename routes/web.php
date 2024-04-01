@@ -1,11 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\LoginController;
+
 use App\Http\Controllers\KasirDashboardController;
 use App\Http\Controllers\KasirTransaksiController;
 use App\Http\Controllers\KasirDataTableController;
 use App\Http\Controllers\KasirDataTransaksiController;
-
 
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminDataProdukController;
@@ -28,11 +30,12 @@ Route::get('/', function () {
     return view('login');
 });
 
+Route::post('login', [LoginController::class, 'login']);
+
 Route::resource('kasir/dashboard', KasirDashboardController::class);
 Route::resource('kasir/transaksi', KasirTransaksiController::class);
 Route::resource('kasir/dataproduk', KasirDataTableController::class);
 Route::resource('kasir/riwayattransaksi', KasirDataTransaksiController::class);
-
 
 Route::resource('admin/dashboard', AdminDashboardController::class);
 Route::resource('admin/dataproduk', AdminDataProdukController::class);
