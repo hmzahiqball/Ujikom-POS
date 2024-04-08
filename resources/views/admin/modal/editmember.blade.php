@@ -1,0 +1,107 @@
+<!-- Modal -->
+<div class="modal fade" id="editmemberModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Member</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="">
+                    <div class="row">
+                        <div class="col">
+                            <div class="mb-3">
+                                <label  class="form-label">Nama Lengkap Member</label>
+                                <input type="hidden" class="form-control" id="id_editmember">
+                                <input type="text" class="form-control" id="nama_editmember"
+                                    placeholder="MK-001">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mb-3">
+                                <label  class="form-label">Tanggal Lahir Member</label>
+                                <input type="date" class="form-control" id="tgllahir_editmember"
+                                    placeholder="Makanan 01">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="mb-3">
+                                <label  class="form-label">No. Telp Member</label>
+                                <input type="number" class="form-control" id="telp_editmember"
+                                    placeholder="MK-001">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mb-3">
+                                <label  class="form-label">Email Member</label>
+                                <input type="email" class="form-control" id="email_editmember"
+                                    placeholder="Makanan 01">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="mb-3">
+                                <label  class="form-label">Jenis Kelamin Member</label>
+                                <select class="form-select" aria-label="Default select example" id="gender_editmember">
+                                    <option>Pilih Gender Member</option>
+                                    <option value="Laki - Laki">Laki - Laki</option>
+                                    <option value="Perempuan">Perempuan</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mb-3">
+                                <label  class="form-label">Status Member</label>
+                                <select class="form-select" aria-label="Default select example" id="status_editmember">
+                                    <option selected>Pilih Status Member</option>
+                                    <option value="Aktif">Aktif</option>
+                                    <option value="Tidak Aktif">Tidak Aktif</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="mb-3">
+                                <label  class="form-label">Alamat Member</label>
+                                <textarea class="form-control" id="alamat_editmember"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{{ URL::asset('js/jquery-3.7.1.min.js') }}"></script>
+<script>
+    $(document).ready(function() {
+        $('#editmemberModal').on('show.bs.modal', function(event) {
+            var btn = $(event.relatedTarget),
+                idmember = btn.data('idmember'),
+                namamember = btn.data('namamember'),
+                alamatmember = btn.data('alamatmember'),
+                telpmember = btn.data('telpmember'),
+                emailmember = btn.data('emailmember'),
+                tgllahirmember = btn.data('tgllahirmember'),
+                gendermember = btn.data('gendermember'),
+                statusmember = btn.data('statusmember');
+
+            $('#editmemberModal').find('#id_editmember').val(idmember);
+            $('#editmemberModal').find('#nama_editmember').val(namamember);
+            $('#editmemberModal').find('#alamat_editmember').val(alamatmember);
+            $('#editmemberModal').find('#telp_editmember').val(telpmember);
+            $('#editmemberModal').find('#email_editmember').val(emailmember);
+            $('#editmemberModal').find('#tgllahir_editmember').val(tgllahirmember);
+            $('#editmemberModal').find('#gender_editmember').val(gendermember);
+            $('#editmemberModal').find('#status_editmember').val(statusmember);
+        });
+    });
+</script>

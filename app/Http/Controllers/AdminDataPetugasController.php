@@ -12,8 +12,9 @@ class AdminDataPetugasController extends Controller
      */
     public function index()
     {
-        $get_petugas = DB::select('CALL sp_get_datapetugas()'); //mengambil data produk dari database melalui stored procedure di mysql
-        return view('admin.datapetugas' , ['petugas' => $get_petugas]);
+        $get_kategori = DB::select('CALL sp_get_datakategori()'); //mengambil data kategori dari database melalui stored procedure di mysql
+        $get_petugas = DB::select('CALL sp_get_datapetugas()'); //mengambil data petugas dari database melalui stored procedure di mysql
+        return view('admin.datapetugas' , ['petugas' => $get_petugas, 'kategori' => $get_kategori]);
     }
 
     /**

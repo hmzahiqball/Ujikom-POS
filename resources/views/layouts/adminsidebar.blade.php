@@ -45,7 +45,7 @@
                 id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                 <img src="https://github.com/mdo.png" alt="hugenerd" width="30" height="30"
                     class="rounded-circle">
-                <span class="d-none d-sm-inline mx-1">loser</span>
+                <span class="d-none d-sm-inline mx-1">{{ Session::has('tb_petugas') ? Session::get('tb_petugas')->nama_petugas : 'Nama Petugas' }}</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
                 <li><a class="dropdown-item" href="#">Sign out</a></li>

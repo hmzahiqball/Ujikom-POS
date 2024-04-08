@@ -33,8 +33,14 @@
                                 <td>{{ $item->email_petugas }}</td>
                                 <td>{{ $item->status_petugas }}</td>
                                 <td>
-                                    <button class="btn btn-primary mr-2" data-bs-toggle="modal" data-bs-target="#editpetugasModal">Edit</button>
-                                    <button class="btn btn-danger mr-2" data-bs-toggle="modal" data-bs-target="#deletepetugasModal">Delete</button>
+                                    <button class="btn btn-primary mr-2" data-bs-toggle="modal" data-bs-target="#editpetugasModal"
+                                    data-idpetugas="{{ $item->id_petugas }}" data-kodepetugas="{{ $item->kode_petugas }}"
+                                    data-namapetugas="{{ $item->nama_petugas }}" data-telppetugas="{{ $item->telp_petugas }}"
+                                    data-emailpetugas="{{ $item->email_petugas }}" data-usernamepetugas="{{ $item->username_petugas }}"
+                                    data-passwordpetugas="{{ $item->password_petugas }}" data-statuspetugas="{{ $item->status_petugas }}"
+                                    data-alamatpetugas="{{ $item->alamat_petugas }}" data-rolepetugas="{{ $item->role_petugas }}">Edit</button>
+                                    <button class="btn btn-danger mr-2" data-bs-toggle="modal" data-bs-target="#deletepetugasModal"
+                                    data-idpetugas="{{ $item->id_petugas }}">Delete</button>
                                 </td>
                             </tr>
                             @endforeach

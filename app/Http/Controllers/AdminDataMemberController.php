@@ -12,8 +12,9 @@ class AdminDataMemberController extends Controller
      */
     public function index()
     {
-        $get_member = DB::select('CALL sp_get_datamember()'); //mengambil data produk dari database melalui stored procedure di mysql
-        return view('admin.datamember' , ['member' => $get_member]);
+        $get_kategori = DB::select('CALL sp_get_datakategori()'); //mengambil data kategori dari database melalui stored procedure di mysql
+        $get_member = DB::select('CALL sp_get_datamember()'); //mengambil data member dari database melalui stored procedure di mysql
+        return view('admin.datamember' , ['member' => $get_member, 'kategori' => $get_kategori]);
     }
 
     /**

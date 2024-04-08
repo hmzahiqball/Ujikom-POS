@@ -9,7 +9,10 @@
 @endsection
 @section('content')
     <div class="container">
-        <h3>Data Produk</h3>
+        <div class="d-flex justify-content-between align-items-center">
+            <h3>Data Produk</h3>
+            <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addprodukModal">Add Data Produk</button>
+        </div>
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive">
@@ -37,8 +40,14 @@
                                 <td>Rp. {{ number_format($item->harga_produk, 0, ',', '.') }}</td>
                                 <td>{{ $item->status_produk }}</td>
                                 <td>
-                                    <button class="btn btn-primary mr-2" data-bs-toggle="modal" data-bs-target="#editprodukModal">Edit</button>
-                                    <button class="btn btn-danger mr-2" data-bs-toggle="modal" data-bs-target="#deleteprodukModal">Delete</button>
+                                    <button class="btn btn-primary mr-2" data-bs-toggle="modal" data-bs-target="#editprodukModal"
+                                    data-idproduk="{{ $item->id_produk }}" data-kodeproduk="{{ $item->kode_produk }}"
+                                    data-namakategori="{{ $item->nama_kategori }}" data-namaproduk="{{ $item->nama_produk }}"
+                                    data-stokproduk="{{ $item->stok_produk }}" data-hargaproduk="{{ $item->harga_produk }}"
+                                    data-diskonproduk="{{ $item->diskon_produk }}" data-lokasiproduk="{{ $item->lokasi_produk }}"
+                                    data-fotoproduk="{{ $item->foto_produk }}" data-statusproduk="{{ $item->status_produk }}">Edit</button>
+                                    <button class="btn btn-danger mr-2" data-bs-toggle="modal" data-bs-target="#deleteprodukModal"
+                                    data-idproduk="{{ $item->id_produk }}">Delete</button>
                                 </td>
                             </tr>
                             @endforeach
@@ -48,6 +57,7 @@
             </div>
         </div>
     </div>
+    @extends('admin.modal.addproduk')
     @extends('admin.modal.editproduk')
     @extends('admin.modal.deleteproduk')
 @endsection

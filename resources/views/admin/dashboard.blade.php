@@ -21,7 +21,7 @@
         .card-text {
             font-size: 20px !important;
         }
-        
+
         body {
             font-family: 'Outfit', sans-serif;
         }
@@ -66,7 +66,7 @@
                             </div>
                         </div>
                         <p class="mt-3 mb-0 text-muted text-sm">
-                            <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 24</span>
+                            <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> {{ $periodepenjualan }}</span>
                             <span class="text-nowrap">Penjualan</span>
                         </p>
                     </div>
@@ -88,7 +88,7 @@
                         </div>
                         <p class="mt-3 mb-0 text-muted text-sm">
                             <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> Rp.</span>
-                            <span class="text-success mr-2"></i>999.999.000</span>
+                            <span class="text-success mr-2"></i>{{ number_format($totalpenjualan, 0, ',', '.') }}</span>
                         </p>
                     </div>
                 </div>
@@ -108,7 +108,7 @@
                             </div>
                         </div>
                         <p class="mt-3 mb-0 text-muted text-sm">
-                            <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 23</span>
+                            <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> {{$totalproduk}}</span>
                             <span class="text-nowrap">Produk</span>
                         </p>
                     </div>
@@ -126,13 +126,13 @@
                                     <strong>Nama :</strong>
                                 </p>
                                 <p class="card-text">
-                                    {{ Session::has('petugas') ? Session::get('petugas')->nama_petugas : 'Nama Petugas' }}<br>
+                                    {{ Session::has('tb_petugas') ? Session::get('tb_petugas')->nama_petugas : 'Nama Petugas' }}<br>
                                 </p>
                                 <p class="card-text">
                                     <strong>Alamat Rumah :</strong>
                                 </p>
                                 <p class="card-text">
-                                    {{ Session::has('petugas') ? Session::get('petugas')->alamat_petugas : 'Alamat Petugas' }}<br>
+                                    {{ Session::has('tb_petugas') ? Session::get('tb_petugas')->alamat_petugas : 'Alamat Petugas' }}<br>
                                 </p>
                             </div>
                             <div class="col-auto">
@@ -149,13 +149,13 @@
                                     <strong>E-Mail :</strong>
                                 </p>
                                 <p class="card-text">
-                                    {{ Session::has('petugas') ? Session::get('petugas')->email_petugas : 'E-mail Petugas' }}<br>
+                                    {{ Session::has('tb_petugas') ? Session::get('tb_petugas')->email_petugas : 'E-mail Petugas' }}<br>
                                 </p>
                                 <p class="card-text">
                                     <strong>Nomor Telepon :</strong>
                                 </p>
                                 <p class="card-text">
-                                    {{ Session::has('petugas') ? Session::get('petugas')->telp_petugas : 'No. Telp Petugas' }}<br>
+                                    {{ Session::has('tb_petugas') ? Session::get('tb_petugas')->telp_petugas : 'No. Telp Petugas' }}<br>
                                 </p>
                             </div>
                         </div>
@@ -175,21 +175,13 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach($penjualan as $key => $item)
                                 <tr>
-                                    <td>PS-28052024</td>
-                                    <td>Rp. 999.999.999</td>
-                                    <td>28 Mei 2024</td>
+                                    <td>{{ $item->no_transaksi }}</td>
+                                    <td>Rp. {{ number_format($item->total_transaksi, 0, ',', '.') }}</td>
+                                    <td>{{ $item->tgl_transaksi }}</td>
                                 </tr>
-                                <tr>
-                                    <td>PS-28052024</td>
-                                    <td>Rp. 999.999.999</td>
-                                    <td>28 Mei 2024</td>
-                                </tr>
-                                <tr>
-                                    <td>PS-28052024</td>
-                                    <td>Rp. 999.999.999</td>
-                                    <td>28 Mei 2024</td>
-                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

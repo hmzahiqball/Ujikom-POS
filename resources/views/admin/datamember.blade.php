@@ -37,8 +37,17 @@
                                 <td>{{ $item->tgllahir_member }}</td>
                                 <td>{{ $item->gender_member }}</td>
                                 <td>
-                                    <button class="btn btn-secondary mr-2" data-bs-toggle="modal" data-bs-target="#editmemberModal">View</button>
-                                    <button class="btn btn-danger mr-2" data-bs-toggle="modal" data-bs-target="#deletememberModal">Delete</button>
+                                    <button class="btn btn-primary mr-2" data-bs-toggle="modal" data-bs-target="#editmemberModal"
+                                    data-idmember="{{ $item->id_member }}"
+                                    data-namamember="{{ $item->nama_member }}"
+                                    data-alamatmember="{{ $item->alamat_member }}"
+                                    data-telpmember="{{ $item->telp_member }}"
+                                    data-emailmember="{{ $item->email_member }}"
+                                    data-tgllahirmember="{{ $item->tgllahir_member }}"
+                                    data-gendermember="{{ $item->gender_member }}"
+                                    data-statusmember="{{ $item->status_member }}">Edit</button>
+                                    <button class="btn btn-danger mr-2" data-bs-toggle="modal" data-bs-target="#deletememberModal"
+                                    data-idmember="{{ $item->id_member }}">Delete</button>
                                 </td>
                             </tr>
                             @endforeach
@@ -48,8 +57,8 @@
             </div>
         </div>
     </div>
-    {{-- @extends('admin.modal.editmember')
-    @extends('admin.modal.deletemember') --}}
+    @extends('admin.modal.editmember')
+    {{-- @extends('admin.modal.deletemember') --}}
 @endsection
 @section('scripts')
     <script>

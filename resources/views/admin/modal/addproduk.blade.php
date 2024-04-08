@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="editprodukModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="addprodukModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-dark text-white">
@@ -7,18 +7,10 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{ URL::asset('/admin/dataproduk/update') }}" method="POST"
+                <form action="{{ URL::asset('/admin/dataproduk/add') }}" method="POST"
                     enctype="multipart/form-data">
                     @csrf
                     <div class="row">
-                        <div class="col">
-                            <div class="mb-3">
-                                <label class="form-label">ID Produk</label>
-                                <input type="hidden" class="form-control" id="id_editproduk" name="id_editproduk">
-                                <input type="text" class="form-control" id="kd_editproduk" name="kd_editproduk"
-                                    readonly required>
-                            </div>
-                        </div>
                         <div class="col">
                             <div class="mb-3">
                                 <label class="form-label">Nama Produk</label>
@@ -110,30 +102,4 @@
     </div>
 </div>
 <script src="{{ URL::asset('js/jquery-3.7.1.min.js') }}"></script>
-<script>
-    $(document).ready(function() {
-        $('#editprodukModal').on('show.bs.modal', function(event) {
-            var btn = $(event.relatedTarget),
-                idproduk = btn.data('idproduk'),
-                kodeproduk = btn.data('kodeproduk'),
-                namakategori = btn.data('namakategori'),
-                namaproduk = btn.data('namaproduk'),
-                stokproduk = btn.data('stokproduk'),
-                hargaproduk = btn.data('hargaproduk'),
-                statusproduk = btn.data('statusproduk'),
-                diskonproduk = btn.data('diskonproduk'),
-                lokasiproduk = btn.data('lokasiproduk'),
-                fotoproduk = btn.data('fotoproduk');
 
-            $('#editprodukModal').find('#id_editproduk').val(idproduk);
-            $('#editprodukModal').find('#kd_editproduk').val(kodeproduk);
-            $('#editprodukModal').find('#nama_editproduk').val(namaproduk);
-            $('#editprodukModal').find('#kategori_editproduk').val(namakategori);
-            $('#editprodukModal').find('#diskon_editproduk').val(diskonproduk);
-            $('#editprodukModal').find('#harga_editproduk').val(hargaproduk);
-            $('#editprodukModal').find('#stok_editproduk').val(stokproduk);
-            $('#editprodukModal').find('#lokasi_editproduk').val(lokasiproduk);
-            $('#editprodukModal').find('#status_editproduk').val(statusproduk);
-        });
-    });
-</script>

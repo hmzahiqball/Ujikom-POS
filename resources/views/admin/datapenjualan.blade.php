@@ -37,8 +37,17 @@
                                 <td>Rp. {{ number_format($item->total_transaksi, 0, ',', '.') }}</td>
                                 <td>{{ $item->status_transaksi }}</td>
                                 <td>
-                                    <button class="btn btn-secondary mr-2" data-bs-toggle="modal" data-bs-target="#viewpenjualanModal">View</button>
-                                    <button class="btn btn-danger mr-2" data-bs-toggle="modal" data-bs-target="#deletepenjualanModal">Delete</button>
+                                    <button class="btn btn-secondary mr-2" data-bs-toggle="modal" data-bs-target="#viewpenjualanModal"
+                                    data-idtransaksi="{{ $item->id_transaksi }}"
+                                    data-notransaksi="{{ $item->no_transaksi }}"
+                                    data-namapetugas="{{ $item->nama_petugas }}"
+                                    data-tgltransaksi="{{ $item->tgl_transaksi }}"
+                                    data-namamember="{{ $item->nama_member }}"
+                                    data-diskontransaksi="{{ $item->diskon_transaksi }}"
+                                    data-totaltransaksi="{{ number_format($item->total_transaksi, 0, ',', '.') }}"
+                                    data-statustransaksi="{{ $item->status_transaksi }}">View</button>
+                                    <button class="btn btn-danger mr-2" data-bs-toggle="modal" data-bs-target="#deletepenjualanModal"
+                                    data-idtransaksi="{{ $item->id_transaksi }}">Delete</button>
                                 </td>
                             </tr>
                             @endforeach
