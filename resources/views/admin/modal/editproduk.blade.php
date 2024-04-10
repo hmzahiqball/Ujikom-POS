@@ -103,7 +103,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" id="editbutton_swal" data-namaprodukswal="">Save changes</button>
             </div>
             </form>
         </div>
@@ -134,6 +134,26 @@
             $('#editprodukModal').find('#stok_editproduk').val(stokproduk);
             $('#editprodukModal').find('#lokasi_editproduk').val(lokasiproduk);
             $('#editprodukModal').find('#status_editproduk').val(statusproduk);
+            $('#editbutton_swal').data('namaprodukswal', namaproduk);
+        });
+
+        // SweetAlert confirmation
+        $('#editbutton_swal').click(function() {
+        var current_object = $(this);
+
+            Swal.fire({
+                title: 'Yakin Untuk Mengubah Data ' + current_object.data('namaprodukswal') + '?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, Ubah Data!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Jika user menekan "Yes, delete it!", submit form
+                    $('#editprodukModal').submit();
+                }
+            });
         });
     });
 </script>

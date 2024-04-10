@@ -38,8 +38,12 @@ Route::resource('kasir/dataproduk', KasirDataTableController::class);
 Route::resource('kasir/riwayattransaksi', KasirDataTransaksiController::class);
 
 Route::resource('admin/dashboard', AdminDashboardController::class);
+
 Route::resource('admin/dataproduk', AdminDataProdukController::class);
+Route::post('admin/dataproduk/add', [AdminDataProdukController::class, 'store']);
 Route::post('admin/dataproduk/update', [AdminDataProdukController::class, 'update']);
+Route::post('admin/dataproduk/delete', [AdminDataProdukController::class, 'destroy'])->name('admin.dataproduk.delete');
+
 Route::resource('admin/datapetugas', AdminDataPetugasController::class);
 Route::resource('admin/datapenjualan', AdminDataPenjualanController::class);
 Route::resource('admin/datamember', AdminDataMemberController::class);

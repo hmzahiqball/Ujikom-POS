@@ -30,7 +30,29 @@ class AdminDataProdukController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Ambil semua data yang dikirimkan oleh formulir
+        $nama_produk = $request->input('nama_addproduk');
+        $kategori = $request->input('kategori_addproduk');
+        $diskon_produk = $request->input('diskon_addproduk');
+        $harga_produk = $request->input('harga_addproduk');
+        $stok_produk = $request->input('stok_addproduk');
+        $lokasi_produk = $request->input('lokasi_addproduk');
+        $status_produk = $request->input('status_addproduk');
+        $foto_produk = $request->input('foto_addproduk');
+
+        // Panggil stored procedure untuk update
+        DB::statement("CALL sp_add_dataproduk(?, ?, ?, ?, ?, ?, ?, ?)", array(
+            $kategori,
+            $nama_produk,
+            $stok_produk,
+            $diskon_produk,
+            $harga_produk,
+            $lokasi_produk,
+            $status_produk,
+            $foto_produk
+        ));
+
+        return redirect('admin/dataproduk');
     }
 
     /**
@@ -88,8 +110,16 @@ class AdminDataProdukController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        // Ambil semua data yang dikirimkan oleh formulir
+        $id_produk = $request->input('id_deleteproduk');
+
+        // Panggil stored procedure untuk update
+        DB::statement("CALL sp_delete_dataproduk(?)", array(
+            $id_produk,
+        ));
+
+        return redirect('admin/dataproduk');
     }
 }

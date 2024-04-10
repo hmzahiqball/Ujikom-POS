@@ -46,8 +46,9 @@
                                     data-stokproduk="{{ $item->stok_produk }}" data-hargaproduk="{{ $item->harga_produk }}"
                                     data-diskonproduk="{{ $item->diskon_produk }}" data-lokasiproduk="{{ $item->lokasi_produk }}"
                                     data-fotoproduk="{{ $item->foto_produk }}" data-statusproduk="{{ $item->status_produk }}">Edit</button>
-                                    <button class="btn btn-danger mr-2" data-bs-toggle="modal" data-bs-target="#deleteprodukModal"
-                                    data-idproduk="{{ $item->id_produk }}">Delete</button>
+                                    <button class="btn btn-danger mr-2 deleteSwal"
+                                    data-idproduk="{{ $item->id_produk }}" data-namaproduk="{{ $item->nama_produk }}"
+                                    data-action="{{ route('admin.dataproduk.delete', $item->id_produk) }}">Delete</button>
                                 </td>
                             </tr>
                             @endforeach

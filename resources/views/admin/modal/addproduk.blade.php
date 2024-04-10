@@ -14,7 +14,7 @@
                         <div class="col">
                             <div class="mb-3">
                                 <label class="form-label">Nama Produk</label>
-                                <input type="text" class="form-control" id="nama_editproduk" name="nama_editproduk"
+                                <input type="text" class="form-control" id="nama_addproduk" name="nama_addproduk"
                                     required>
                             </div>
                         </div>
@@ -23,8 +23,8 @@
                         <div class="col">
                             <div class="mb-3">
                                 <label class="form-label">Kategori</label>
-                                <select class="form-select" aria-label="Default select example" id="kategori_editproduk"
-                                    name="kategori_editproduk">
+                                <select class="form-select" aria-label="Default select example" id="kategori_addproduk"
+                                    name="kategori_addproduk">
                                     <option selected>Pilih Jenis Kategori</option>
                                     @foreach ($kategori as $kategori)
                                         <option value="{{ $kategori->nama_kategori }}"
@@ -38,8 +38,8 @@
                             <div class="mb-3">
                                 <label class="form-label">Diskon</label>
                                 <div class="input-group mb-3">
-                                    <input type="number" class="form-control" id="diskon_editproduk"
-                                        name="diskon_editproduk" required>
+                                    <input type="number" class="form-control" id="diskon_addproduk"
+                                        name="diskon_addproduk" required>
                                     <span class="input-group-text" id="basic-addon1">%</span>
                                 </div>
                             </div>
@@ -51,15 +51,15 @@
                                 <label class="form-label">Harga Jual Produk</label>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">Rp.</span>
-                                    <input type="number" class="form-control" id="harga_editproduk"
-                                        name="harga_editproduk" required>
+                                    <input type="number" class="form-control" id="harga_addproduk"
+                                        name="harga_addproduk" required>
                                 </div>
                             </div>
                         </div>
                         <div class="col">
                             <div class="mb-3">
                                 <label class="form-label">Stok Produk</label>
-                                <input type="number" class="form-control" id="stok_editproduk" name="stok_editproduk"
+                                <input type="number" class="form-control" id="stok_addproduk" name="stok_addproduk"
                                     required>
                             </div>
                         </div>
@@ -68,15 +68,15 @@
                         <div class="col">
                             <div class="mb-3">
                                 <label class="form-label">Lokasi Produk</label>
-                                <input type="text" class="form-control" id="lokasi_editproduk"
-                                    name="lokasi_editproduk" required>
+                                <input type="text" class="form-control" id="lokasi_addproduk"
+                                    name="lokasi_addproduk" required>
                             </div>
                         </div>
                         <div class="col">
                             <div class="mb-3">
                                 <label class="form-label">Status Produk</label>
-                                <select class="form-select" aria-label="Default select example" id="status_editproduk"
-                                    name="status_editproduk">
+                                <select class="form-select" aria-label="Default select example" id="status_addproduk"
+                                    name="status_addproduk">
                                     <option selected>Pilih Status Produk</option>
                                     <option value="Tersedia">Tersedia</option>
                                     <option value="Tidak Tersedia">Tidak Tersedia</option>
@@ -88,18 +88,36 @@
                         <div class="col">
                             <div class="mb-3">
                                 <label class="form-label">Foto Produk</label>
-                                <input type="text" class="form-control" id="foto_editproduk" name="foto_editproduk" value="jaket.jpg">
+                                <input type="text" class="form-control" id="foto_addproduk" name="foto_addproduk" value="jaket.jpg">
                             </div>
                         </div>
                     </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save changes</button>
+                <button type="submit" class="btn btn-primary" id="addbutton_swal">Save changes</button>
             </div>
             </form>
         </div>
     </div>
 </div>
 <script src="{{ URL::asset('js/jquery-3.7.1.min.js') }}"></script>
+<script>
+    // SweetAlert confirmation
+    $('#addbutton_swal').click(function() {
+            Swal.fire({
+                title: 'Yakin Untuk Menambah Data?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, Tambah Data!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Jika user menekan "Yes, delete it!", submit form
+                    $('#addprodukModal').submit();
+                }
+            });
+        });
+</script>
 
