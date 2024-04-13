@@ -39,6 +39,16 @@ class LoginController extends Controller
         }
     }
 
+    public function logout(Request $request)
+    {
+        // Hapus session petugas
+        $request->session()->forget('tb_petugas');
+
+        // Redirect ke halaman login
+        return redirect('/');
+    }
+
+
     /**
      * Show the form for creating a new resource.
      */

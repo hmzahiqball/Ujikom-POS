@@ -32,6 +32,8 @@ Route::get('/', function () {
 
 Route::post('login', [LoginController::class, 'login']);
 
+Route::post('logout', [LoginController::class, 'logout']);
+
 Route::resource('kasir/dashboard', KasirDashboardController::class);
 Route::resource('kasir/transaksi', KasirTransaksiController::class);
 Route::resource('kasir/dataproduk', KasirDataTableController::class);
@@ -45,6 +47,10 @@ Route::post('admin/dataproduk/update', [AdminDataProdukController::class, 'updat
 Route::post('admin/dataproduk/delete', [AdminDataProdukController::class, 'destroy'])->name('admin.dataproduk.delete');
 
 Route::resource('admin/datapetugas', AdminDataPetugasController::class);
+Route::post('admin/datapetugas/add', [AdminDataPetugasController::class, 'store']);
+Route::post('admin/datapetugas/update', [AdminDataPetugasController::class, 'update']);
+Route::post('admin/datapetugas/delete', [AdminDataPetugasController::class, 'destroy'])->name('admin.datapetugas.delete');
+
 Route::resource('admin/datapenjualan', AdminDataPenjualanController::class);
 Route::resource('admin/datamember', AdminDataMemberController::class);
 

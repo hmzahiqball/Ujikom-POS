@@ -95,8 +95,11 @@
                     <div class="row">
                         <div class="col">
                             <div class="mb-3">
-                                <label class="form-label">Foto Produk</label>
-                                <input type="text" class="form-control" id="foto_editproduk" name="foto_editproduk" value="jaket.jpg">
+                                <label for="foto_editproduk">Foto Produk</label>
+                                <div class="d-flex align-items-center">
+                                    <img id="foto_preview" src="" alt="Foto Produk" class="me-3" width="100">
+                                    <input type="file" class="form-control" id="foto_editproduk" placeholder="Foto Produk" name="foto_editproduk">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -134,6 +137,7 @@
             $('#editprodukModal').find('#stok_editproduk').val(stokproduk);
             $('#editprodukModal').find('#lokasi_editproduk').val(lokasiproduk);
             $('#editprodukModal').find('#status_editproduk').val(statusproduk);
+            $('#editprodukModal').find('#foto_preview').attr('src', "{{ asset('uploads/') }}/" + fotoproduk);
             $('#editbutton_swal').data('namaprodukswal', namaproduk);
         });
 
@@ -151,7 +155,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Jika user menekan "Yes, delete it!", submit form
-                    $('#editprodukModal').submit();
+                    $('#editprodukModal form').submit();
                 }
             });
         });

@@ -9,7 +9,10 @@
 @endsection
 @section('content')
     <div class="container">
-        <h3>Data Petugas</h3>
+        <div class="d-flex justify-content-between align-items-center">
+            <h3>Data Petugas</h3>
+            <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addpetugasModal">Add Data Petugas</button>
+        </div>
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive">
@@ -19,7 +22,7 @@
                                 <th>No.</th>
                                 <th>ID Petugas</th>
                                 <th>Nama Petugas</th>
-                                <th>Email</th>
+                                <th>Hak Akses</th>
                                 <th>Status Petugas</th>
                                 <th>Action</th>
                             </tr>
@@ -30,7 +33,7 @@
                                 <td>{{ $key + 1 }}</td>
                                 <td>{{ $item->kode_petugas }}</td>
                                 <td>{{ $item->nama_petugas }}</td>
-                                <td>{{ $item->email_petugas }}</td>
+                                <td>{{ $item->role_petugas }}</td>
                                 <td>{{ $item->status_petugas }}</td>
                                 <td>
                                     <button class="btn btn-primary mr-2" data-bs-toggle="modal" data-bs-target="#editpetugasModal"
@@ -39,8 +42,9 @@
                                     data-emailpetugas="{{ $item->email_petugas }}" data-usernamepetugas="{{ $item->username_petugas }}"
                                     data-passwordpetugas="{{ $item->password_petugas }}" data-statuspetugas="{{ $item->status_petugas }}"
                                     data-alamatpetugas="{{ $item->alamat_petugas }}" data-rolepetugas="{{ $item->role_petugas }}">Edit</button>
-                                    <button class="btn btn-danger mr-2" data-bs-toggle="modal" data-bs-target="#deletepetugasModal"
-                                    data-idpetugas="{{ $item->id_petugas }}">Delete</button>
+                                    <button class="btn btn-danger mr-2 deleteSwal"
+                                    data-idpetugas="{{ $item->id_petugas }}" data-namapetugas="{{ $item->nama_petugas }}"
+                                    data-action="{{ route('admin.datapetugas.delete', $item->id_petugas) }}">Delete</button>
                                 </td>
                             </tr>
                             @endforeach
@@ -50,6 +54,7 @@
             </div>
         </div>
     </div>
+    @extends('admin.modal.addpetugas')
     @extends('admin.modal.editpetugas')
     @extends('admin.modal.deletepetugas')
 @endsection

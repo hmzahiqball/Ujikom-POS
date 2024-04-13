@@ -48,7 +48,12 @@
                 <span class="d-none d-sm-inline mx-1">{{ Session::has('tb_petugas') ? Session::get('tb_petugas')->nama_petugas : 'Nama Petugas' }}</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                <li><a class="dropdown-item" href="#">Sign out</a></li>
+                <li>
+                    <form action="{{ URL::asset('logout') }}" method="post">
+                        @csrf
+                        <button type="submit" class="dropdown-item">Sign Out</button>
+                    </form>
+                </li>
             </ul>
         </div>
     </div>

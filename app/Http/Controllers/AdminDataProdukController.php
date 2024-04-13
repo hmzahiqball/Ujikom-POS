@@ -30,6 +30,22 @@ class AdminDataProdukController extends Controller
      */
     public function store(Request $request)
     {
+        // Validate the request...
+        $request->validate([
+            'nama_addproduk' => 'required',
+            'kategori_addproduk' => 'required',
+            'diskon_addproduk' => 'required|numeric',
+            'harga_addproduk' => 'required|numeric',
+            'stok_addproduk' => 'required|numeric',
+            'lokasi_addproduk' => 'required',
+            'status_addproduk' => 'required',
+            'foto_addproduk' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        // Handle the file upload...
+        $fileName = time(). '.'. $request->foto_addproduk->extension();
+        $request->foto_addproduk->move(public_path('uploads'), $fileName);
+
         // Ambil semua data yang dikirimkan oleh formulir
         $nama_produk = $request->input('nama_addproduk');
         $kategori = $request->input('kategori_addproduk');
@@ -38,7 +54,7 @@ class AdminDataProdukController extends Controller
         $stok_produk = $request->input('stok_addproduk');
         $lokasi_produk = $request->input('lokasi_addproduk');
         $status_produk = $request->input('status_addproduk');
-        $foto_produk = $request->input('foto_addproduk');
+        $foto_produk = $fileName;
 
         // Panggil stored procedure untuk update
         DB::statement("CALL sp_add_dataproduk(?, ?, ?, ?, ?, ?, ?, ?)", array(
@@ -76,6 +92,24 @@ class AdminDataProdukController extends Controller
      */
     public function update(Request $request)
     {
+        // Validate the request...
+        $request->validate([
+            'id_editproduk' => 'required|numeric',
+            'kategori_editproduk' => 'required',
+            'kd_editproduk' => 'required',
+            'nama_editproduk' => 'required',
+            'stok_editproduk' => 'required|numeric',
+            'diskon_editproduk' => 'required|numeric',
+            'harga_editproduk' => 'required|numeric',
+            'lokasi_editproduk' => 'required',
+            'status_editproduk' => 'required',
+            'foto_editproduk' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        // Handle the file upload...
+        $fileName = time(). '.'. $request->foto_editproduk->extension();
+        $request->foto_editproduk->move(public_path('uploads'), $fileName);
+
         // Ambil semua data yang dikirimkan oleh formulir
         $id_produk = $request->input('id_editproduk');
         $kategori = $request->input('kategori_editproduk');
@@ -85,7 +119,7 @@ class AdminDataProdukController extends Controller
         $diskon_produk = $request->input('diskon_editproduk');
         $harga_produk = $request->input('harga_editproduk');
         $lokasi_produk = $request->input('lokasi_editproduk');
-        $foto_produk = $request->input('foto_editproduk');
+        $foto_produk = $fileName;
         $status_produk = $request->input('status_editproduk');
 
         // Lakukan validasi data jika diperlukan
