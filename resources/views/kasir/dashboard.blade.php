@@ -32,7 +32,7 @@
                         <div class="row">
                             <div class="col">
                                 <h5 class="card-title text-uppercase text-muted mb-0">Tanggal</h5>
-                                <span class="h2 font-weight-bold mb-0">Hari Ini</span>
+                                <span class="h2 font-weight-bold mb-0">Bulan Ini</span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon-container bg-dark">
@@ -52,7 +52,7 @@
                         <div class="row">
                             <div class="col">
                                 <h5 class="card-title text-uppercase text-muted mb-0">Penjualan</h5>
-                                <span class="h2 font-weight-bold mb-0">Hari ini</span>
+                                <span class="h2 font-weight-bold mb-0">Bulan ini</span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon-container bg-dark">
@@ -73,7 +73,7 @@
                         <div class="row">
                             <div class="col">
                                 <h5 class="card-title text-uppercase text-muted mb-0">Pendapatan</h5>
-                                <span class="h2 font-weight-bold mb-0">Hari Ini</span>
+                                <span class="h2 font-weight-bold mb-0">Bulan Ini</span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon-container bg-dark">

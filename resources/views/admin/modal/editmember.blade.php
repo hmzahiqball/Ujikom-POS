@@ -7,21 +7,21 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="">
+                <form action="{{ URL::asset('/admin/datamember/update') }}" method="POST"
+                enctype="multipart/form-data">
+                @csrf
                     <div class="row">
                         <div class="col">
                             <div class="mb-3">
                                 <label  class="form-label">Nama Lengkap Member</label>
-                                <input type="hidden" class="form-control" id="id_editmember">
-                                <input type="text" class="form-control" id="nama_editmember"
-                                    placeholder="MK-001">
+                                <input type="hidden" class="form-control" id="id_editmember" name="id_editmember">
+                                <input type="text" class="form-control" id="nama_editmember" name="nama_editmember">
                             </div>
                         </div>
                         <div class="col">
                             <div class="mb-3">
                                 <label  class="form-label">Tanggal Lahir Member</label>
-                                <input type="date" class="form-control" id="tgllahir_editmember"
-                                    placeholder="Makanan 01">
+                                <input type="date" class="form-control" id="tgllahir_editmember" name="tgllahir_editmember">
                             </div>
                         </div>
                     </div>
@@ -29,15 +29,13 @@
                         <div class="col">
                             <div class="mb-3">
                                 <label  class="form-label">No. Telp Member</label>
-                                <input type="number" class="form-control" id="telp_editmember"
-                                    placeholder="MK-001">
+                                <input type="number" class="form-control" id="telp_editmember" name="telp_editmember">
                             </div>
                         </div>
                         <div class="col">
                             <div class="mb-3">
                                 <label  class="form-label">Email Member</label>
-                                <input type="email" class="form-control" id="email_editmember"
-                                    placeholder="Makanan 01">
+                                <input type="email" class="form-control" id="email_editmember" name="email_editmember">
                             </div>
                         </div>
                     </div>
@@ -45,7 +43,7 @@
                         <div class="col">
                             <div class="mb-3">
                                 <label  class="form-label">Jenis Kelamin Member</label>
-                                <select class="form-select" aria-label="Default select example" id="gender_editmember">
+                                <select class="form-select" aria-label="Default select example" id="gender_editmember" name="gender_editmember">
                                     <option>Pilih Gender Member</option>
                                     <option value="Laki - Laki">Laki - Laki</option>
                                     <option value="Perempuan">Perempuan</option>
@@ -55,7 +53,7 @@
                         <div class="col">
                             <div class="mb-3">
                                 <label  class="form-label">Status Member</label>
-                                <select class="form-select" aria-label="Default select example" id="status_editmember">
+                                <select class="form-select" aria-label="Default select example" id="status_editmember" name="status_editmember">
                                     <option selected>Pilih Status Member</option>
                                     <option value="Aktif">Aktif</option>
                                     <option value="Tidak Aktif">Tidak Aktif</option>
@@ -67,7 +65,7 @@
                         <div class="col">
                             <div class="mb-3">
                                 <label  class="form-label">Alamat Member</label>
-                                <textarea class="form-control" id="alamat_editmember"></textarea>
+                                <textarea class="form-control" id="alamat_editmember" name="alamat_editmember"></textarea>
                             </div>
                         </div>
                     </div>
@@ -75,7 +73,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" id="editbutton_swal">Save changes</button>
             </div>
         </div>
     </div>
@@ -102,6 +100,26 @@
             $('#editmemberModal').find('#tgllahir_editmember').val(tgllahirmember);
             $('#editmemberModal').find('#gender_editmember').val(gendermember);
             $('#editmemberModal').find('#status_editmember').val(statusmember);
+            $('#editbutton_swal').data('namamemberswal', namamember);
+        });
+
+        // SweetAlert confirmation
+        $('#editbutton_swal').click(function() {
+        var current_object = $(this);
+
+            Swal.fire({
+                title: 'Yakin Untuk Mengubah Data ' + current_object.data('namamemberswal') + '?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, Ubah Data!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Jika user menekan "Yes, delete it!", submit form
+                    $('#editmemberModal form').submit();
+                }
+            });
         });
     });
 </script>

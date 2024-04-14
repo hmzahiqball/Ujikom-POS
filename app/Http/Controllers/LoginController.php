@@ -26,6 +26,7 @@ class LoginController extends Controller
             // Jika berhasil, kembalikan data petugas
             $petugas = $result[0];
             Session::put('tb_petugas', $petugas);
+            Session::put('foto_petugas', $petugas->foto_petugas);
 
             // Redirect sesuai dengan role_petugas
             if ($petugas->role_petugas == 'Admin') {

@@ -4,11 +4,12 @@
         // SweetAlert confirmation
         $('.deleteSwal').click(function() {
             var current_object = $(this);
-            var id_transaksi = current_object.data('idtransaksi');
+            var id_member = current_object.data('idmember');
+            var namamember = current_object.data('namamember');
             var action = current_object.data('action');
 
             Swal.fire({
-                title: 'Yakin Untuk Menghapus Data ini ?',
+                title: 'Yakin Untuk Menghapus Data ' + namamember + ' ?',
                 icon: 'warning',
                 iconColor: 'red',
                 showCancelButton: true,
@@ -28,8 +29,8 @@
 
                     // Menambahkan input dengan nama "id" untuk mengirim ID data yang akan dihapus
                     form.append($('<input>', {
-                        'name': 'id_deletepenjualan',
-                        'value': id_transaksi,
+                        'name': 'id_deletemember',
+                        'value': id_member,
                         'type': 'hidden'
                     }));
 

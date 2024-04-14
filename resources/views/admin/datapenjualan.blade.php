@@ -46,8 +46,9 @@
                                     data-diskontransaksi="{{ $item->diskon_transaksi }}"
                                     data-totaltransaksi="{{ number_format($item->total_transaksi, 0, ',', '.') }}"
                                     data-statustransaksi="{{ $item->status_transaksi }}">View</button>
-                                    <button class="btn btn-danger mr-2" data-bs-toggle="modal" data-bs-target="#deletepenjualanModal"
-                                    data-idtransaksi="{{ $item->id_transaksi }}">Delete</button>
+                                    <button class="btn btn-danger mr-2 deleteSwal"
+                                    data-idtransaksi="{{ $item->id_transaksi }}"
+                                    data-action="{{ route('admin.datapenjualan.delete', $item->id_transaksi) }}">Delete</button>
                                 </td>
                             </tr>
                             @endforeach

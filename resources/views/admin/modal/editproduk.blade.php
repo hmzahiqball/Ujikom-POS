@@ -12,27 +12,24 @@
                     @csrf
                     <div class="row">
                         <div class="col">
-                            <div class="mb-3">
-                                <label class="form-label">ID Produk</label>
+                            <div class="form-floating mb-3">
                                 <input type="hidden" class="form-control" id="id_editproduk" name="id_editproduk">
-                                <input type="text" class="form-control" id="kd_editproduk" name="kd_editproduk"
-                                    readonly required>
+                                <input type="text" class="form-control" id="kd_editproduk" placeholder="ID Produk" name="kd_editproduk" readonly required>
+                                <label for="kd_editproduk">ID Produk</label>
                             </div>
                         </div>
                         <div class="col">
-                            <div class="mb-3">
-                                <label class="form-label">Nama Produk</label>
-                                <input type="text" class="form-control" id="nama_editproduk" name="nama_editproduk"
-                                    required>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="nama_editproduk" placeholder="Nama Produk" name="nama_editproduk" readonly required>
+                                <label for="nama_editproduk">Nama Produk</label>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <div class="mb-3">
-                                <label class="form-label">Kategori</label>
+                            <div class="form-floating mb-3">
                                 <select class="form-select" aria-label="Default select example" id="kategori_editproduk"
-                                    name="kategori_editproduk">
+                                    name="kategori_editproduk" required>
                                     <option selected>Pilih Jenis Kategori</option>
                                     @foreach ($kategori as $kategori)
                                         <option value="{{ $kategori->nama_kategori }}"
@@ -40,55 +37,54 @@
                                         </option>
                                     @endforeach
                                 </select>
+                                <label for="kategori_editproduk">Kategori</label>
                             </div>
                         </div>
                         <div class="col">
-                            <div class="mb-3">
-                                <label class="form-label">Diskon</label>
-                                <div class="input-group mb-3">
+                            <div class="input-group mb-3">
+                                <div class="form-floating is-invalid">
                                     <input type="number" class="form-control" id="diskon_editproduk"
-                                        name="diskon_editproduk" required>
-                                    <span class="input-group-text" id="basic-addon1">%</span>
+                                        name="diskon_editproduk" placeholder="100" required>
+                                    <label for="diskon_editproduk">Diskon Produk</label>
                                 </div>
+                                <span class="input-group-text" id="basic-addon1">%</span>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <div class="mb-3">
-                                <label class="form-label">Harga Jual Produk</label>
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text" id="basic-addon1">Rp.</span>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">Rp.</span>
+                                <div class="form-floating is-invalid">
                                     <input type="number" class="form-control" id="harga_editproduk"
-                                        name="harga_editproduk" required>
+                                        name="harga_editproduk" placeholder="100" required>
+                                    <label for="harga_editproduk">Harga Jual Produk</label>
                                 </div>
                             </div>
                         </div>
                         <div class="col">
-                            <div class="mb-3">
-                                <label class="form-label">Stok Produk</label>
-                                <input type="number" class="form-control" id="stok_editproduk" name="stok_editproduk"
-                                    required>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="stok_editproduk" placeholder="Stok Produk" name="stok_editproduk" required>
+                                <label for="stok_editproduk">Stok Produk</label>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <div class="mb-3">
-                                <label class="form-label">Lokasi Produk</label>
-                                <input type="text" class="form-control" id="lokasi_editproduk"
-                                    name="lokasi_editproduk" required>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="lokasi_editproduk" placeholder="Lokasi Produk" name="lokasi_editproduk" required>
+                                <label for="lokasi_editproduk">Lokasi Produk</label>
                             </div>
                         </div>
                         <div class="col">
-                            <div class="mb-3">
-                                <label class="form-label">Status Produk</label>
+                            <div class="form-floating mb-3">
                                 <select class="form-select" aria-label="Default select example" id="status_editproduk"
-                                    name="status_editproduk">
+                                    name="status_editproduk" required>
                                     <option selected>Pilih Status Produk</option>
                                     <option value="Tersedia">Tersedia</option>
                                     <option value="Tidak Tersedia">Tidak Tersedia</option>
                                 </select>
+                                <label for="status_editproduk">Status Produk</label>
                             </div>
                         </div>
                     </div>

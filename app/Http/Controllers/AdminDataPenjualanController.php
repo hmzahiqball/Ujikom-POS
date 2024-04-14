@@ -60,8 +60,16 @@ class AdminDataPenjualanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        // Ambil semua data yang dikirimkan oleh formulir
+        $id_transaksi = $request->input('id_deletepenjualan');
+
+        // Panggil stored procedure untuk update
+        DB::statement("CALL sp_delete_datapenjualan(?)", array(
+            $id_transaksi,
+        ));
+
+        return redirect('admin/datapenjualan');
     }
 }

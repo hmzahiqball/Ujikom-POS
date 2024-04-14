@@ -10,71 +10,58 @@
                 <form action="">
                     <div class="row">
                         <div class="col">
-                            <div class="mb-3">
-                                <label  class="form-label">Tanggal dan Waktu</label>
-                                <input type="datetime" class="form-control" id="tgl_viewtransaksi"
-                                    placeholder="2016/04/15 05:06" readonly>
+                            <div class="form-floating mb-3">
+                                <input type="datetime" class="form-control" id="tgl_viewtransaksi" placeholder="Tanggal dan Waktu" name="tgl_viewtransaksi" readonly>
+                                <label for="tgl_viewtransaksi">Tanggal dan Waktu</label>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <div class="mb-3">
-                                <label  class="form-label">No. Transaksi</label>
+                            <div class="form-floating mb-3">
                                 <input type="hidden" class="form-control" id="id_viewtransaksi" readonly>
-                                <input type="text" class="form-control" id="no_viewtransaksi"
-                                    placeholder="PR15042015" readonly>
+                                <input type="text" class="form-control" id="no_viewtransaksi" placeholder="No. Transaksi" name="no_viewtransaksi" readonly>
+                                <label for="no_viewtransaksi">No. Transaksi</label>
                             </div>
                         </div>
                         <div class="col">
-                            <div class="mb-3">
-                                <label  class="form-label">Status Transaksi</label>
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" id="status_viewtransaksi"
-                                    placeholder="Berhasil" readonly>
-                                </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="status_viewtransaksi" placeholder="Status Transaksi" name="status_viewtransaksi" readonly>
+                                <label for="status_viewtransaksi">Status Transaksi</label>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <div class="mb-3">
-                                <label  class="form-label">Diskon Transaksi</label>
-                                <div class="input-group mb-3">
-                                    <input type="number" class="form-control" id="diskon_viewtransaksi"
-                                    placeholder="12" readonly>
-                                    <span class="input-group-text" id="basic-addon1">%</span>
+                            <div class="input-group mb-3">
+                                <div class="form-floating">
+                                    <input type="number" class="form-control" id="diskon_viewtransaksi" placeholder="Diskon Transaksi" name="diskon_viewtransaksi" readonly>
+                                    <label for="diskon_viewtransaksi">Diskon Transaksi</label>
                                 </div>
+                                <span class="input-group-text" id="basic-addon1">%</span>
                             </div>
                         </div>
                         <div class="col">
-                            <div class="mb-3">
-                                <label  class="form-label">Total Transaksi</label>
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text" id="basic-addon1">Rp.</span>
-                                    <input type="number" class="form-control" id="total_viewtransaksi"
-                                    placeholder="122.000" readonly>
+                            <div class="input-group mb-3">
+                                <div class="form-floating">
+                                    <input type="number" class="form-control" id="total_viewtransaksi" placeholder="Total Transaksi" name="total_viewtransaksi" readonly>
+                                    <label for="total_viewtransaksi">Total Transaksi</label>
                                 </div>
+                                <span class="input-group-text" id="basic-addon1">Rp.</span>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <div class="mb-3">
-                                <label  class="form-label">Kasir</label>
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" id="petugas_viewtransaksi"
-                                    placeholder="Bobi" readonly>
-                                </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="petugas_viewtransaksi" placeholder="Kasir" name="petugas_viewtransaksi" readonly>
+                                <label for="petugas_viewtransaksi">Kasir</label>
                             </div>
                         </div>
                         <div class="col">
-                            <div class="mb-3">
-                                <label  class="form-label">Member</label>
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" id="member_viewtransaksi"
-                                    placeholder="Bobo" readonly>
-                                </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="member_viewtransaksi" placeholder="Member" name="member_viewtransaksi" readonly>
+                                <label for="member_viewtransaksi">Member</label>
                             </div>
                         </div>
                     </div>

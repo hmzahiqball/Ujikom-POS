@@ -12,80 +12,75 @@
                 @csrf
                     <div class="row">
                         <div class="col">
-                            <div class="mb-3">
-                                <label  class="form-label">ID Petugas</label>
+                            <div class="form-floating mb-3">
                                 <input type="hidden" class="form-control" id="id_editpetugas" name="id_editpetugas">
-                                <input type="text" class="form-control" id="kd_editpetugas"
-                                    name="kd_editpetugas">
+                                <input type="text" class="form-control" id="kd_editpetugas" placeholder="ID Petugas" name="kd_editpetugas" required>
+                                <label for="kd_editpetugas">ID Petugas</label>
                             </div>
                         </div>
                         <div class="col">
-                            <div class="mb-3">
-                                <label  class="form-label">Nama Lengkap</label>
-                                <input type="text" class="form-control" id="nama_editpetugas"
-                                    name="nama_editpetugas">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="nama_editpetugas" placeholder="Nama Petugas" name="nama_editpetugas" required>
+                                <label for="nama_editpetugas">Nama Lengkap</label>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
+                    </div><div class="row">
                         <div class="col">
-                            <div class="mb-3">
-                                <label  class="form-label">No. Telp</label>
-                                <input type="number" class="form-control" id="telp_editpetugas"
-                                    name="telp_editpetugas">
+                            <div class="form-floating mb-3">
+                                <input type="number" class="form-control" id="telp_editpetugas" placeholder="No. Telp" name="telp_editpetugas" required>
+                                <label for="telp_editpetugas">No. Telp</label>
                             </div>
                         </div>
                         <div class="col">
-                            <div class="mb-3">
-                                <label  class="form-label">Alamat E-mail</label>
-                                <input type="text" class="form-control" id="email_editpetugas"
-                                    name="email_editpetugas">
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" id="email_editpetugas" placeholder="Alamat E-Mail" name="email_editpetugas" required>
+                                <label for="email_editpetugas">Alamat E-Mail</label>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <div class="mb-3">
-                                <label  class="form-label">Username Petugas</label>
-                                <input type="text" class="form-control" id="username_editpetugas"
-                                    name="username_editpetugas">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="username_editpetugas" placeholder="Username Petugas" name="username_editpetugas" required>
+                                <label for="username_editpetugas">Username Petugas</label>
                             </div>
                         </div>
                         <div class="col">
-                            <div class="mb-3">
-                                <label  class="form-label">Password Petugas</label>
-                                <input type="password" class="form-control" id="password_editpetugas"
-                                    name="password_editpetugas">
+                            <div class="form-floating mb-3">
+                                <input type="password" class="form-control" id="password_editpetugas" placeholder="Password Petugas" name="password_editpetugas" required>
+                                <label for="password_editpetugas">Password Petugas</label>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <div class="mb-3">
-                                <label  class="form-label">Status Petugas</label>
-                                <select class="form-select" aria-label="Default select example" id="status_editpetugas" name="status_editpetugas">
-                                    <option selected>Pilih Status Produk</option>
+                            <div class="form-floating mb-3">
+                                <select class="form-select" aria-label="Default select example" id="status_editpetugas"
+                                    name="status_editpetugas" required>
+                                    <option selected>Pilih Status Petugas</option>
                                     <option value="Aktif">Aktif</option>
                                     <option value="Tidak Aktif">Tidak Aktif</option>
                                 </select>
+                                <label for="status_editpetugas">Status Petugas</label>
                             </div>
                         </div>
                         <div class="col">
-                            <div class="mb-3">
-                                <label  class="form-label">Hak Akses Petugas</label>
-                                <select class="form-select" aria-label="Default select example" id="role_editpetugas" name="role_editpetugas">
-                                    <option selected>Pilih Hak Akses Petugas</option>
+                            <div class="form-floating mb-3">
+                                <select class="form-select" aria-label="Default select example" id="role_editpetugas"
+                                    name="role_editpetugas" required>
+                                    <option selected>Hak Akses Petugas</option>
                                     <option value="Admin">Admin</option>
                                     <option value="Kasir">Kasir</option>
                                 </select>
+                                <label for="role_editpetugas">Hak Akses Petugas</label>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <div class="mb-3">
-                                <label  class="form-label">Alamat Petugas</label>
-                                <textarea class="form-control" id="alamat_editpetugas" name="alamat_editpetugas"></textarea>
+                            <div class="form-floating mb-3">
+                                <textarea class="form-control" placeholder="Alamat Petugas" id="alamat_editpetugas" name="alamat_editpetugas"></textarea>
+                                <label for="alamat_editpetugas">Alamat Petugas</label>
                             </div>
                         </div>
                     </div>
@@ -93,7 +88,10 @@
                         <div class="col">
                             <div class="mb-3">
                                 <label  class="form-label">Foto Petugas</label>
-                                <input type="file" class="form-control" id="foto_editpetugas" name="foto_editpetugas">
+                                <div class="d-flex align-items-center">
+                                    <img id="foto_preview" src="" alt="Foto Petugas" class="me-3" width="200">
+                                    <input type="file" class="form-control" id="foto_editpetugas" name="foto_editpetugas">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -120,7 +118,8 @@
                 passwordpetugas = btn.data('passwordpetugas'),
                 statuspetugas = btn.data('statuspetugas'),
                 alamatpetugas = btn.data('alamatpetugas'),
-                rolepetugas = btn.data('rolepetugas');
+                rolepetugas = btn.data('rolepetugas'),
+                fotopetugas = btn.data('fotopetugas');
 
             $('#editpetugasModal').find('#id_editpetugas').val(idpetugas);
             $('#editpetugasModal').find('#kd_editpetugas').val(kodepetugas);
@@ -132,6 +131,7 @@
             $('#editpetugasModal').find('#status_editpetugas').val(statuspetugas);
             $('#editpetugasModal').find('#alamat_editpetugas').val(alamatpetugas);
             $('#editpetugasModal').find('#role_editpetugas').val(rolepetugas);
+            $('#editpetugasModal').find('#foto_preview').attr('src', "{{ asset('uploads/') }}/" + fotopetugas);
             $('#editbutton_swal').data('namapetugasswal', namapetugas);
         });
 

@@ -52,6 +52,11 @@ Route::post('admin/datapetugas/update', [AdminDataPetugasController::class, 'upd
 Route::post('admin/datapetugas/delete', [AdminDataPetugasController::class, 'destroy'])->name('admin.datapetugas.delete');
 
 Route::resource('admin/datapenjualan', AdminDataPenjualanController::class);
+Route::post('admin/datapenjualan/delete', [AdminDataPenjualanController::class, 'destroy'])->name('admin.datapenjualan.delete');
+
 Route::resource('admin/datamember', AdminDataMemberController::class);
+Route::post('admin/datamember/add', [AdminDataMemberController::class, 'store']);
+Route::post('admin/datamember/update', [AdminDataMemberController::class, 'update']);
+Route::post('admin/datamember/delete', [AdminDataMemberController::class, 'destroy'])->name('admin.datamember.delete');
 
 

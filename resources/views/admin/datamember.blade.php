@@ -9,7 +9,10 @@
 @endsection
 @section('content')
     <div class="container">
-        <h3>Data Member</h3>
+        <div class="d-flex justify-content-between align-items-center">
+            <h3>Data Member</h3>
+            <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addmemberModal">Add Data Member</button>
+        </div>
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive">
@@ -46,8 +49,9 @@
                                     data-tgllahirmember="{{ $item->tgllahir_member }}"
                                     data-gendermember="{{ $item->gender_member }}"
                                     data-statusmember="{{ $item->status_member }}">Edit</button>
-                                    <button class="btn btn-danger mr-2" data-bs-toggle="modal" data-bs-target="#deletememberModal"
-                                    data-idmember="{{ $item->id_member }}">Delete</button>
+                                    <button class="btn btn-danger mr-2 deleteSwal"
+                                    data-idmember="{{ $item->id_member }}" data-namamember="{{ $item->nama_member }}"
+                                    data-action="{{ route('admin.datamember.delete', $item->id_member) }}">Delete</button>
                                 </td>
                             </tr>
                             @endforeach
@@ -57,8 +61,9 @@
             </div>
         </div>
     </div>
+    @extends('admin.modal.addmember')
     @extends('admin.modal.editmember')
-    {{-- @extends('admin.modal.deletemember') --}}
+    @extends('admin.modal.deletemember')
 @endsection
 @section('scripts')
     <script>

@@ -37,7 +37,7 @@
                         <div class="row">
                             <div class="col">
                                 <h5 class="card-title text-uppercase text-muted mb-0">Tanggal</h5>
-                                <span class="h2 font-weight-bold mb-0">Hari Ini</span>
+                                <span class="h2 font-weight-bold mb-0">Bulan Ini</span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon-container bg-dark">
@@ -57,7 +57,7 @@
                         <div class="row">
                             <div class="col">
                                 <h5 class="card-title text-uppercase text-muted mb-0">Penjualan</h5>
-                                <span class="h2 font-weight-bold mb-0">Hari ini</span>
+                                <span class="h2 font-weight-bold mb-0">Bulan ini</span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon-container bg-dark">
@@ -78,7 +78,7 @@
                         <div class="row">
                             <div class="col">
                                 <h5 class="card-title text-uppercase text-muted mb-0">Pendapatan</h5>
-                                <span class="h2 font-weight-bold mb-0">Hari Ini</span>
+                                <span class="h2 font-weight-bold mb-0">Bulan Ini</span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon-container bg-dark">
@@ -136,8 +136,8 @@
                                 </p>
                             </div>
                             <div class="col-auto">
-                                <img src="https://plus.college.indiana.edu/images/profiles/profiles-768x768/assistant.jpg"
-                                    alt="Profile Photo" class="profile-photo" height="200px" width="200px">
+                                <img src="{{ Session::has('foto_petugas') ? asset('uploads/' . Session::get('foto_petugas')) : 'Foto Petugas' }}" alt="Foto Petugas"
+                                class="profile-photo" height="200px" width="200px">
                             </div>
                         </div>
 

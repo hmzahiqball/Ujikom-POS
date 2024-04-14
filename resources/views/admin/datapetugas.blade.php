@@ -41,7 +41,7 @@
                                     data-namapetugas="{{ $item->nama_petugas }}" data-telppetugas="{{ $item->telp_petugas }}"
                                     data-emailpetugas="{{ $item->email_petugas }}" data-usernamepetugas="{{ $item->username_petugas }}"
                                     data-passwordpetugas="{{ $item->password_petugas }}" data-statuspetugas="{{ $item->status_petugas }}"
-                                    data-alamatpetugas="{{ $item->alamat_petugas }}" data-rolepetugas="{{ $item->role_petugas }}">Edit</button>
+                                    data-alamatpetugas="{{ $item->alamat_petugas }}" data-rolepetugas="{{ $item->role_petugas }}" data-fotopetugas="{{ $item->foto_petugas }}">Edit</button>
                                     <button class="btn btn-danger mr-2 deleteSwal"
                                     data-idpetugas="{{ $item->id_petugas }}" data-namapetugas="{{ $item->nama_petugas }}"
                                     data-action="{{ route('admin.datapetugas.delete', $item->id_petugas) }}">Delete</button>
