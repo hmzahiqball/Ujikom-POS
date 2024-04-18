@@ -12,52 +12,52 @@
                 @csrf
                     <div class="row">
                         <div class="col">
-                            <div class="mb-3">
-                                <label  class="form-label">Nama Lengkap Member</label>
+                            <div class="form-floating mb-3">
                                 <input type="hidden" class="form-control" id="id_editmember" name="id_editmember">
-                                <input type="text" class="form-control" id="nama_editmember" name="nama_editmember">
+                                <input type="text" class="form-control" id="nama_editmember" placeholder="Nama Lengkap Member" name="nama_editmember" required>
+                                <label for="nama_editmember">Nama Lengkap Member</label>
                             </div>
                         </div>
                         <div class="col">
-                            <div class="mb-3">
-                                <label  class="form-label">Tanggal Lahir Member</label>
-                                <input type="date" class="form-control" id="tgllahir_editmember" name="tgllahir_editmember">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="mb-3">
-                                <label  class="form-label">No. Telp Member</label>
-                                <input type="number" class="form-control" id="telp_editmember" name="telp_editmember">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="mb-3">
-                                <label  class="form-label">Email Member</label>
-                                <input type="email" class="form-control" id="email_editmember" name="email_editmember">
+                            <div class="form-floating mb-3">
+                                <input type="date" class="form-control" id="tgllahir_editmember" placeholder="Tanggal Lahir Member" name="tgllahir_editmember" required>
+                                <label for="tgllahir_editmember">Tanggal Lahir Member</label>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <div class="mb-3">
-                                <label  class="form-label">Jenis Kelamin Member</label>
+                            <div class="form-floating mb-3">
+                                <input type="number" class="form-control" id="telp_editmember" placeholder="No. Telp  Member" name="telp_editmember" required>
+                                <label for="telp_editmember">No. Telp  Member</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" id="email_editmember" placeholder="Email  Member" name="email_editmember" required>
+                                <label for="email_editmember">Email  Member</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-floating mb-3">
                                 <select class="form-select" aria-label="Default select example" id="gender_editmember" name="gender_editmember">
                                     <option>Pilih Gender Member</option>
                                     <option value="Laki - Laki">Laki - Laki</option>
                                     <option value="Perempuan">Perempuan</option>
                                 </select>
+                                <label for="gender_editmember">Gender Member</label>
                             </div>
                         </div>
                         <div class="col">
-                            <div class="mb-3">
-                                <label  class="form-label">Status Member</label>
+                            <div class="form-floating mb-3">
                                 <select class="form-select" aria-label="Default select example" id="status_editmember" name="status_editmember">
-                                    <option selected>Pilih Status Member</option>
+                                    <option>Pilih Status Member</option>
                                     <option value="Aktif">Aktif</option>
                                     <option value="Tidak Aktif">Tidak Aktif</option>
                                 </select>
+                                <label for="status_editmember">Status Member</label>
                             </div>
                         </div>
                     </div>

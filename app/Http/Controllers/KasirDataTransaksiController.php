@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class KasirDataTransaksiController extends Controller
 {
@@ -11,7 +12,9 @@ class KasirDataTransaksiController extends Controller
      */
     public function index()
     {
-        return view('kasir.datatransaksi');
+        $nama_petugas = session()->get('tb_petugas')->nama_petugas;
+        $get_penjualanperiode = DB::select('CALL cb(?, ?)', [now(), $nama_petugas]);
+        return view('kasir.datatransaksi' , ['penjualan' => $get_penjualanperiode]);
     }
 
     /**

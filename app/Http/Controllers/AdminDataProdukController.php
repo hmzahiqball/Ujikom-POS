@@ -103,12 +103,8 @@ class AdminDataProdukController extends Controller
             'harga_editproduk' => 'required|numeric',
             'lokasi_editproduk' => 'required',
             'status_editproduk' => 'required',
-            'foto_editproduk' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'foto_editproduk' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-
-        // Handle the file upload...
-        $fileName = time(). '.'. $request->foto_editproduk->extension();
-        $request->foto_editproduk->move(public_path('uploads'), $fileName);
 
         // Ambil semua data yang dikirimkan oleh formulir
         $id_produk = $request->input('id_editproduk');
@@ -119,24 +115,41 @@ class AdminDataProdukController extends Controller
         $diskon_produk = $request->input('diskon_editproduk');
         $harga_produk = $request->input('harga_editproduk');
         $lokasi_produk = $request->input('lokasi_editproduk');
-        $foto_produk = $fileName;
         $status_produk = $request->input('status_editproduk');
 
-        // Lakukan validasi data jika diperlukan
+        if ($request->hasFile('foto_editproduk')) {
+            $fileName = time(). '.'. $request->foto_editproduk->extension();
+            $request->foto_editproduk->move(public_path('uploads'), $fileName);
+            $foto_produk = $fileName;
 
-        // Panggil stored procedure untuk update
-        DB::statement("CALL sp_edit_dataproduk(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array(
-            $id_produk,
-            $kategori,
-            $kode_produk,
-            $nama_produk,
-            $stok_produk,
-            $diskon_produk,
-            $harga_produk,
-            $lokasi_produk,
-            $status_produk,
-            $foto_produk
-        ));
+            // Panggil stored procedure untuk update
+            DB::statement("CALL sp_edit_dataproduk(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array(
+                $id_produk,
+                $kategori,
+                $kode_produk,
+                $nama_produk,
+                $stok_produk,
+                $diskon_produk,
+                $harga_produk,
+                $lokasi_produk,
+                $status_produk,
+                $foto_produk
+            ));
+        } else {
+            // Panggil stored procedure untuk update
+            DB::statement("CALL sp_edit_dataproduk(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array(
+                $id_produk,
+                $kategori,
+                $kode_produk,
+                $nama_produk,
+                $stok_produk,
+                $diskon_produk,
+                $harga_produk,
+                $lokasi_produk,
+                $status_produk,
+                ''
+            ));
+        }
 
         return redirect('admin/dataproduk');
     }

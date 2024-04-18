@@ -1,4 +1,5 @@
 @extends('app')
+<link rel="icon" href="{{ asset('images/logo/favicon.png') }}" type="image/png" />
 @section('styles')
     <style>
         .btn-circle {
@@ -9,6 +10,10 @@
             font-size: 12px;
             background-size: cover;
             text-align: center;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
         }
     </style>
 @endsection
@@ -21,73 +26,44 @@
             <!-- Filter kategori -->
             <div class="mb-3">
                 <button type="button" class="btn btn-dark btn-circle" data-category="all">All</button>
-                <button type="button" class="btn btn-dark btn-circle" data-category="jam">Jaket</button>
-                <button type="button" class="btn btn-dark btn-circle" data-category="kamera">Kaos</button>
-                <button type="button" class="btn btn-dark btn-circle" data-category="sepatu">Celana</button>
-                <button type="button" class="btn btn-dark btn-circle" data-category="headset">Sepatu</button>
-                <button type="button" class="btn btn-dark btn-circle" data-category="headset">Acc</button>
+                @foreach ($data_kategori as $key => $item)
+                    <button type="button" class="btn btn-dark btn-circle"
+                        data-category="{{ $item->nama_kategori }}">{{ $item->nama_kategori }}</button>
+                @endforeach
             </div>
             <div class="mb-3">
-                <input type="text" id="searchInput" class="form-control" placeholder="Cari produk...">
+                <input type="text" id="searchInput" class="form-control" onkeyup="myFunction()"
+                    placeholder="Cari produk...">
             </div>
             <hr>
-            <div class="row">
-                <div class="col mb-3">
-                    <div class="card" style="width: 180px;" id="cardproduct">
-                        <img src="{{ asset('images/product1.jpeg') }}" class="card-img-top" alt="Jaket1">
-                        <div class="card-body">
-                            <h5 class="card-title product-name">Jaket 1</h5>
-                            <p class="card-text">Rp. 100.000</p>
-                            <button class="btn btn-success add-to-cart-button" data-name="Jaket 1" data-price="10000000"
-                                data-stock="10">Add</button>
-                            <span id="stokbrg" class="form-text">
-                                Stok : 10
-                            </span>
+            <div class="row row-cols-1 row-cols-md-4 g-4" id="productContainer">
+                @foreach ($data_produk as $key => $item)
+                    <div class="col">
+                        <div class="card h-100" id="cardproduct">
+                            <img src="{{ asset('uploads/' . $item->foto_produk) }}" class="card-img-top"
+                                alt="{{ $item->nama_produk }}" height="200">
+                            <div class="card-body">
+                                <h5 class="card-title product-name">{{ $item->nama_produk }}</h5>
+                            </div>
+                                <ul class="list-group list-group-flush">
+                                    @if($item->harga_produk != $item->harga_akhir)
+                                        <li class="list-group-item">Diskon : {{ number_format($item->diskon_produk, 0, ',', '.') }}%</li>
+                                        <li class="list-group-item" style="text-decoration: line-through;">Rp. {{ number_format($item->harga_produk, 0, ',', '.') }}</li>
+                                    @endif
+                                    <li class="list-group-item">Rp. {{ number_format($item->harga_akhir, 0, ',', '.') }} </li>
+                                </ul>
+                            <div class="card-footer">
+                                <button class="btn btn-success add-to-cart-button" data-name="{{ $item->nama_produk }}"
+                                    data-price="{{ $item->harga_akhir }}"
+                                    data-stock="{{ $item->stok_produk }}"
+                                    data-diskon="{{ $item->diskon_produk }}">Add</button>
+                                <span id="stokbrg" class="form-text">
+                                    Stok : {{ $item->stok_produk }}
+                                </span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col mb-3">
-                    <div class="card" style="width: 180px" id="cardproduct">
-                        <img src="{{ asset('images/product2.jpeg') }}" class="card-img-top" alt="Kaos1">
-                        <div class="card-body">
-                            <h5 class="card-title">Kaos 1</h5>
-                            <p class="card-text">Rp. 7.299.000</p>
-                            <button class="btn btn-success add-to-cart-button" data-name="Kaos 1" data-price="7299000"
-                                data-stock="20">Add</button>
-                            <span id="stokbrg" class="form-text">
-                                Stok : 20
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col mb-3">
-                    <div class="card" style="width: 180px" id="cardproduct">
-                        <img src="{{ asset('images/product3.jpeg') }}" class="card-img-top" alt="Jaket2">
-                        <div class="card-body">
-                            <h5 class="card-title">Jaket 2</h5>
-                            <p class="card-text">Rp. 3.999.000</p>
-                            <button class="btn btn-success add-to-cart-button" data-name="Jaket 2" data-price="3999000"
-                                data-stock="30">Add</button>
-                            <span id="stokbrg" class="form-text">
-                                Stok : 30
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col mb-3">
-                    <div class="card" style="width: 180px" id="cardproduct">
-                        <img src="{{ asset('images/product4.jpeg') }}" class="card-img-top" alt="Jaket3">
-                        <div class="card-body">
-                            <h5 class="card-title" id="judulcard">Jaket 3</h5>
-                            <p class="card-text">Rp. 199.000</p>
-                            <button class="btn btn-success add-to-cart-button" data-name="Jaket 3" data-price="199000"
-                                data-stock="40">Add</button>
-                            <span id="stokbrg" class="form-text">
-                                Stok : 40
-                            </span>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
         <div class="col-md-4">
@@ -95,32 +71,56 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Detail Keranjang</h5>
-                    <form id="checkoutForm">
+                    <form action="{{ URL::asset('/kasir/transaksi/add') }}" method="POST" enctype="multipart/form-data"
+                        id="checkoutForm">
+                        @csrf
+                        <div class="form-floating mb-3">
+                            <select class="form-select" aria-label="Default select example" id="member_transaksi"
+                                name="member_transaksi" required>
+                                <option selected value="1">Non - Member</option>
+                                @foreach ($data_member as $member)
+                                    <option value="{{ $member->id_member }}"
+                                        data-db-value="{{ $member->id_member }}">{{ $member->nama_member }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <label for="member_transaksi">Member</label>
+                        </div>
                         <!-- Informasi barang -->
                         <div class="mb-1" id="card-details">
                             <label class="form-label">Barang</label>
                         </div>
-
-                        <!-- Total Harga -->
                         <hr>
-                        <div class="mb-3">
-                            <label class="form-label">Total Harga :</label>
-                            <input type="text" class="form-control-plaintext border-0" id="totalPrice" readonly>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">Rp.</span>
+                            <div class="form-floating is-invalid">
+                                <input type="hidden" class="form-control-plaintext border-0" id="totalPriceRaw" name="totalharga_transaksi" readonly>
+                                <input type="text" class="form-control-plaintext border-0" id="totalPrice" readonly>
+                                <label for="harga_addproduk">Total Harga :</label>
+                            </div>
                         </div>
                         <hr>
                         <!-- Total Bayar dan Kembalian -->
-                        <div class="mb-3">
-                            <label for="totalPayment" class="form-label">Total Bayar :</label>
-                            <input type="text" class="form-control border-0" id="totalPayment">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">Rp.</span>
+                            <div class="form-floating is-invalid">
+                                <input type="text" class="form-control-plaintext border-0" id="totalPayment" name="totalbayar_transaksi">
+                                <label for="harga_addproduk">Total Bayar :</label>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="change" class="form-label">Kembalian :</label>
-                            <input type="text" class="form-control-plaintext border-0" id="change" readonly>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">Rp.</span>
+                            <div class="form-floating is-invalid">
+                                <input type="hidden" class="form-control-plaintext border-0" id="changeRaw" name="kembalian_transaksi" readonly>
+                                <input type="text" class="form-control-plaintext border-0" id="change" readonly>
+                                <label for="harga_addproduk">Kembalian :</label>
+                            </div>
                         </div>
                         <!-- Tombol Submit -->
                         <button type="submit" class="btn btn-primary">Simpan Transaksi</button>
                         <!-- Tombol Clear Keranjang -->
                         <button type="button" class="btn btn-danger" id="clearCart">Clear Keranjang</button>
+                        <input type="hidden" id="cartData" name="cartData">
                     </form>
                 </div>
             </div>
@@ -131,52 +131,77 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
+            var cartItems = [];
 
             // Function to add product to cart
             function addToCart(product) {
                 var productName = product.data('name');
-                var productPrice = parseFloat(product.data('price'));
+                var productPrice = parseInt(product.data('price'));
+                var discountPrice = parseInt(product.data('diskon'));
 
-                // Kurangi stok barang
-                var stok = parseInt(product.siblings('#stokbrg').text().trim().split(':')[1].trim());
-                if (stok <= 0) {
-                    alert('Stok barang habis!');
-                    return;
+                // Inisialisasi kuantitas produk baru dengan 1
+                var quantity = 1;
+
+                // Cari produk yang sudah ada di keranjang
+                var existingProduct = $('#card-details').find('input[value="' + productName + '"]').closest('.row');
+
+                if (existingProduct.length) {
+                    // Jika produk sudah ada di keranjang, tambahkan kuantitasnya
+                    var quantity = parseInt(existingProduct.find('.product-quantity').val().replace('x', ''));
+                    quantity++;
+                    existingProduct.find('.product-quantity').val(quantity + 'x');
+
+                    // Kurangi stok barang
+                    var stok = parseInt(product.siblings('#stokbrg').text().trim().split(':')[1].trim());
+                    stok--;
+                    product.siblings('#stokbrg').text('Stok : ' + stok);
+                } else {
+                    // Jika produk belum ada di keranjang, tambahkan produk baru
+                    var formattedPrice = 'Rp. ' + productPrice.toLocaleString('id-ID');
+
+                    // Append product details to cart
+                    $('#card-details').append(
+                        '<div class="mb-1">' +
+                        '<div class="row">' +
+                        '<div class="col-md-5">' +
+                        '<input type="text" class="form-control-plaintext border-0 product-name" value="' + productName +
+                        '" readonly>' +
+                        '</div>' +
+                        '<div class="col-md-5">' +
+                        '<input type="text" class="form-control-plaintext border-0 product-priceshow" value="' +
+                        formattedPrice + '"  readonly>' +
+                        '<input type="hidden" class="product-price" value="' +
+                        productPrice.toFixed(0) + '"  readonly>' +
+                        '<input type="hidden" class="product-discount" value="' +
+                        discountPrice + '"  readonly>' +
+                        '</div>' +
+                        '<div class="col-md-2">' +
+                        '<input type="text" class="form-control-plaintext border-0 product-quantity" value="1x" readonly>' +
+                        '</div>' +
+                        '</div>'
+                    );
+
+                    // Kurangi stok barang
+                    var stok = parseInt(product.siblings('#stokbrg').text().trim().split(':')[1].trim());
+                    stok--;
+                    product.siblings('#stokbrg').text('Stok : ' + stok);
                 }
-                stok--;
-                product.siblings('#stokbrg').text('Stok : ' + stok);
 
-                // Append product details to cart
-                $('#card-details').append(
-                    '<div class="mb-1">' +
-                    '<div class="row">' +
-                    '<div class="col-md-5">' +
-                    '<input type="text" class="form-control-plaintext border-0" value="' + productName +
-                    '" readonly>' +
-                    '</div>' +
-                    '<div class="col-md-5">' +
-                    '<input type="text" class="form-control-plaintext border-0 product-price" value="Rp. ' +
-                    productPrice.toFixed(2) + '"  readonly>' +
-                    '</div>' +
-                    '<div class="col-md-2">' +
-                    '<input type="text" class="form-control-plaintext border-0 product-quantity" value="1x" readonly>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>'
-                );
                 // Recalculate total price
                 calculateTotalPrice();
-            }
+            };
 
             // Function to calculate total price
             function calculateTotalPrice() {
                 var totalPrice = 0;
                 $('.product-price').each(function() {
-                    var price = parseFloat($(this).val().replace('Rp. ', ''));
+                    var price = parseInt($(this).val().replace('Rp. ', ''));
                     var quantity = parseInt($(this).closest('.row').find('.product-quantity').val());
                     totalPrice += price * quantity;
                 });
-                $('#totalPrice').val('Rp. ' + totalPrice.toFixed(2));
+                $('#totalPrice').data('raw-value', totalPrice);
+                $('#totalPriceRaw').val(totalPrice.toFixed(0));
+                $('#totalPrice').val(totalPrice.toLocaleString('id-ID'));
             }
 
             // Event listener for 'Tambahkan ke Keranjang' button click
@@ -185,42 +210,76 @@
                 addToCart(product);
             });
 
+            // Function to collect cart data into an array
+            function collectCartData() {
+                var cartData = [];
+                $('.row').each(function() {
+                    var productName = $(this).find('.product-name').val();
+                    var productPrice = parseFloat($(this).find('.product-price').val());
+                    var quantity = parseInt($(this).find('.product-quantity').val());
+                    var discount = parseInt($(this).find('.product-discount').val());
+                    if (productName) { // Add check if productName is not empty
+                        cartData.push({
+                            namaproduk_transaksi: productName,
+                            hargaproduk_transaksi: productPrice,
+                            kuantitas_transaksi: quantity,
+                            potongan_transaksi: discount
+                        });
+                    }
+                });
+                // Update the value of the hidden input field
+                $('#cartDataInput').val(JSON.stringify(cartData));
+                return cartData;
+            }
+
             // Event listener for change in product quantity
             $(document).on('input', '.product-quantity', function() {
                 calculateTotalPrice();
             });
 
             // Event listener for total payment change
-            $("#totalPayment").change(function() {
+            $("#totalPayment").on("input", function() {
                 calculateChange();
             });
 
             // Function to calculate change
             function calculateChange() {
                 var totalPayment = parseFloat($("#totalPayment").val());
-                var totalPrice = parseFloat($("#totalPrice").val().replace('Rp. ', ''));
-                var change = totalPayment - totalPrice;
-                $("#change").val(change.toFixed(2));
+                var totalPriceRaw = parseFloat($("#totalPrice").data('raw-value'));
+                var change = totalPayment - totalPriceRaw;
+                $('#change').val(change.toLocaleString('id-ID'));
+                $("#changeRaw").val(change.toFixed(0));
             }
 
             // Event listener for form submission
             $("#checkoutForm").submit(function(event) {
                 event.preventDefault(); // Prevent form submission
+                // Collect cart data into array
+                var cartData = collectCartData();
+
+                // Set value of hidden input fields
+                $("#cartData").val(JSON.stringify(cartData.length > 0 ? cartData : []));
+
+                this.submit();
 
                 // Perform any other action you need here, like submitting the data to the server
-                // For now, let's just log the data
-                console.log("Nama Barang: " + $("#productName").val());
-                console.log("Harga Barang: " + $("#productPrice").val());
-                console.log("Quantity: " + $("#quantity").val());
-                console.log("Total Harga: " + $("#totalPrice").val());
-                console.log("Total Bayar: " + $("#totalPayment").val());
-                console.log("Kembalian: " + $("#change").val());
+                // // For now, let's just log the data
+                // console.log("Cart Data: " + $("#cartData").val());
+                // console.log("Total Price: " + $("#totalPrice").val());
+                // console.log("Total Payment: " + $("#totalPayment").val());
+                // console.log("Change: " + $("#change").val());
             });
+
+
+            // Function to reset cart items array
+            function resetCartItems() {
+                cartItems = [];
+            }
 
             // Event listener for Clear Keranjang button click
             $("#clearCart").click(function() {
-                $('#card-details').empty(); // Clear the cart details
-                $('#totalPrice').val('Rp. 0.00'); // Reset total price
+                $('#card-details').children(':not(:first-child)').remove(); // Clear the cart details
+                $('#totalPrice').val(''); // Reset total price
                 $("#totalPayment").val(''); // Reset total payment
                 $("#change").val(''); // Reset change
                 // Reset stok barang ke nilai awal
@@ -228,6 +287,7 @@
                     var stock = $(this).data('stock');
                     $(this).siblings('#stokbrg').text('Stok : ' + stock);
                 });
+                resetCartItems();
             });
         });
     </script>

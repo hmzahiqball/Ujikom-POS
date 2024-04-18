@@ -15,7 +15,7 @@ class AdminDashboardController extends Controller
         $get_produk = DB::select('CALL sp_get_dataproduk()'); //mengambil data produk dari database melalui stored procedure di mysql
         $get_kategori = DB::select('CALL sp_get_datakategori()'); //mengambil data kategori dari database melalui stored procedure di mysql
         $get_penjualan = DB::select('CALL sp_get_datatransaksi()'); //mengambil data transaksi dari database melalui stored procedure di mysql
-        $get_penjualanperiode = DB::select('CALL sp_getperiode_datatransaksi(?)', [now()]);
+        $get_penjualanperiode = DB::select('CALL sp_getperiode_datatransaksi(?, ?)', [now(), '']);
 
         // Hitung jumlah total data
         $total_data = count($get_penjualanperiode);

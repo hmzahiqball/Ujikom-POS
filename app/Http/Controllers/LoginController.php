@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -44,6 +45,9 @@ class LoginController extends Controller
     {
         // Hapus session petugas
         $request->session()->forget('tb_petugas');
+
+        // Logout pengguna menggunakan Auth::logout()
+        Auth::logout();
 
         // Redirect ke halaman login
         return redirect('/');

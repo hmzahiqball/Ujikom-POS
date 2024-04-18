@@ -37,7 +37,6 @@ class AdminDataMemberController extends Controller
             'telp_addmember' => 'required|numeric',
             'email_addmember' => 'required',
             'gender_addmember' => 'required',
-            'status_addmember' => 'required',
             'alamat_addmember' => 'required'
         ]);
 
@@ -47,7 +46,7 @@ class AdminDataMemberController extends Controller
         $telp_member = $request->input('telp_addmember');
         $email_member = $request->input('email_addmember');
         $gender_member = $request->input('gender_addmember');
-        $status_member = $request->input('status_addmember');
+        $status_member = 'Aktif';
         $alamat_member = $request->input('alamat_addmember');
 
         // Panggil stored procedure untuk update

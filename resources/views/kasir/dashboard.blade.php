@@ -1,4 +1,5 @@
 @extends('app')
+<link rel="icon" href="{{ asset('images/logo/favicon.png') }}" type="image/png" />
 @section('styles')
     <style>
         .icon-container {
@@ -10,6 +11,10 @@
             align-items: center;
             border-radius: 50%;
             /* Membuat bentuk lingkaran */
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
         }
 
         .icon {
@@ -40,7 +45,7 @@
                                 </div>
                             </div>
                             <p class="mt-3 mb-0 text-muted text-sm">
-                                <span class="text-nowrap">28/05/2024</span>
+                                <span class="text-nowrap">{{ now()->format('d/m/Y') }}</span>
                             </p>
                         </div>
                     </div>
@@ -61,7 +66,7 @@
                             </div>
                         </div>
                         <p class="mt-3 mb-0 text-muted text-sm">
-                            <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 24</span>
+                            <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> {{ $periodepenjualan }}</span>
                             <span class="text-nowrap">Penjualan</span>
                         </p>
                     </div>
@@ -83,7 +88,7 @@
                         </div>
                         <p class="mt-3 mb-0 text-muted text-sm">
                             <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> Rp.</span>
-                            <span class="text-success mr-2"></i>999.999.000</span>
+                            <span class="text-success mr-2"></i> {{ number_format($totalpenjualan, 0, ',', '.') }}</span>
                         </p>
                     </div>
                 </div>
@@ -103,7 +108,7 @@
                             </div>
                         </div>
                         <p class="mt-3 mb-0 text-muted text-sm">
-                            <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 23</span>
+                            <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> {{ $totalproduk }}</span>
                             <span class="text-nowrap">Produk</span>
                         </p>
                     </div>
@@ -121,18 +126,18 @@
                                     <strong>Nama :</strong>
                                 </p>
                                 <p class="card-text">
-                                    Putra Suyapratama<br>
+                                    {{ Session::has('tb_petugas') ? Session::get('tb_petugas')->nama_petugas : 'Nama Petugas' }}<br>
                                 </p>
                                 <p class="card-text">
                                     <strong>Alamat Rumah :</strong>
                                 </p>
                                 <p class="card-text">
-                                    Luxemburg<br>
+                                    {{ Session::has('tb_petugas') ? Session::get('tb_petugas')->alamat_petugas : 'Alamat Petugas' }}<br>
                                 </p>
                             </div>
                             <div class="col-auto">
-                                <img src="https://plus.college.indiana.edu/images/profiles/profiles-768x768/assistant.jpg"
-                                    alt="Profile Photo" class="profile-photo" height="200px" width="200px">
+                                <img src="{{ Session::has('foto_petugas') ? asset('uploads/' . Session::get('foto_petugas')) : 'Foto Petugas' }}" alt="Foto Petugas"
+                                class="profile-photo" height="200px" width="200px">
                             </div>
                         </div>
 
@@ -144,13 +149,13 @@
                                     <strong>E-Mail :</strong>
                                 </p>
                                 <p class="card-text">
-                                    email@gmail.com<br>
+                                    {{ Session::has('tb_petugas') ? Session::get('tb_petugas')->email_petugas : 'E-mail Petugas' }}<br>
                                 </p>
                                 <p class="card-text">
                                     <strong>Nomor Telepon :</strong>
                                 </p>
                                 <p class="card-text">
-                                    081234567890<br>
+                                    {{ Session::has('tb_petugas') ? Session::get('tb_petugas')->telp_petugas : 'No. Telp Petugas' }}<br>
                                 </p>
                             </div>
                         </div>
@@ -170,46 +175,13 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach($penjualan as $key => $item)
                                 <tr>
-                                    <td>PS-28052024</td>
-                                    <td>Rp. 999.999.999</td>
-                                    <td>28 Mei 2024</td>
+                                    <td>{{ $item->no_transaksi }}</td>
+                                    <td>Rp. {{ number_format($item->total_transaksi, 0, ',', '.') }}</td>
+                                    <td>{{ $item->tgl_transaksi }}</td>
                                 </tr>
-                                <tr>
-                                    <td>PS-28052024</td>
-                                    <td>Rp. 999.999.999</td>
-                                    <td>28 Mei 2024</td>
-                                </tr>
-                                <tr>
-                                    <td>PS-28052024</td>
-                                    <td>Rp. 999.999.999</td>
-                                    <td>28 Mei 2024</td>
-                                </tr>
-                                <tr>
-                                    <td>PS-28052024</td>
-                                    <td>Rp. 999.999.999</td>
-                                    <td>28 Mei 2024</td>
-                                </tr>
-                                <tr>
-                                    <td>PS-28052024</td>
-                                    <td>Rp. 999.999.999</td>
-                                    <td>28 Mei 2024</td>
-                                </tr>
-                                <tr>
-                                    <td>PS-28052024</td>
-                                    <td>Rp. 999.999.999</td>
-                                    <td>28 Mei 2024</td>
-                                </tr>
-                                <tr>
-                                    <td>PS-28052024</td>
-                                    <td>Rp. 999.999.999</td>
-                                    <td>28 Mei 2024</td>
-                                </tr>
-                                <tr>
-                                    <td>PS-28052024</td>
-                                    <td>Rp. 999.999.999</td>
-                                    <td>28 Mei 2024</td>
-                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -223,7 +195,8 @@
     <script>
         $(document).ready(function() {
             $('#tableTransaksi').DataTable({
-                lengthChange: false
+                lengthChange: false,
+                pageLength: 8
             });
         });
     </script>

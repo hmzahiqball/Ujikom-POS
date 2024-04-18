@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class KasirDataTableController extends Controller
 {
@@ -11,7 +12,9 @@ class KasirDataTableController extends Controller
      */
     public function index()
     {
-        return view('kasir.dataproduk');
+        $get_kategori = DB::select('CALL sp_get_datakategori()'); //mengambil data kategori dari database melalui stored procedure di mysql
+        $get_produk = DB::select('CALL sp_get_dataproduk()'); //mengambil data produk dari database melalui stored procedure di mysql
+        return view('kasir.dataproduk' , ['produk' => $get_produk, 'kategori' => $get_kategori]);
     }
 
     /**
