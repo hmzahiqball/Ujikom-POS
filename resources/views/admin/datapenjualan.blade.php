@@ -27,30 +27,41 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @php
+                                $processed_ids = [];
+                            @endphp
                             @foreach($penjualan as $key => $item)
-                            <tr>
-                                <td>{{ $key + 1 }}</td>
-                                <td>{{ $item->no_transaksi }}</td>
-                                <td>{{ $item->nama_petugas }}</td>
-                                <td>{{ $item->tgl_transaksi }}</td>
-                                <td>{{ $item->nama_member }}</td>
-                                <td>Rp. {{ number_format($item->total_transaksi, 0, ',', '.') }}</td>
-                                <td>{{ $item->status_transaksi }}</td>
-                                <td>
-                                    <button class="btn btn-secondary mr-2" data-bs-toggle="modal" data-bs-target="#viewpenjualanModal"
-                                    data-idtransaksi="{{ $item->id_transaksi }}"
-                                    data-notransaksi="{{ $item->no_transaksi }}"
-                                    data-namapetugas="{{ $item->nama_petugas }}"
-                                    data-tgltransaksi="{{ $item->tgl_transaksi }}"
-                                    data-namamember="{{ $item->nama_member }}"
-                                    data-diskontransaksi="{{ $item->diskon_transaksi }}"
-                                    data-totaltransaksi="{{ number_format($item->total_transaksi, 0, ',', '.') }}"
-                                    data-statustransaksi="{{ $item->status_transaksi }}">View</button>
-                                    <button class="btn btn-danger mr-2 deleteSwal"
-                                    data-idtransaksi="{{ $item->id_transaksi }}"
-                                    data-action="{{ route('admin.datapenjualan.delete', $item->id_transaksi) }}">Delete</button>
-                                </td>
-                            </tr>
+                                @if(!in_array($item->id_transaksi, $processed_ids))
+                                    @php
+                                        $processed_ids[] = $item->id_transaksi;
+                                    @endphp
+                                    <tr>
+                                        <td>{{ $key + 1 }}</td>
+                                        <td>{{ $item->no_transaksi }}</td>
+                                        <td>{{ $item->nama_petugas }}</td>
+                                        <td>{{ $item->tgl_transaksi }}</td>
+                                        <td>{{ $item->nama_member }}</td>
+                                        <td>Rp. {{ number_format($item->total_transaksi, 0, ',', '.') }}</td>
+                                        <td>{{ $item->status_transaksi }}</td>
+                                        <td>
+                                            <button class="btn btn-secondary mr-2" data-bs-toggle="modal" data-bs-target="#viewpenjualanModal"
+                                            data-idtransaksi="{{ $item->id_transaksi }}"
+                                            data-idtransaksidet="{{ $item->no_transaksidet }}"
+                                            data-notransaksi="{{ $item->no_transaksi }}"
+                                            data-namapetugas="{{ $item->nama_petugas }}"
+                                            data-tgltransaksi="{{ $item->tgl_transaksi }}"
+                                            data-namamember="{{ $item->nama_member }}"
+                                            data-totaltransaksi="{{ number_format($item->total_transaksi, 0, ',', '.') }}"
+                                            data-totalbayar="{{ number_format($item->total_bayar, 0, ',', '.') }}"
+                                            data-kembaliantransaksi="{{ number_format($item->kembalian, 0, ',', '.') }}"
+                                            data-statustransaksi="{{ $item->status_transaksi }}"
+                                            data-namaproduk="{{ $item->nama_produk }}"
+                                            data-stokproduk="{{ $item->stok_produk }}"
+                                            data-hargaproduk="{{ $item->harga_produk }}"
+                                            data-diskonproduk="{{ $item->diskon_produk }}">View</button>
+                                        </td>
+                                    </tr>
+                                @endif
                             @endforeach
                         </tbody>
                     </table>

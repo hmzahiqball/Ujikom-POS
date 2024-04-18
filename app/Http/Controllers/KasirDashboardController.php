@@ -12,7 +12,7 @@ class KasirDashboardController extends Controller
         $nama_petugas = session()->get('tb_petugas')->nama_petugas;
         $get_produk = DB::select('CALL sp_get_dataproduk()'); //mengambil data produk dari database melalui stored procedure di mysql
         $get_kategori = DB::select('CALL sp_get_datakategori()'); //mengambil data kategori dari database melalui stored procedure di mysql
-        $get_penjualanperiode = DB::select('CALL sp_getperiode_transaksidetail(?, ?)', [now(), $nama_petugas]);
+        $get_penjualanperiode = DB::select('CALL sp_get_datatransaksi(?, ?)', [now(), $nama_petugas]);
 
         // Hitung jumlah total data
         $total_data = count($get_penjualanperiode);

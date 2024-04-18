@@ -13,7 +13,7 @@ class KasirDataTransaksiController extends Controller
     public function index()
     {
         $nama_petugas = session()->get('tb_petugas')->nama_petugas;
-        $get_penjualanperiode = DB::select('CALL cb(?, ?)', [now(), $nama_petugas]);
+        $get_penjualanperiode = DB::select('CALL sp_get_datatransaksi(?, ?)', [now(), $nama_petugas]);
         return view('kasir.datatransaksi' , ['penjualan' => $get_penjualanperiode]);
     }
 

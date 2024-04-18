@@ -14,8 +14,7 @@ class AdminDashboardController extends Controller
     {
         $get_produk = DB::select('CALL sp_get_dataproduk()'); //mengambil data produk dari database melalui stored procedure di mysql
         $get_kategori = DB::select('CALL sp_get_datakategori()'); //mengambil data kategori dari database melalui stored procedure di mysql
-        $get_penjualan = DB::select('CALL sp_get_datatransaksi()'); //mengambil data transaksi dari database melalui stored procedure di mysql
-        $get_penjualanperiode = DB::select('CALL sp_getperiode_datatransaksi(?, ?)', [now(), '']);
+        $get_penjualanperiode = DB::select('CALL sp_get_datatransaksi(?, ?)', [now(), '']);
 
         // Hitung jumlah total data
         $total_data = count($get_penjualanperiode);
@@ -24,7 +23,7 @@ class AdminDashboardController extends Controller
         // Menghitung total nilai dari kolom total_transaksi
         $total_penjualan = collect($get_penjualanperiode)->sum('total_transaksi');
 
-        return view('admin.dashboard' , ['penjualan' => $get_penjualan, 'periodepenjualan' => $total_data, 'totalpenjualan' => $total_penjualan, 'kategori' => $get_kategori, 'totalproduk' => $total_produk]);
+        return view('admin.dashboard' , ['penjualan' => $get_penjualanperiode, 'periodepenjualan' => $total_data, 'totalpenjualan' => $total_penjualan, 'kategori' => $get_kategori, 'totalproduk' => $total_produk]);
     }
 
     /**
