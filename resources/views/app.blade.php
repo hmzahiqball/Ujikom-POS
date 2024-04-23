@@ -1,11 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
-        .text-abu{
+        @font-face {
+            font-family: 'Outfit';
+            src: url('/fonts/Outfit-Regular.ttf') format('truetype');
+            /* Ganti Nama-Font-Regular.ttf dengan nama file font yang sesuai */
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @import '~bootstrap-icons/font/bootstrap-icons.css';
+
+        .text-abu {
             color: #CCCCCC;
         }
+
         body {
             font-family: 'Outfit', sans-serif;
         }
@@ -17,8 +28,9 @@
     <!-- site icon -->
     <link rel="icon" href="{{ asset('images/logo/favicon.png') }}" type="image/png" />
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+
     <!-- bootstrap css -->
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-icons.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('css/bootstrap.min.css') }}" />
     <!-- dataTables css -->
     <link rel="stylesheet" href="{{ URL::asset('css/dataTables.dataTables.min.css') }}" />
@@ -46,13 +58,14 @@
     <script src="{{ URL::asset('js/zingchart.min.js') }}"></script>
 </head>
 @yield('styles')
+
 <body>
     <div class="container-fluid">
         <div class="row flex-nowrap">
 
             <!-- Navbar -->
             <!-- Navbar -->
-            @if(Session::has('tb_petugas') && Session::get('tb_petugas')->role_petugas == 'Admin')
+            @if (Session::has('tb_petugas') && Session::get('tb_petugas')->role_petugas == 'Admin')
                 @include('layouts.adminsidebar')
             @elseif(Session::has('tb_petugas') && Session::get('tb_petugas')->role_petugas == 'Kasir')
                 @include('layouts.sidebar')
@@ -65,4 +78,8 @@
     </div>
 </body>
 @yield('scripts')
+<script>
+    require('bootstrap-icons/font/bootstrap-icons.css');
+</script>
+
 </html>

@@ -104,6 +104,17 @@ class KasirTransaksiController extends Controller
         }
     }
 
+    public function printInvoice(Request $request)
+    {
+        // Ambil data dari URL
+        $noNota = $request->input('noNota');
+        $cartData = $request->input('cartData');
+        $totalHarga = $request->input('totalHarga');
+
+        // Tampilkan halaman cetak dengan membawa data yang diperlukan
+        return view('kasir.print', compact('noNota', 'cartData', 'totalHarga'));
+    }
+
     /**
      * Display the specified resource.
      */

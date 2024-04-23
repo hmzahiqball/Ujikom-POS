@@ -2,16 +2,6 @@
 <link rel="icon" href="{{ asset('images/logo/favicon.png') }}" type="image/png" />
 @section('styles')
     <style>
-        .btn-circle {
-            width: 70px;
-            height: 70px;
-            padding: 10px 16px;
-            border-radius: 35px;
-            font-size: 12px;
-            background-size: cover;
-            text-align: center;
-        }
-
         body {
             font-family: 'Outfit', sans-serif;
         }
@@ -22,19 +12,6 @@
         <div class="col-md-8">
             <!-- Bagian kiri untuk menampilkan card produk -->
             <h3>Produk</h3>
-
-            <!-- Filter kategori -->
-            <div class="mb-3">
-                <button type="button" class="btn btn-dark btn-circle" data-category="all">All</button>
-                @foreach ($data_kategori as $key => $item)
-                    <button type="button" class="btn btn-dark btn-circle"
-                        data-category="{{ $item->nama_kategori }}">{{ $item->nama_kategori }}</button>
-                @endforeach
-            </div>
-            <div class="mb-3">
-                <input type="text" id="searchInput" class="form-control" onkeyup="myFunction()"
-                    placeholder="Cari produk...">
-            </div>
             <hr>
             <div class="row row-cols-1 row-cols-md-4 g-4" id="productContainer">
                 @foreach ($data_produk as $key => $item)

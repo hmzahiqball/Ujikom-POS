@@ -2,6 +2,9 @@
 <link rel="icon" href="{{ URL::asset('images/logo/favicon.png') }}" type="image/png" />
 @section('styles')
     <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+        }
     </style>
 @endsection
 @section('content')

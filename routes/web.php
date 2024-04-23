@@ -63,6 +63,7 @@ Route::middleware(['kasir'])->group(function () {
     Route::resource('kasir/dashboard', KasirDashboardController::class);
     Route::resource('kasir/transaksi', KasirTransaksiController::class);
     Route::post('kasir/transaksi/add', [KasirTransaksiController::class, 'store']);
+    Route::get('kasir/riwayattransaksi/print', [KasirTransaksiController::class, 'printInvoice'])->name('print.invoice');
 
     Route::post('kasir/datamember/add', [KasirDataMemberController::class, 'store']);
     Route::resource('kasir/dataproduk', KasirDataTableController::class);
