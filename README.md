@@ -1,6 +1,4 @@
-<p align="center">
-    <a href="https://github.com/LuthfiMeteor" target="_blank"><img src="https://github.com/LuthfiMeteor/laravel-Ujikom-2023/assets/106295051/487a4e49-78a7-47b6-89e4-b1a6ebf8e0fb" width="120"></a>
-</p>
+
 
 ## Tentang Aplikasi
 
