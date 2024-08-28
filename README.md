@@ -69,25 +69,8 @@ DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_DATABASE=ujikompos
-DB_USERNAME=putra
-DB_PASSWORD=putra
-```
-Opsional
-```bash
-APP_NAME=Laravel
-APP_ENV=local
-APP_KEY=base64:7ny8i06U6BGjRyeIDxeiJ1Oz3+SLjK3QIDaeesQdqWo=
-APP_DEBUG=true
-APP_URL=http://localhost
-```
-Generate key
-```bash
-php artisan key:generate
-```
-Import Manual Database ke XAMPP
-Seeder table User, Pengaturan
-```bash
-php artisan db:seed
+DB_USERNAME=root
+DB_PASSWORD=
 ```
 Menjalankan aplikasi
 ```bash
