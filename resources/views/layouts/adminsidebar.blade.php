@@ -13,7 +13,7 @@
             </li>
             <li>
                 <a href="#submenutabel" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
-                    <i class="fs-4 bi-table text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Tabel
+                    <i class="bi bi-table text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Tabel
                         Data</span></a>
                 <ul class="collapse nav flex-column ms-4" id="submenutabel" data-bs-parent="#menu">
                     <li class="w-100 h-100">
@@ -45,7 +45,7 @@
                 id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                 <img src="{{ Session::has('foto_petugas') ? asset('uploads/' . Session::get('foto_petugas')) : 'Foto Petugas' }}" alt="Foto Petugas"
                 width="30" height="30" class="rounded-circle">
-                <span class="d-none d-sm-inline mx-1">{{ Session::has('tb_petugas') ? Session::get('tb_petugas')->nama_petugas : 'Nama Petugas' }}</span>
+                <span class="d-none d-sm-inline mx-1">{{ Session::has('tb_petugas') ? Session::get('tb_petugas')['nama_user'] : 'Nama Petugas' }}</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
                 <li>

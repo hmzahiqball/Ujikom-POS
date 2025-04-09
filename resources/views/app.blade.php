@@ -56,6 +56,9 @@
     <script src="{{ URL::asset('js/sweetalert2.min.js') }}"></script>
     <!-- zingchart JS -->
     <script src="{{ URL::asset('js/zingchart.min.js') }}"></script>
+    <script>
+        require('bootstrap-icons/font/bootstrap-icons.css');
+    </script>
 </head>
 @yield('styles')
 
@@ -65,9 +68,9 @@
 
             <!-- Navbar -->
             <!-- Navbar -->
-            @if (Session::has('tb_petugas') && Session::get('tb_petugas')->role_petugas == 'Admin')
+            @if (Session::has('tb_petugas') && Session::get('tb_petugas')['role_user'] == 'admin')
                 @include('layouts.adminsidebar')
-            @elseif(Session::has('tb_petugas') && Session::get('tb_petugas')->role_petugas == 'Kasir')
+            @elseif(Session::has('tb_petugas') && Session::get('tb_petugas')['role_user'] == 'kasir')
                 @include('layouts.sidebar')
             @endif
             <div class="col py-3">
@@ -78,8 +81,4 @@
     </div>
 </body>
 @yield('scripts')
-<script>
-    require('bootstrap-icons/font/bootstrap-icons.css');
-</script>
-
 </html>
