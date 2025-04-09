@@ -12,6 +12,13 @@ class LoginController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+     public function index()
+    {
+
+        return view('login');
+    }
+
     public function login(request $request)
     {
 

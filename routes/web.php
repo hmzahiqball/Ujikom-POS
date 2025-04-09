@@ -27,9 +27,7 @@ use App\Http\Controllers\AdminDataMemberController;
 |
 */
 
-Route::get('/', function () {
-    return view('login');
-});
+Route::get('/', [LoginController::class, 'index']);
 
 Route::post('login', [LoginController::class, 'login']);
 
