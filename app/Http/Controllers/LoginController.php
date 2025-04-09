@@ -21,30 +21,34 @@ class LoginController extends Controller
 
     public function login(request $request)
     {
-
-        // Ambil input email dan password dari request
-        $username = $request->input('input_usernamepetugas');
+        $contact = $request->input('input_contactpetugas');
         $password = $request->input('input_passwordpetugas');
 
-        // Panggil stored procedure dengan parameter email sebagai username dan password sebagai password
-        $result = DB::select('CALL sp_login_petugas(?, ?)', array($username, $password));
+        // Panggil stored procedure
+        $result = DB::select('CALL sp_login_petugas(?, ?)', [$contact, $password]);
 
-        // Cek apakah hasil tidak kosong
         if (!empty($result)) {
-            // Jika berhasil, kembalikan data petugas
-            $petugas = $result[0];
-            Session::put('tb_petugas', $petugas);
-            Session::put('foto_petugas', $petugas->foto_petugas);
+            $data = (array) $result[0]; // Konversi ke array untuk akses lebih mudah
 
-            // Redirect sesuai dengan role_petugas
-            if ($petugas->role_petugas == 'Admin') {
-                return redirect('admin/dashboard');
-            } elseif ($petugas->role_petugas == 'Kasir') {
-                return redirect('kasir/dashboard');
+            if (isset($data['keterangan']) && $data['keterangan'] === 'Login berhasil') {
+                // Simpan semua data ke session
+                Session::put('tb_petugas', $data);
+                Session::put('foto_petugas', $data['gambar_user']);
+
+                // Redirect berdasarkan role
+                if ($data['role_user'] === 'admin') {
+                    return redirect('admin/dashboard');
+                } elseif ($data['role_user'] === 'kasir') {
+                    return redirect('kasir/dashboard');
+                } else {
+                    return redirect('/'); // default fallback
+                }
+            } else {
+                // Jika keterangan bukan "Login berhasil"
+                return back()->with('error', $data['keterangan']);
             }
         } else {
-            // Jika tidak berhasil, kembalikan pesan error
-            return response()->json(['error' => 'Username atau password salah'], 401);
+            return back()->with('error', 'Terjadi kesalahan sistem.');
         }
     }
 

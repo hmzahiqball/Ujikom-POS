@@ -23,10 +23,10 @@ class AdminMiddleware
          }
 
          // Ambil role_petugas dari session
-         $role = Session::get('tb_petugas')->role_petugas;
+         $role = Session::get('tb_petugas')['role_user'];
 
          // Cek apakah peran pengguna adalah 'admin'
-         if ($role !== 'Admin') {
+         if ($role !== 'admin') {
             $request->session()->forget('tb_petugas');
             Auth::logout();
             return redirect('/');

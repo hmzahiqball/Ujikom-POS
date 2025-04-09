@@ -22,10 +22,10 @@ class KasirMiddleware
          }
 
          // Ambil role_petugas dari session
-         $role = Session::get('tb_petugas')->role_petugas;
+         $role = Session::get('tb_petugas')['role_user'];
 
          // Cek apakah peran pengguna adalah 'admin'
-         if ($role !== 'Kasir') {
+         if ($role !== 'kasir') {
             $request->session()->forget('tb_petugas');
             Auth::logout();
             return redirect('/');
