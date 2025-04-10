@@ -29,36 +29,41 @@
     <link rel="icon" href="{{ asset('images/logo/favicon.png') }}" type="image/png" />
 
 
-    <!-- bootstrap css -->
-    <link rel="stylesheet" href="{{ asset('css/bootstrap-icons.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('css/bootstrap.min.css') }}" />
-    <!-- dataTables css -->
-    <link rel="stylesheet" href="{{ URL::asset('css/dataTables.dataTables.min.css') }}" />
-    <link rel="stylesheet" href="{{ URL::asset('css/buttons.dataTables.min.css') }}" />
-    <link rel="stylesheet" href="{{ URL::asset('css/dataTables.min.css') }}" />
-    <!-- sweetalert2 css -->
-    <link rel="stylesheet" href="{{ URL::asset('css/sweetalert2.css') }}" />
-    <link rel="stylesheet" href="{{ URL::asset('css/sweetalert2.min.css') }}" />
-    <!-- fontawesome css -->
-    <link rel="stylesheet" href="{{ URL::asset('css/all.min.css') }}">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" crossorigin="anonymous">
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
+
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- jQuery -->
-    <script src="{{ URL::asset('js/jquery-3.7.1.min.js') }}"></script>
-    <script src="{{ URL::asset('js/jquery-ui.min.js') }}"></script>
-    <!-- bootstrap JS -->
-    <script src="{{ URL::asset('js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ URL::asset('js/mdb.umb.min.js') }}"></script>
-    <!-- dataTables JS -->
-    <script src="{{ URL::asset('js/datatables.min.js') }}"></script>
-    <!-- fontawesome JS -->
-    <script src="{{ URL::asset('js/all.min.js') }}"></script>
-    <!-- sweetalert2 JS -->
-    <script src="{{ URL::asset('js/sweetalert2.min.js') }}"></script>
-    <!-- zingchart JS -->
-    <script src="{{ URL::asset('js/zingchart.min.js') }}"></script>
-    <script>
-        require('bootstrap-icons/font/bootstrap-icons.css');
-    </script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+
+    <!-- Font Awesome JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- ZingChart JS -->
+    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
 </head>
 @yield('styles')
 

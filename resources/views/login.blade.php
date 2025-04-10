@@ -11,25 +11,25 @@
     <!-- bootstrap css -->
     <link rel="stylesheet" href="{{ URL::asset('css/mdb.min.css') }}" />
     <!-- sweetalert2 css -->
-    <link rel="stylesheet" href="{{ URL::asset('css/sweetalert2.css') }}" />
-    <link rel="stylesheet" href="{{ URL::asset('css/sweetalert2.min.css') }}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <!-- fontawesome css -->
-    <link rel="stylesheet" href="{{ URL::asset('css/all.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- jQuery -->
-    <script src="{{ URL::asset('js/jquery-3.7.1.min.js') }}"></script>
-    <script src="{{ URL::asset('js/jquery-ui.min.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     <!-- bootstrap JS -->
-    <script src="{{ URL::asset('js/bootstrap.bundle.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
     <script src="{{ URL::asset('js/mdb.umb.min.js') }}"></script>
     <!-- dataTables JS -->
-    <script src="{{ URL::asset('js/datatables.min.js') }}"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
     <!-- fontawesome JS -->
-    <script src="{{ URL::asset('js/all.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- sweetalert2 JS -->
-    <script src="{{ URL::asset('js/sweetalert2.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- zingchart JS -->
-    <script src="{{ URL::asset('js/zingchart.min.js') }}"></script>
+    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
 </head>
 
 <body class="bg-dark">

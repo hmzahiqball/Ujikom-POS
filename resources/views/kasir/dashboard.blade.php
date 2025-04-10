@@ -126,13 +126,13 @@
                                     <strong>Nama :</strong>
                                 </p>
                                 <p class="card-text">
-                                    {{ Session::has('tb_petugas') ? Session::get('tb_petugas')->nama_petugas : 'Nama Petugas' }}<br>
+                                    {{ Session::has('tb_petugas') ? Session::get('tb_petugas')['nama_user'] : 'Nama Petugas' }}<br>
                                 </p>
                                 <p class="card-text">
                                     <strong>Alamat Rumah :</strong>
                                 </p>
                                 <p class="card-text">
-                                    {{ Session::has('tb_petugas') ? Session::get('tb_petugas')->alamat_petugas : 'Alamat Petugas' }}<br>
+                                    {{ Session::has('tb_petugas') ? Session::get('tb_petugas')['alamat_karyawan'] : 'Alamat Petugas' }}<br>
                                 </p>
                             </div>
                             <div class="col-auto">
@@ -146,16 +146,16 @@
                         <div class="row align-items-center">
                             <div class="col">
                                 <p class="card-text">
-                                    <strong>E-Mail :</strong>
+                                    <strong>Kode Petugas :</strong>
                                 </p>
                                 <p class="card-text">
-                                    {{ Session::has('tb_petugas') ? Session::get('tb_petugas')->email_petugas : 'E-mail Petugas' }}<br>
+                                    {{ Session::has('tb_petugas') ? Session::get('tb_petugas')['kode_user'] : 'Kode Petugas' }}<br>
                                 </p>
                                 <p class="card-text">
                                     <strong>Nomor Telepon :</strong>
                                 </p>
                                 <p class="card-text">
-                                    {{ Session::has('tb_petugas') ? Session::get('tb_petugas')->telp_petugas : 'No. Telp Petugas' }}<br>
+                                    {{ Session::has('tb_petugas') ? Session::get('tb_petugas')['contact_user'] : 'No. Telp Petugas' }}<br>
                                 </p>
                             </div>
                         </div>
@@ -177,9 +177,9 @@
                             <tbody>
                                 @foreach($penjualan as $key => $item)
                                 <tr>
-                                    <td>{{ $item->no_transaksi }}</td>
-                                    <td>Rp. {{ number_format($item->total_transaksi, 0, ',', '.') }}</td>
-                                    <td>{{ $item->tgl_transaksi }}</td>
+                                    <td>{{ $item->kode_penjualan }}</td>
+                                    <td>Rp. {{ number_format($item->total_harga, 0, ',', '.') }}</td>
+                                    <td>{{ $item->tanggal_penjualan }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>

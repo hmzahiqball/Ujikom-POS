@@ -12,9 +12,10 @@ class AdminDataProdukController extends Controller
      */
     public function index()
     {
-        $get_kategori = DB::select('CALL sp_get_datakategori()'); //mengambil data kategori dari database melalui stored procedure di mysql
+        $get_kategori = collect(DB::select('CALL sp_get_datakategori()')); //mengambil data kategori dari database melalui stored procedure di mysql
+        $kategori_unik = $get_kategori->unique('id_kategori');
         $get_produk = DB::select('CALL sp_get_dataproduk()'); //mengambil data produk dari database melalui stored procedure di mysql
-        return view('admin.dataproduk' , ['produk' => $get_produk, 'kategori' => $get_kategori]);
+        return view('admin.dataproduk' , ['produk' => $get_produk, 'kategori' => $get_kategori, 'kategori_unik' => $kategori_unik]);
     }
 
     /**
