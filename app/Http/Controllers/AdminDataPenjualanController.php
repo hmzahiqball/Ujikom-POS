@@ -12,8 +12,9 @@ class AdminDataPenjualanController extends Controller
      */
     public function index()
     {
+        $id_petugas = null;
         $get_kategori = DB::select('CALL sp_get_datakategori()'); //mengambil data kategori dari database melalui stored procedure di mysql
-        $get_penjualanperiode = DB::select('CALL sp_get_datatransaksi(?, ?)', [now(), '']);
+        $get_penjualanperiode = DB::select('CALL sp_get_datatransaksi(?, ?)', [date('Y-m-d'), $id_petugas]);
         return view('admin.datapenjualan' , ['penjualan' => $get_penjualanperiode, 'kategori' => $get_kategori]);
     }
 

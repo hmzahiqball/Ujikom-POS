@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,19 +19,24 @@ class LoginController extends Controller
         return view('login');
     }
 
-    public function login(request $request)
+    public function login(Request $request)
     {
         $contact = $request->input('input_contactpetugas');
         $password = $request->input('input_passwordpetugas');
 
-        // Panggil stored procedure
-        $result = DB::select('CALL sp_login_petugas(?, ?)', [$contact, $password]);
+        // Kirim request ke REST API
+        $response = Http::post('http://localhost:1111/api/users/login', [
+            'p_contactUsers' => $contact,
+            'p_passwordUsers' => $password,
+        ]);
 
-        if (!empty($result)) {
-            $data = (array) $result[0]; // Konversi ke array untuk akses lebih mudah
+        if ($response->successful()) {
+            $result = $response->json();
 
-            if (isset($data['keterangan']) && $data['keterangan'] === 'Login berhasil') {
-                // Simpan semua data ke session
+            if (isset($result['message']) && $result['message'] === 'Login berhasil') {
+                $data = $result['data'];
+
+                // Simpan data ke session
                 Session::put('tb_petugas', $data);
                 Session::put('foto_petugas', $data['gambar_user']);
 
@@ -41,14 +46,13 @@ class LoginController extends Controller
                 } elseif ($data['role_user'] === 'kasir') {
                     return redirect('kasir/dashboard');
                 } else {
-                    return redirect('/'); // default fallback
+                    return redirect('/'); // fallback jika role tidak dikenali
                 }
             } else {
-                // Jika keterangan bukan "Login berhasil"
-                return back()->with('error', $data['keterangan']);
+                return back()->with('error', $result['message'] ?? 'Gagal login');
             }
         } else {
-            return back()->with('error', 'Terjadi kesalahan sistem.');
+            return back()->with('error', 'Tidak dapat terhubung ke server login.');
         }
     }
 
