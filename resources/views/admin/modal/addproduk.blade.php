@@ -3,13 +3,14 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-dark text-white">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Produk</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add Produk</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form action="{{ URL::asset('/admin/dataproduk/add') }}" method="POST"
                     enctype="multipart/form-data">
                     @csrf
+                    <input type="hidden" class="form-control" id="id_addproduk" name="id_addproduk">
                     <div class="row">
                         <div class="col">
                             <div class="form-floating mb-3">
@@ -21,18 +22,56 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-floating mb-3">
-                                <select class="form-select" aria-label="Default select example" id="kategori_addproduk"
-                                    name="kategori_addproduk" required>
-                                    <option selected>Pilih Jenis Kategori</option>
-                                    @foreach ($kategori as $kategori)
-                                        <option value="{{ $kategori->nama_kategori }}"
-                                            data-db-value="{{ $kategori->id_kategori }}">{{ $kategori->nama_kategori }}
-                                        </option>
+                                <select class="form-select" id="kategori_addproduk" name="kategori_addproduk" required>
+                                    <option selected disabled>Pilih Jenis Kategori</option>
+                                    @foreach ($kategori as $kat)
+                                        <option value="{{ $kat['id_kategori'] }}">{{ $kat['nama_kategori'] }}</option>
                                     @endforeach
                                 </select>
                                 <label for="kategori_addproduk">Kategori</label>
                             </div>
                         </div>
+
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="subkategori_addproduk" name="subkategori_addproduk" required>
+                                    <option selected disabled>Pilih Jenis Sub-Kategori</option>
+                                    @foreach ($kategori as $kat)
+                                        @foreach ($kat['data_subkategori'] as $sub)
+                                            <option value="{{ $sub['id_subkategori'] }}"
+                                                    data-kategori-id="{{ $kat['id_kategori'] }}">
+                                                {{ $sub['nama_subkategori'] }}
+                                            </option>
+                                        @endforeach
+                                    @endforeach
+                                </select>
+                                <label for="subkategori_addproduk">Sub-Kategori</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">Rp.</span>
+                                <div class="form-floating is-invalid">
+                                    <input type="text" class="form-control" id="hargaModal_addproduk"
+                                        name="hargaModal_addproduk" placeholder="100" required>
+                                    <label for="hargaModal_addproduk">Harga Modal Produk</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">Rp.</span>
+                                <div class="form-floating is-invalid">
+                                    <input type="text" class="form-control" id="hargaJual_addproduk"
+                                        name="hargaJual_addproduk" placeholder="100" required>
+                                    <label for="hargaJual_addproduk">Harga Jual Produk</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col">
                             <div class="input-group mb-3">
                                 <div class="form-floating is-invalid">
@@ -43,41 +82,49 @@
                                 <span class="input-group-text" id="basic-addon1">%</span>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col">
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="basic-addon1">Rp.</span>
                                 <div class="form-floating is-invalid">
-                                    <input type="number" class="form-control" id="harga_addproduk"
-                                        name="harga_addproduk" placeholder="100" required>
-                                    <label for="harga_addproduk">Harga Jual Produk</label>
+                                    <input type="text" class="form-control" id="hargaDiskon_addproduk"
+                                        name="hargaDiskon_addproduk" placeholder="100" required disabled>
+                                    <label for="hargaDiskon_addproduk">Harga Setelah Diskon</label>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col">
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="stok_addproduk" placeholder="Stok Produk" name="stok_addproduk" required>
                                 <label for="stok_addproduk">Stok Produk</label>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="lokasi_addproduk" placeholder="Lokasi Produk" name="lokasi_addproduk" required>
-                                <label for="lokasi_addproduk">Lokasi Produk</label>
+                                <input type="text" class="form-control" id="stokMin_addproduk" placeholder="Stok Produk" name="stokMin_addproduk" required>
+                                <label for="stokMin_addproduk">Stok Minimum</label>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col">
                             <div class="form-floating mb-3">
                                 <select class="form-select" aria-label="Default select example" id="status_addproduk"
                                     name="status_addproduk" required>
                                     <option selected>Pilih Status Produk</option>
-                                    <option value="Tersedia">Tersedia</option>
-                                    <option value="Tidak Tersedia">Tidak Tersedia</option>
+                                    <option value="Available">Tersedia</option>
+                                    <option value="Kosong">Tidak Tersedia</option>
                                 </select>
-                                <label for="kategori_addproduk">Status Produk</label>
+                                <label for="status_addproduk">Status Produk</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <textarea class="form-control" id="deskripsi_addproduk" placeholder="Deskripsi Produk" name="deskripsi_addproduk" required></textarea>
+                                <label for="deskripsi_addproduk">Deskripsi Produk</label>
                             </div>
                         </div>
                     </div>
@@ -85,15 +132,17 @@
                         <div class="col">
                             <div class="mb-3">
                                 <label for="foto_addproduk">Foto Produk</label>
-                                <input type="file" class="form-control" id="foto_addproduk" placeholder="Foto Produk" name="foto_addproduk" required>
+                                <div class="d-flex align-items-center">
+                                    <input type="file" class="form-control" id="foto_addproduk" placeholder="Foto Produk" name="foto_addproduk">
+                                </div>
                             </div>
                         </div>
                     </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="addbutton_swal">Save changes</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="addbutton_swal" data-namaprodukswal="">Save changes</button>
+                </div>
             </form>
         </div>
     </div>
@@ -117,4 +166,41 @@
             });
         });
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const addkategoriSelect = document.getElementById('kategori_addproduk');
+        const addsubkategoriSelect = document.getElementById('subkategori_addproduk');
 
+        // Simpan semua opsi subkategori di awal
+        const allSubkategoriOptions = Array.from(addsubkategoriSelect.options).slice(1); // Skip "Pilih Jenis Sub-Kategori"
+
+        const updateSubkategoriState = () => {
+            if (addkategoriSelect.selectedIndex === 0) {
+                addsubkategoriSelect.setAttribute('disabled', true);
+            } else {
+                addsubkategoriSelect.removeAttribute('disabled');
+            }
+        };
+
+        updateSubkategoriState();
+
+        addkategoriSelect.addEventListener('change', function () {
+            const selectedKategoriId = this.value;
+
+            // Reset subkategori
+            addsubkategoriSelect.innerHTML = '<option selected disabled>Pilih Jenis Sub-Kategori</option>';
+
+            // Filter subkategori sesuai id_kategori yang dipilih
+            const filteredOptions = allSubkategoriOptions.filter(option => {
+                return option.dataset.kategoriId === selectedKategoriId;
+            });
+
+            // Tambahkan opsi yang lolos filter
+            filteredOptions.forEach(option => {
+                addsubkategoriSelect.appendChild(option);
+            });
+
+            updateSubkategoriState();
+        });
+    });
+</script>

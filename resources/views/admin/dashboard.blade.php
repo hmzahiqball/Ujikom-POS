@@ -132,12 +132,12 @@
                                     <strong>Alamat Rumah :</strong>
                                 </p>
                                 <p class="card-text">
-                                    {{ Session::has('tb_petugas') ? Session::get('tb_petugas')['alamat_karyawan'] : 'Alamat Petugas' }}<br>
+                                    {{ Session::has('tb_petugas') ? Session::get('tb_petugas')['data_user']['alamat_karyawan'] : 'Alamat Petugas' }}<br>
                                 </p>
                             </div>
                             <div class="col-auto">
-                                <img src="{{ Session::has('foto_petugas') ? asset('uploads/' . Session::get('foto_petugas')) : 'Foto Petugas' }}" alt="Foto Petugas"
-                                class="profile-photo" height="200px" width="200px">
+                                <img src="{{ session('foto_petugas') ? session('foto_petugas') : 'https://placehold.co/200' }}"
+                                alt="Foto Petugas" class="profile-photo" height="200px" width="200px">
                             </div>
                         </div>
 
@@ -189,7 +189,6 @@
             </div>
         </div>
     </div>
-    @extends('admin.modal.editproduk')
 @endsection
 @section('scripts')
     <script>

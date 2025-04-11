@@ -33,27 +33,27 @@
                             @foreach($produk as $key => $item)
                             <tr>
                                 <td>{{ $key + 1 }}</td>
-                                <td>{{ $item->sku_produk }}</td>
-                                <td>{{ $item->nama_kategori }}</td>
-                                <td>{{ $item->nama_produk }}</td>
-                                <td>{{ $item->stok_produk }}</td>
-                                <td>Rp. {{ number_format($item->harga_produk, 0, ',', '.') }}</td>
-                                <td>{{ $item->stok_minimum_produk }}</td>
+                                <td>{{ $item['sku_produk'] }}</td>
+                                <td>{{ $item['kategori'][0]['nama_kategori'] }}</td>
+                                <td>{{ $item['nama_produk'] }}</td>
+                                <td>{{ $item['stok_produk'] }}</td>
+                                <td>Rp. {{ number_format($item['harga_produk'], 0, ',', '.') }}</td>
+                                <td>{{ $item['status_produk'] }}</td>
                                 <td>
                                     <button class="btn btn-primary mr-2" data-bs-toggle="modal" data-bs-target="#editprodukModal"
-                                    data-idproduk="{{ $item->id_produk }}" data-kodeproduk="{{ $item->sku_produk }}"
-                                    data-idkategori="{{ $item->id_kategori }}" data-idsubkategori="{{ $item->id_subkategori }}"
-                                    data-namakategori="{{ $item->nama_kategori }}" data-namasubkategori="{{ $item->nama_subkategori }}"
-                                    data-namaproduk="{{ $item->nama_produk }}" data-barcodeproduk="{{ $item->barcode_produk }}"
-                                    data-deskripsiproduk="{{ $item->deskripsi_produk }}" data-hargaproduk="{{ $item->harga_produk }}"
-                                    data-modalproduk="{{ $item->modal_produk }}" data-diskonproduk="{{ $item->diskon_produk }}"
-                                    data-stokproduk="{{ $item->stok_produk }}" data-stokminimumproduk="{{ $item->stok_minimum_produk }}"
-                                    data-statusproduk="{{ $item->status_produk }}" data-fotoproduk="{{ $item->gambar_produk }}">
+                                    data-idproduk="{{ $item['id_produk'] }}" data-kodeproduk="{{ $item['sku_produk'] }}"
+                                    data-idkategori="{{ $item['kategori'][0]['id_kategori'] }}" data-idsubkategori="{{ $item['kategori'][0]['id_subkategori'] }}"
+                                    data-namakategori="{{ $item['kategori'][0]['nama_kategori'] }}" data-namasubkategori="{{ $item['kategori'][0]['nama_subkategori'] }}"
+                                    data-namaproduk="{{ $item['nama_produk'] }}" data-barcodeproduk="{{ $item['barcode_produk'] }}"
+                                    data-deskripsiproduk="{{ $item['deskripsi_produk'] }}" data-hargaproduk="{{ $item['harga_produk'] }}"
+                                    data-modalproduk="{{ $item['modal_produk'] }}" data-diskonproduk="{{ $item['diskon_prpduk'] }}"
+                                    data-stokproduk="{{ $item['stok_produk'] }}" data-stokminimumproduk="{{ $item['stok_minimum_produk'] }}"
+                                    data-statusproduk="{{ $item['status_produk'] }}" data-fotoproduk="{{ $item['gambar_produk'] }}">
                                         Edit
                                     </button>
                                     <button class="btn btn-danger mr-2 deleteSwal"
-                                    data-idproduk="{{ $item->id_produk }}" data-namaproduk="{{ $item->nama_produk }}"
-                                    data-action="{{ route('admin.dataproduk.delete', $item->id_produk) }}">Delete</button>
+                                    data-idproduk="{{ $item['id_produk'] }}" data-namaproduk="{{ $item['nama_produk'] }}"
+                                    data-action="{{ route('admin.dataproduk.delete', $item['id_produk']) }}">Delete</button>
                                 </td>
                             </tr>
                             @endforeach
