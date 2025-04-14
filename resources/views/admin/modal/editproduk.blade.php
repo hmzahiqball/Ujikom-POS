@@ -193,17 +193,23 @@
             .slice(1) // Skip default option
             .map(option => option.cloneNode(true));
 
-        // Saat kategori berubah
-        kategoriSelect.addEventListener('change', function () {
+            kategoriSelect.addEventListener('change', function () {
             const selectedKategoriId = this.value;
 
-            // Reset isi subkategori
+            // Reset subkategori
             subkategoriSelect.innerHTML = '<option selected disabled>Pilih Jenis Sub-Kategori</option>';
 
-            // Tampilkan hanya subkategori sesuai kategori
-            allSubkategoriOptions
-                .filter(option => option.dataset.kategoriId === selectedKategoriId)
-                .forEach(option => subkategoriSelect.appendChild(option.cloneNode(true)));
+            // Filter subkategori sesuai id_kategori yang dipilih
+            const filteredOptions = allSubkategoriOptions.filter(option => {
+                return option.dataset.kategoriId === selectedKategoriId;
+            });
+
+            // Tambahkan opsi yang lolos filter
+            filteredOptions.forEach(option => {
+                subkategoriSelect.appendChild(option);
+            });
+
+            updateSubkategoriState();
         });
 
         // Formatting angka saat input
@@ -238,28 +244,27 @@
             const statusproduk = btn.data('statusproduk');
             const fotoproduk = btn.data('fotoproduk');
 
-            const hargaDiskon = hargaproduk - (hargaproduk * (diskonproduk / 100));
-
             $('#editprodukModal').find('#id_editproduk').val(idproduk);
             $('#editprodukModal').find('#kd_editproduk').val(kodeproduk);
             $('#editprodukModal').find('#nama_editproduk').val(namaproduk);
             $('#editprodukModal').find('#kategori_editproduk').val(idkategori).trigger('change');
+
+            // 🔥 FILTER subkategori langsung setelah kategori diketahui
+            $('#editprodukModal').find('#subkategori_editproduk').val(idsubkategori);
+
             $('#editprodukModal').find('#barcode_editproduk').val(barcodeproduk);
             $('#editprodukModal').find('#diskon_editproduk').val(formatNumber(diskonproduk));
             $('#editprodukModal').find('#hargaModal_editproduk').val(formatNumber(modalproduk));
             $('#editprodukModal').find('#hargaJual_editproduk').val(formatNumber(hargaproduk));
+
+            const hargaDiskon = hargaproduk - (hargaproduk * (diskonproduk / 100));
             $('#editprodukModal').find('#hargaDiskon_editproduk').val(formatNumber(Math.floor(hargaDiskon)));
+
             $('#editprodukModal').find('#stok_editproduk').val(stokproduk);
             $('#editprodukModal').find('#stokMin_editproduk').val(stokminimumproduk);
             $('#editprodukModal').find('#status_editproduk').val(statusproduk);
             $('#editprodukModal').find('#deskripsi_editproduk').val(deskripsiproduk);
             $('#editprodukModal').find('#foto_preview').attr('src', fotoproduk);
-            $('#editbutton_swal').data('namaprodukswal', namaproduk);
-
-            // Tunggu sedikit agar kategori ter-set sebelum set subkategori
-            setTimeout(function () {
-                $('#subkategori_editproduk').val(idsubkategori);
-            }, 100);
         });
 
         // Format unformat sebelum submit

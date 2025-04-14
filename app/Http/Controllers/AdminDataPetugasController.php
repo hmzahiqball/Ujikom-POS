@@ -12,7 +12,6 @@ class AdminDataPetugasController extends Controller
      */
     public function index()
     {
-        $get_produk = DB::select('CALL sp_get_dataproduk()'); //mengambil data produk dari database melalui stored procedure di mysql
         $get_kategori = collect(DB::select('CALL sp_get_datakategori()')); //mengambil data kategori dari database melalui stored procedure di mysql
         $kategori_unik = $get_kategori->unique('id_kategori');
         $get_petugas = DB::select('CALL sp_get_datapetugas()'); //mengambil data petugas dari database melalui stored procedure di mysql

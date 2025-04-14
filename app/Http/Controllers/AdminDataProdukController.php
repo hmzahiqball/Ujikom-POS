@@ -43,8 +43,8 @@ class AdminDataProdukController extends Controller
      * Store a newly created resource in storage.
      */
 
-    public function store(Request $request)
-    {
+     public function store(Request $request)
+     {
         // Validasi input dari form
         $request->validate([
             'nama_addproduk'        => 'required',
@@ -59,15 +59,19 @@ class AdminDataProdukController extends Controller
             'foto_addproduk'        => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        // Generate SKU dan barcode
+        // Generate SKU dan Barcode
         $sku = ProdukHelper::generateSKU($request->nama_addproduk);
         $barcode = ProdukHelper::generateBarcode($request->subkategori_addproduk, $sku);
 
         // Ambil file gambar
         $image = $request->file('foto_addproduk');
 
-        // Data yang akan dikirim ke server
-        $data = [
+        // Kirim request ke API eksternal dengan form-data (termasuk file)
+        $response = Http::attach(
+            'p_gambarProduk',
+            fopen($image->getPathname(), 'r'),
+            $image->getClientOriginalName()
+        )->post('http://localhost:1111/api/produk', [
             'p_idKategori'         => $request->subkategori_addproduk,
             'p_namaProduk'         => $request->nama_addproduk,
             'p_skuProduk'          => $sku,
@@ -79,21 +83,11 @@ class AdminDataProdukController extends Controller
             'p_stokProduk'         => $request->stok_addproduk,
             'p_stokMinimumProduk'  => $request->stokMin_addproduk,
             'p_statusProduk'       => $request->status_addproduk,
-        ];
+        ]);
 
-        // Debug data yang dikirim ke server
-        // dd($data);
-
-        // Kirim request ke API eksternal dengan file dan form data
-        $response = Http::attach(
-            'p_gambarProduk',
-            fopen($image->getPathname(), 'r'),
-            $image->getClientOriginalName()
-        )->post('http://localhost:1111/api/produk', $data);
-
-        // Cek respon API
+        // Cek hasil respon dari API
         if ($response->successful()) {
-            return redirect('admin/dataproduk')->with('success', 'Produk berhasil ditambahkan');
+            return redirect('admin/dataproduk')->with('success', 'Produk berhasil ditambahkan ke server API');
         } else {
             return redirect()->back()->with('error', 'Gagal menambahkan produk: ' . $response->body());
         }
