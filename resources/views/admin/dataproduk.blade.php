@@ -25,7 +25,6 @@
                                 <th>Nama Produk</th>
                                 <th>Stok Produk</th>
                                 <th>Harga Jual</th>
-                                <th>Status Produk</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -38,22 +37,23 @@
                                 <td>{{ $item['nama_produk'] }}</td>
                                 <td>{{ $item['stok_produk'] }}</td>
                                 <td>Rp. {{ number_format($item['harga_produk'], 0, ',', '.') }}</td>
-                                <td>{{ $item['status_produk'] }}</td>
-                                <td>
-                                    <button class="btn btn-primary mr-2" data-bs-toggle="modal" data-bs-target="#editprodukModal"
-                                    data-idproduk="{{ $item['id_produk'] }}" data-kodeproduk="{{ $item['sku_produk'] }}"
-                                    data-idkategori="{{ $item['kategori'][0]['id_kategori'] }}" data-idsubkategori="{{ $item['kategori'][0]['id_subkategori'] }}"
-                                    data-namakategori="{{ $item['kategori'][0]['nama_kategori'] }}" data-namasubkategori="{{ $item['kategori'][0]['nama_subkategori'] }}"
-                                    data-namaproduk="{{ $item['nama_produk'] }}" data-barcodeproduk="{{ $item['barcode_produk'] }}"
-                                    data-deskripsiproduk="{{ $item['deskripsi_produk'] }}" data-hargaproduk="{{ $item['harga_produk'] }}"
-                                    data-modalproduk="{{ $item['modal_produk'] }}" data-diskonproduk="{{ $item['diskon_prpduk'] }}"
-                                    data-stokproduk="{{ $item['stok_produk'] }}" data-stokminimumproduk="{{ $item['stok_minimum_produk'] }}"
-                                    data-statusproduk="{{ $item['status_produk'] }}" data-fotoproduk="{{ $item['gambar_produk'] }}">
-                                        Edit
-                                    </button>
-                                    <button class="btn btn-danger mr-2 deleteSwal"
-                                    data-idproduk="{{ $item['id_produk'] }}" data-namaproduk="{{ $item['nama_produk'] }}"
-                                    data-action="{{ route('admin.dataproduk.delete', $item['id_produk']) }}">Delete</button>
+                                <td style="width: 10rem;">
+                                    <div class="d-flex flex-column justify-content-center align-items-center">
+                                        <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#editprodukModal"
+                                        data-idproduk="{{ $item['id_produk'] }}" data-kodeproduk="{{ $item['sku_produk'] }}"
+                                        data-idkategori="{{ $item['kategori'][0]['id_kategori'] }}" data-idsubkategori="{{ $item['kategori'][0]['id_subkategori'] }}"
+                                        data-namakategori="{{ $item['kategori'][0]['nama_kategori'] }}" data-namasubkategori="{{ $item['kategori'][0]['nama_subkategori'] }}"
+                                        data-namaproduk="{{ $item['nama_produk'] }}" data-barcodeproduk="{{ $item['barcode_produk'] }}"
+                                        data-deskripsiproduk="{{ $item['deskripsi_produk'] }}" data-hargaproduk="{{ $item['harga_produk'] }}"
+                                        data-modalproduk="{{ $item['modal_produk'] }}" data-diskonproduk="{{ $item['diskon_prpduk'] }}"
+                                        data-stokproduk="{{ $item['stok_produk'] }}" data-stokminimumproduk="{{ $item['stok_minimum_produk'] }}"
+                                        data-statusproduk="{{ $item['status_produk'] }}" data-fotoproduk="{{ $item['gambar_produk'] }}">
+                                            Edit
+                                        </button>
+                                        <button class="btn btn-danger w-100 mt-2 deleteSwal"
+                                        data-idproduk="{{ $item['id_produk'] }}" data-namaproduk="{{ $item['nama_produk'] }}"
+                                        data-action="{{ route('admin.dataproduk.delete', $item['id_produk']) }}">Delete</button>
+                                    </div>
                                 </td>
                             </tr>
                             @endforeach

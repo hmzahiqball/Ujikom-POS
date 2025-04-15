@@ -10,7 +10,6 @@
                 <form action="{{ URL::asset('/admin/dataproduk/add') }}" method="POST"
                     enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" class="form-control" id="id_addproduk" name="id_addproduk">
                     <div class="row">
                         <div class="col">
                             <div class="form-floating mb-3">
@@ -76,7 +75,7 @@
                             <div class="input-group mb-3">
                                 <div class="form-floating is-invalid">
                                     <input type="number" class="form-control" id="diskon_addproduk"
-                                        name="diskon_addproduk" placeholder="100" required>
+                                        name="diskon_addproduk" value="0" placeholder="100" required>
                                     <label for="diskon_addproduk">Diskon Produk</label>
                                 </div>
                                 <span class="input-group-text" id="basic-addon1">%</span>
@@ -87,7 +86,7 @@
                                 <span class="input-group-text" id="basic-addon1">Rp.</span>
                                 <div class="form-floating is-invalid">
                                     <input type="text" class="form-control" id="hargaDiskon_addproduk"
-                                        name="hargaDiskon_addproduk" placeholder="100" required disabled>
+                                        name="hargaDiskon_addproduk" placeholder="100" required readonly>
                                     <label for="hargaDiskon_addproduk">Harga Setelah Diskon</label>
                                 </div>
                             </div>
@@ -149,6 +148,50 @@
 </div>
 <script src="{{ URL::asset('js/jquery-3.7.1.min.js') }}"></script>
 <script>
+    function formatNumber(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    function unformatNumber(num) {
+        return num.toString().replace(/\./g, "").replace(/[^0-9]/g, "");
+    }
+
+    function hitungHargaDiskonAddProduk() {
+        const hargaJualInput = document.getElementById('hargaJual_addproduk');
+        const hargaModalInput = document.getElementById('hargaModal_addproduk');
+        const diskonInput = document.getElementById('diskon_addproduk');
+        const hargaDiskonInput = document.getElementById('hargaDiskon_addproduk');
+
+        const hargaJual = parseInt(unformatNumber(hargaJualInput.value)) || 0;
+        const hargaModal = parseInt(unformatNumber(hargaModalInput.value)) || 0;
+        const diskon = parseFloat(unformatNumber(diskonInput.value)) || 0;
+
+        const hasilDiskon = hargaJual - (hargaJual * (diskon / 100));
+        hargaDiskonInput.value = formatNumber(Math.floor(hasilDiskon));
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Format dan hitung harga diskon otomatis saat user input
+        const hargaModal = document.getElementById('hargaModal_addproduk');
+        const hargaJual = document.getElementById('hargaJual_addproduk');
+        const diskon = document.getElementById('diskon_addproduk');
+
+        hargaModal.addEventListener('input', function () {
+            const unformatted = unformatNumber(this.value);
+            this.value = formatNumber(unformatted);
+        });
+
+        hargaJual.addEventListener('input', function () {
+            const unformatted = unformatNumber(this.value);
+            this.value = formatNumber(unformatted);
+            hitungHargaDiskonAddProduk();
+        });
+
+        diskon.addEventListener('input', function () {
+            hitungHargaDiskonAddProduk();
+        });
+    });
+
     // SweetAlert confirmation
     $('#addbutton_swal').click(function() {
             Swal.fire({
@@ -160,13 +203,30 @@
                 confirmButtonText: 'Ya, Tambah Data!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Jika user menekan "Yes, delete it!", submit form
+                    // Unformat dulu sebelum submit
+                    $('#hargaModal_addproduk').val(unformatNumber($('#hargaModal_addproduk').val()));
+                    $('#hargaJual_addproduk').val(unformatNumber($('#hargaJual_addproduk').val()));
+                    $('#diskon_addproduk').val(unformatNumber($('#diskon_addproduk').val()));
+
                     $('#addprodukModal form').submit();
                 }
             });
         });
-</script>
-<script>
+
+    // Formatting angka saat input
+    const hargaModalInput = document.getElementById('hargaModal_addproduk');
+    const hargaJualInput = document.getElementById('hargaJual_addproduk');
+    const diskonInput = document.getElementById('diskon_addproduk');
+
+    [hargaJualInput, hargaModalInput, diskonInput].forEach(input => {
+        input.addEventListener('input', function (e) {
+            const raw = unformatNumber(e.target.value);
+            if (!isNaN(raw)) {
+                e.target.value = formatNumber(raw);
+            }
+        });
+    });
+
     document.addEventListener('DOMContentLoaded', function () {
         const addkategoriSelect = document.getElementById('kategori_addproduk');
         const addsubkategoriSelect = document.getElementById('subkategori_addproduk');
