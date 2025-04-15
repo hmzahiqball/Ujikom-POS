@@ -18,37 +18,20 @@
                                 <label for="kd_editpetugas">ID Petugas</label>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="nama_editpetugas" placeholder="Nama Petugas" name="nama_editpetugas" required>
-                                <label for="nama_editpetugas">Nama Lengkap</label>
-                            </div>
-                        </div>
-                    </div><div class="row">
-                        <div class="col">
-                            <div class="form-floating mb-3">
-                                <input type="number" class="form-control" id="telp_editpetugas" placeholder="No. Telp" name="telp_editpetugas" required>
-                                <label for="telp_editpetugas">No. Telp</label>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-floating mb-3">
-                                <input type="email" class="form-control" id="email_editpetugas" placeholder="Alamat E-Mail" name="email_editpetugas" required>
-                                <label for="email_editpetugas">Alamat E-Mail</label>
+                                <input type="number" class="form-control" id="contact_editpetugas" placeholder="No. Telp" name="contact_editpetugas" required>
+                                <label for="contact_editpetugas">No. Telp</label>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="username_editpetugas" placeholder="Username Petugas" name="username_editpetugas" required>
-                                <label for="username_editpetugas">Username Petugas</label>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-floating mb-3">
-                                <input type="password" class="form-control" id="password_editpetugas" placeholder="Password Petugas" name="password_editpetugas" required>
-                                <label for="password_editpetugas">Password Petugas</label>
+                                <input type="text" class="form-control" id="nama_editpetugas" placeholder="Nama Petugas" name="nama_editpetugas" required>
+                                <label for="nama_editpetugas">Nama Lengkap</label>
                             </div>
                         </div>
                     </div>
@@ -58,8 +41,8 @@
                                 <select class="form-select" aria-label="Default select example" id="status_editpetugas"
                                     name="status_editpetugas" required>
                                     <option selected>Pilih Status Petugas</option>
-                                    <option value="Aktif">Aktif</option>
-                                    <option value="Tidak Aktif">Tidak Aktif</option>
+                                    <option value="aktif">Aktif</option>
+                                    <option value="non-aktif">Tidak Aktif</option>
                                 </select>
                                 <label for="status_editpetugas">Status Petugas</label>
                             </div>
@@ -69,8 +52,8 @@
                                 <select class="form-select" aria-label="Default select example" id="role_editpetugas"
                                     name="role_editpetugas" required>
                                     <option selected>Hak Akses Petugas</option>
-                                    <option value="Admin">Admin</option>
-                                    <option value="Kasir">Kasir</option>
+                                    <option value="admin">Admin</option>
+                                    <option value="kasir">Kasir</option>
                                 </select>
                                 <label for="role_editpetugas">Hak Akses Petugas</label>
                             </div>
@@ -79,8 +62,45 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="posisi_editpetugas" placeholder="Posisi Petugas" name="posisi_editpetugas" required>
+                                <label for="posisi_editpetugas">Posisi Petugas</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">Rp.</span>
+                                <div class="form-floating is-invalid">
+                                    <input type="text" class="form-control" id="gaji_editpetugas"
+                                        name="gaji_editpetugas" placeholder="100" required>
+                                    <label for="gaji_editpetugas">Gaji Petugas</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-floating mb-3">
                                 <textarea class="form-control" placeholder="Alamat Petugas" id="alamat_editpetugas" name="alamat_editpetugas"></textarea>
                                 <label for="alamat_editpetugas">Alamat Petugas</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="shift_editpetugas" name="shift_editpetugas" required>
+                                    <option selected disabled>Pilih Jadwal Shift</option>
+                                    @foreach ($shifts as $shift)
+                                        <option value="{{ $shift['id_shifts'] }}">{{ $shift['nama_shifts'] }}</option>
+                                    @endforeach
+                                </select>
+                                <label for="shift_editpetugas">Shift Petugas</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="waktushift_editpetugas" name="waktushift_editpetugas" disabled>
+                                <label for="waktushift_editpetugas">Waktu Shift Petugas</label>
                             </div>
                         </div>
                     </div>
@@ -105,34 +125,83 @@
     </div>
 </div>
 <script src="{{ URL::asset('js/jquery-3.7.1.min.js') }}"></script>
-{{-- <script>
+<script>
+    const shiftData = @json($shifts);
+
+    $('#shift_editpetugas').on('change', function () {
+        const selectedId = $(this).val();
+        const selectedShift = shiftData.find(shift => shift.id_shifts == selectedId);
+
+        if (selectedShift) {
+            const start = selectedShift.start_time.slice(0, 5);
+            const end = selectedShift.end_time.slice(0, 5);
+            $('#waktushift_editpetugas').val(`${start} - ${end}`);
+        } else {
+            $('#waktushift_editpetugas').val('');
+        }
+    });
+    
+    function formatNumber(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    function unformatNumber(num) {
+        return num.toString().replace(/\./g, "");
+    }
+
+    // Formatting angka saat input
+    const gajiKaryawanInput = document.getElementById('gaji_editpetugas');
+
+    [gajiKaryawanInput].forEach(input => {
+        input.addEventListener('input', function (e) {
+            const raw = unformatNumber(e.target.value);
+            if (!isNaN(raw)) {
+                e.target.value = formatNumber(raw);
+            }
+        });
+    });
+
     $(document).ready(function() {
         $('#editpetugasModal').on('show.bs.modal', function(event) {
             var btn = $(event.relatedTarget),
                 idpetugas = btn.data('idpetugas'),
+                iduser = btn.data('iduser'),
                 kodepetugas = btn.data('kodepetugas'),
                 namapetugas = btn.data('namapetugas'),
                 telppetugas = btn.data('telppetugas'),
-                emailpetugas = btn.data('emailpetugas'),
-                usernamepetugas = btn.data('usernamepetugas'),
-                passwordpetugas = btn.data('passwordpetugas'),
-                statuspetugas = btn.data('statuspetugas'),
-                alamatpetugas = btn.data('alamatpetugas'),
                 rolepetugas = btn.data('rolepetugas'),
-                fotopetugas = btn.data('fotopetugas');
+                statuspetugas = btn.data('statuspetugas'),
+                fotopetugas = btn.data('fotopetugas'),
+                posisipetugas = btn.data('posisipetugas'),
+                gajipetugas = btn.data('gajipetugas'),
+                alamatpetugas = btn.data('alamatpetugas'),
+                idshifts = btn.data('idshifts'),
+                namashifts = btn.data('namashifts'),
+                starttime = btn.data('starttime'),
+                endtime = btn.data('endtime');
 
             $('#editpetugasModal').find('#id_editpetugas').val(idpetugas);
             $('#editpetugasModal').find('#kd_editpetugas').val(kodepetugas);
+            $('#editpetugasModal').find('#contact_editpetugas').val(telppetugas);
             $('#editpetugasModal').find('#nama_editpetugas').val(namapetugas);
-            $('#editpetugasModal').find('#telp_editpetugas').val(telppetugas);
-            $('#editpetugasModal').find('#email_editpetugas').val(emailpetugas);
-            $('#editpetugasModal').find('#username_editpetugas').val(usernamepetugas);
-            $('#editpetugasModal').find('#password_editpetugas').val(passwordpetugas);
             $('#editpetugasModal').find('#status_editpetugas').val(statuspetugas);
-            $('#editpetugasModal').find('#alamat_editpetugas').val(alamatpetugas);
             $('#editpetugasModal').find('#role_editpetugas').val(rolepetugas);
-            $('#editpetugasModal').find('#foto_preview').attr('src', "{{ asset('uploads/') }}/" + fotopetugas);
+            $('#editpetugasModal').find('#posisi_editpetugas').val(posisipetugas);
+            $('#editpetugasModal').find('#gaji_editpetugas').val(formatNumber(gajipetugas));
+            $('#editpetugasModal').find('#alamat_editpetugas').val(alamatpetugas);
+            $('#editpetugasModal').find('#shift_editpetugas').val(idshifts);
+            $('#editpetugasModal').find('#foto_preview').attr('src', fotopetugas);
             $('#editbutton_swal').data('namapetugasswal', namapetugas);
+
+            // Tambahkan ini:
+            const selectedShift = shiftData.find(shift => shift.id_shifts == idshifts);
+            if (selectedShift) {
+                const start = selectedShift.start_time.slice(0, 5);
+                const end = selectedShift.end_time.slice(0, 5);
+                $('#waktushift_editpetugas').val(`${start} - ${end}`);
+            } else {
+                $('#waktushift_editpetugas').val('');
+            }
         });
 
         // SweetAlert confirmation
@@ -149,9 +218,10 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Jika user menekan "Yes, delete it!", submit form
+                    $('#gaji_editpetugas').val(unformatNumber($('#gaji_editpetugas').val()));
                     $('#editpetugasModal form').submit();
                 }
             });
         });
     });
-</script> --}}
+</script>

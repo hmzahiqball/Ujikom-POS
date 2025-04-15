@@ -14,28 +14,25 @@ class AdminDataPetugasController extends Controller
     {
         try {
             $karyawanResponse = Http::get('http://localhost:1111/api/karyawan/');
-            $kategoriResponse = Http::get('http://localhost:1111/api/kategori/');
+            $shiftsResponse = Http::get('http://localhost:1111/api/shifts/');
 
-            if ($karyawanResponse->successful() && $kategoriResponse->successful()) {
+            if ($karyawanResponse->successful() && $shiftsResponse->successful()) {
                 return view('admin.datapetugas', [
                     'petugas' => $karyawanResponse['data'],
-                    'kategori' => $kategoriResponse['data'],
-                    'kategori_unik' => collect($kategoriResponse['data'])->unique('id_kategori'),
+                    'shifts' => $shiftsResponse['data'],
                     'success' => $karyawanResponse['message'],
                 ]);
             } else {
                 return view('admin.datapetugas', [
                     'petugas' => [],
-                    'kategori' => [],
-                    'kategori_unik' => [],
+                    'shifts' => [],
                     'error' => 'Gagal mengambil data dari API',
                 ]);
             }
         } catch (\Exception $e) {
             return view('admin.datapetugas', [
                 'petugas' => [],
-                'kategori' => [],
-                'kategori_unik' => [],
+                'shifts' => [],
                 'error' => 'Terjadi kesalahan: ' . $e->getMessage(),
             ]);
         }
