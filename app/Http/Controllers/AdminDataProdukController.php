@@ -48,6 +48,7 @@ class AdminDataProdukController extends Controller
         // Validasi input dari form
         $request->validate([
             'nama_addproduk'        => 'required',
+            'kategori_addproduk' => 'required',
             'subkategori_addproduk' => 'required',
             'hargaModal_addproduk'  => 'required|numeric',
             'hargaJual_addproduk'   => 'required|numeric',
@@ -60,7 +61,7 @@ class AdminDataProdukController extends Controller
         ]);
 
         // Generate SKU dan Barcode
-        $sku = ProdukHelper::generateSKU($request->nama_addproduk);
+        $sku = ProdukHelper::generateSKU($request->kategori_addproduk,$request->subkategori_addproduk,$request->nama_addproduk);
         $barcode = ProdukHelper::generateBarcode($request->subkategori_addproduk, $sku);
 
         // Ambil file gambar
@@ -172,14 +173,14 @@ class AdminDataProdukController extends Controller
         $request->validate([
             'id_deleteproduk' => 'required|numeric',
         ]);
-    
+
         $id_produk = $request->input('id_deleteproduk');
-    
+
         try {
             $response = Http::withHeaders([
                 'Accept' => 'application/json',
             ])->delete("http://localhost:1111/api/produk/{$id_produk}");
-            
+
             if ($response->successful()) {
                 return redirect('admin/dataproduk')->with('success', 'Produk berhasil dihapus.');
             } else {
