@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use App\Helpers\ProdukHelper;
+use App\Helpers\HttpHelper;
 
 class AdminDataProdukController extends Controller
 {
@@ -114,56 +115,47 @@ class AdminDataProdukController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request)
-    {
-        $request->validate([
-            'id_editproduk'       => 'required|numeric',
-            'hargaModal_editproduk'    => 'required|numeric',
-            'hargaJual_editproduk'    => 'required|numeric',
-            'diskon_editproduk'   => 'required|numeric',
-            'stok_editproduk'     => 'required|numeric',
-            'stokMin_editproduk'  => 'required|numeric',
-            'status_editproduk'   => 'required',
-            'deskripsi_editproduk'=> 'required',
-            'foto_editproduk'     => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+{
+    $request->validate([
+        'id_editproduk'       => 'required|numeric',
+        'hargaModal_editproduk'    => 'required|numeric',
+        'hargaJual_editproduk'    => 'required|numeric',
+        'diskon_editproduk'   => 'required|numeric',
+        'stok_editproduk'     => 'required|numeric',
+        'stokMin_editproduk'  => 'required|numeric',
+        'status_editproduk'   => 'required',
+        'deskripsi_editproduk'=> 'required',
+        'foto_editproduk'     => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+    ]);
 
-        $id_produk = $request->input('id_editproduk');
+    $id_produk = $request->input('id_editproduk');
 
-        // Siapkan data
-        $data = [
-            'p_modalProduk'        => $request->hargaModal_editproduk,
-            'p_hargaProduk'        => $request->hargaJual_editproduk,
-            'p_diskonProduk'       => $request->diskon_editproduk,
-            'p_stokProduk'         => $request->stok_editproduk,
-            'p_stokMinimumProduk'  => $request->stokMin_editproduk,
-            'p_statusProduk'       => $request->status_editproduk,
-            'p_deskripsiProduk'    => $request->deskripsi_editproduk,
-        ];
+    $formFields = [
+        'p_modalProduk'        => $request->hargaModal_editproduk,
+        'p_hargaProduk'        => $request->hargaJual_editproduk,
+        'p_diskonProduk'       => $request->diskon_editproduk,
+        'p_stokProduk'         => $request->stok_editproduk,
+        'p_stokMinimumProduk'  => $request->stokMin_editproduk,
+        'p_statusProduk'       => $request->status_editproduk,
+        'p_deskripsiProduk'    => $request->deskripsi_editproduk,
+    ];
 
-        // Siapkan permintaan HTTP dengan atau tanpa file
-        $url = "http://localhost:1111/api/produk/{$id_produk}";
-        // dd($url, $data);
+    $url = "http://localhost:1111/api/produk/{$id_produk}";
 
-        if ($request->hasFile('foto_editproduk')) {
-            $image = $request->file('foto_editproduk');
+    $response = HttpHelper::putMultipart(
+        $url,
+        $formFields,
+        'p_gambarProduk',
+        $request->file('foto_editproduk')
+    );
 
-            $response = Http::withHeaders([
-                'Content-Type' => 'multipart/form-data',
-            ])->attach(
-                'p_gambarProduk',
-                fopen($image->getPathname(), 'r'),
-                $image->getClientOriginalName()
-            )->put($url, $data);
-        } else {
-            $response = Http::asForm()->put($url, $data);
-        }
-
-        if ($response->successful()) {
-            return redirect('admin/dataproduk')->with('success', 'Produk berhasil diperbarui.');
-        } else {
-            return redirect()->back()->with('error', 'Gagal memperbarui produk: ' . $response->json()['message']);
-        }
+    if ($response->successful()) {
+        return redirect('admin/dataproduk')->with('success', 'Produk berhasil diperbarui.');
+    } else {
+        return redirect()->back()->with('error', 'Gagal memperbarui produk: ' . $response->json()['message']);
     }
+}
+
 
     /**
      * Remove the specified resource from storage.
