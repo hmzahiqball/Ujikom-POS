@@ -11,17 +11,24 @@ class AdminDataProdukController extends Controller
 {
     public function index()
     {
-        $produkResponse = Http::get('http://localhost:1111/api/produk/');
-        $kategoriResponse = Http::get('http://localhost:1111/api/kategori/');
+        try {
+            $produkResponse = Http::get('http://localhost:1111/api/produk/');
+            $kategoriResponse = Http::get('http://localhost:1111/api/kategori/');
 
-        if ($produkResponse->successful() && $kategoriResponse->successful()) {
+            if ($produkResponse->successful() && $kategoriResponse->successful()) {
+                return view('admin.dataproduk', [
+                    'produk' => $produkResponse['data'],
+                    'kategori' => $kategoriResponse['data'],
+                    'success' => $produkResponse['message']
+                ]);
+            }
+        } catch (\Exception $e) {
             return view('admin.dataproduk', [
-                'produk' => $produkResponse['data'],
-                'kategori' => $kategoriResponse['data'],
+                'produk' => [],
+                'kategori' => [],
+                'error' => 'Gagal mengambil data produk'
             ]);
         }
-
-        return back()->with('error', 'Gagal mengambil data dari API.');
     }
 
     public function create()
@@ -75,7 +82,7 @@ class AdminDataProdukController extends Controller
         )->post('http://localhost:1111/api/produk', $payload);
 
         if ($response->successful()) {
-            return redirect('admin/dataproduk')->with('success', 'Produk berhasil ditambahkan ke server API.');
+            return redirect('admin/dataproduk')->with('success', 'Produk berhasil ditambahkan.');
         }
 
         return redirect()->back()->with('error', 'Gagal menambahkan produk: ' . $response->body());

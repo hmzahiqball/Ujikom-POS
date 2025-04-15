@@ -14,13 +14,13 @@
                         <div class="col">
                             <div class="form-floating mb-3">
                                 <input type="hidden" class="form-control" id="id_editproduk" name="id_editproduk">
-                                <input type="text" class="form-control" id="kd_editproduk" placeholder="ID Produk" name="kd_editproduk" readonly required>
+                                <input type="text" class="form-control" id="kd_editproduk" placeholder="ID Produk" name="kd_editproduk" disabled required>
                                 <label for="kd_editproduk">ID Produk</label>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="nama_editproduk" placeholder="Nama Produk" name="nama_editproduk" readonly required>
+                                <input type="text" class="form-control" id="nama_editproduk" placeholder="Nama Produk" name="nama_editproduk" disabled required>
                                 <label for="nama_editproduk">Nama Produk</label>
                             </div>
                         </div>
@@ -28,7 +28,7 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-floating mb-3">
-                                <select class="form-select" id="kategori_editproduk" name="kategori_editproduk" required>
+                                <select class="form-select" id="kategori_editproduk" name="kategori_editproduk" required disabled>
                                     <option selected disabled>Pilih Jenis Kategori</option>
                                     @foreach ($kategori as $kat)
                                         <option value="{{ $kat['id_kategori'] }}">{{ $kat['nama_kategori'] }}</option>
@@ -40,7 +40,7 @@
 
                         <div class="col">
                             <div class="form-floating mb-3">
-                                <select class="form-select" id="subkategori_editproduk" name="subkategori_editproduk" required>
+                                <select class="form-select" id="subkategori_editproduk" name="subkategori_editproduk" required disabled>
                                     <option selected disabled>Pilih Jenis Sub-Kategori</option>
                                     @foreach ($kategori as $kat)
                                         @foreach ($kat['data_subkategori'] as $sub)
@@ -116,7 +116,7 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="barcode_editproduk" placeholder="Barcode Produk" name="barcode_editproduk" required>
+                                <input type="text" class="form-control" id="barcode_editproduk" placeholder="Barcode Produk" name="barcode_editproduk" required disabled>
                                 <label for="barcode_editproduk">Barcode Produk</label>
                             </div>
                         </div>

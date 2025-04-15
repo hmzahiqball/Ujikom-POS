@@ -105,7 +105,7 @@
     </div>
 </div>
 <script src="{{ URL::asset('js/jquery-3.7.1.min.js') }}"></script>
-<script>
+{{-- <script>
     $(document).ready(function() {
         $('#editpetugasModal').on('show.bs.modal', function(event) {
             var btn = $(event.relatedTarget),
@@ -154,4 +154,4 @@
             });
         });
     });
-</script>
+</script> --}}

@@ -31,20 +31,37 @@
                             @foreach($petugas as $key => $item)
                             <tr>
                                 <td>{{ $key + 1 }}</td>
-                                <td>{{ $item->kode_user }}</td>
-                                <td>{{ $item->nama_user }}</td>
-                                <td>{{ $item->role_user }}</td>
-                                <td>{{ $item->status_user }}</td>
+                                <td>{{ $item['data_user']['kode_user'] }}</td>
+                                <td>{{ $item['data_user']['nama_user'] }}</td>
+                                <td>{{ $item['data_user']['role_user'] }}</td>
+                                <td>{{ $item['data_user']['status_user'] }}</td>
                                 <td>
-                                    <button class="btn btn-primary mr-2" data-bs-toggle="modal" data-bs-target="#editpetugasModal"
-                                    data-idpetugas="{{ $item->id_karyawan }}" data-iduser="{{ $item->id_user }}" data-kodepetugas="{{ $item->kode_user }}"
-                                    data-namapetugas="{{ $item->nama_user }}" data-telppetugas="{{ $item->contact_user }}" data-rolepetugas="{{ $item->role_user }}"
-                                    data-statuspetugas="{{ $item->status_user }}" data-fotopetugas="{{ $item->gambar_user }}" data-posisipetugas="{{ $item->posisi_karyawan }}"
-                                    data-gajipetugas="{{ $item->gaji_karyawan }}" data-alamatpetugas="{{ $item->alamat_karyawan }}" data-idshifts="{{ $item->id_shifts }}"
-                                    data-namashifts="{{ $item->nama_shifts }}" data-starttime="{{ $item->start_time }}" data-endtime="{{ $item->end_time }}">Edit</button>
-                                    <button class="btn btn-danger mr-2 deleteSwal"
-                                    data-idpetugas="{{ $item->id_karyawan }}" data-namapetugas="{{ $item->nama_user }}"
-                                    data-action="{{ route('admin.datapetugas.delete', $item->id_karyawan) }}">Delete</button>
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#editpetugasModal"
+                                            data-idpetugas="{{ $item['id_karyawan'] }}"
+                                            data-iduser="{{ $item['data_user']['id_user'] }}"
+                                            data-kodepetugas="{{ $item['data_user']['kode_user'] }}"
+                                            data-namapetugas="{{ $item['data_user']['nama_user'] }}"
+                                            data-telppetugas="{{ $item['data_user']['contact_user'] }}"
+                                            data-rolepetugas="{{ $item['data_user']['role_user'] }}"
+                                            data-statuspetugas="{{ $item['data_user']['status_user'] }}"
+                                            data-fotopetugas="{{ $item['data_user']['gambar_user'] }}"
+                                            data-posisipetugas="{{ $item['posisi_karyawan'] }}"
+                                            data-gajipetugas="{{ $item['gaji_karyawan'] }}"
+                                            data-alamatpetugas="{{ $item['alamat_karyawan'] }}"
+                                            data-idshifts="{{ $item['data_shift']['id_shift'] }}"
+                                            data-namashifts="{{ $item['data_shift']['nama_shift'] }}"
+                                            data-starttime="{{ $item['data_shift']['start_time'] }}"
+                                            data-endtime="{{ $item['data_shift']['end_time'] }}">
+                                            Edit
+                                        </button>
+                                        <button class="btn btn-danger w-100 deleteSwal"
+                                            data-idpetugas="{{ $item['id_karyawan'] }}"
+                                            data-namapetugas="{{ $item['data_user']['nama_user'] }}"
+                                            data-action="{{ route('admin.datapetugas.delete', $item['id_karyawan']) }}">
+                                            Delete
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                             @endforeach
@@ -54,19 +71,38 @@
             </div>
         </div>
     </div>
-    {{-- @extends('admin.modal.addpetugas')
+    @extends('admin.modal.addpetugas')
     @extends('admin.modal.editpetugas')
-    @extends('admin.modal.deletepetugas') --}}
+    @extends('admin.modal.deletepetugas')
 @endsection
 @section('scripts')
     <script>
         $(document).ready(function() {
+            const d = new Date();
+            const tanggal = `Data Petugas-${('0' + d.getDate()).slice(-2)}${('0' + (d.getMonth() + 1)).slice(-2)}${d.getFullYear()}`;
             $('#tablePetugas').DataTable({
                 layout: {
-                topStart: {
-                    buttons: ['copyHtml5', 'excelHtml5', 'csvHtml5', 'pdfHtml5']
+                    topStart: {
+                    buttons: [
+                        {
+                            extend: 'copyHtml5',
+                            title: tanggal
+                        },
+                        {
+                            extend: 'excelHtml5',
+                            title: tanggal
+                        },
+                        {
+                            extend: 'pdfHtml5',
+                            title: tanggal
+                        },
+                        {
+                            extend: 'csvHtml5',
+                            title: tanggal
+                        }
+                    ]
                 }
-            }
+            },
             });
         });
     </script>

@@ -37,8 +37,8 @@
                                 <td>{{ $item['nama_produk'] }}</td>
                                 <td>{{ $item['stok_produk'] }}</td>
                                 <td>Rp. {{ number_format($item['harga_produk'], 0, ',', '.') }}</td>
-                                <td style="width: 10rem;">
-                                    <div class="d-flex flex-column justify-content-center align-items-center">
+                                <td>
+                                    <div class="d-flex gap-2">
                                         <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#editprodukModal"
                                         data-idproduk="{{ $item['id_produk'] }}" data-kodeproduk="{{ $item['sku_produk'] }}"
                                         data-idkategori="{{ $item['kategori'][0]['id_kategori'] }}" data-idsubkategori="{{ $item['kategori'][0]['id_subkategori'] }}"
@@ -50,7 +50,7 @@
                                         data-statusproduk="{{ $item['status_produk'] }}" data-fotoproduk="{{ $item['gambar_produk'] }}">
                                             Edit
                                         </button>
-                                        <button class="btn btn-danger w-100 mt-2 deleteSwal"
+                                        <button class="btn btn-danger w-100 deleteSwal"
                                         data-idproduk="{{ $item['id_produk'] }}" data-namaproduk="{{ $item['nama_produk'] }}"
                                         data-action="{{ route('admin.dataproduk.delete', $item['id_produk']) }}">Delete</button>
                                     </div>
@@ -70,7 +70,32 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
-            $('#tableProduk').DataTable();
+            const d = new Date();
+            const tanggal = `Data Produk-${('0' + d.getDate()).slice(-2)}${('0' + (d.getMonth() + 1)).slice(-2)}${d.getFullYear()}`;
+            $('#tableProduk').DataTable({
+                layout: {
+                    topStart: {
+                    buttons: [
+                        {
+                            extend: 'copyHtml5',
+                            title: tanggal
+                        },
+                        {
+                            extend: 'excelHtml5',
+                            title: tanggal
+                        },
+                        {
+                            extend: 'pdfHtml5',
+                            title: tanggal
+                        },
+                        {
+                            extend: 'csvHtml5',
+                            title: tanggal
+                        }
+                    ]
+                }
+            },
+            });
         });
     </script>
 @endsection

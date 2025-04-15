@@ -15,7 +15,7 @@ class ProdukHelper
 
     public static function generateBarcode($idKategori, $sku)
     {
-        $kategoriKode = 'KAT' . str_pad($idKategori, 3, '0', STR_PAD_LEFT);
+        $kategoriKode = 'KAT';
         $randomAngka = mt_rand(100, 999);
         return $kategoriKode . $sku . $randomAngka;
     }

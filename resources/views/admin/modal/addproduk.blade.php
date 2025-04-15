@@ -95,13 +95,13 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="stok_addproduk" placeholder="Stok Produk" name="stok_addproduk" required>
+                                <input type="number" class="form-control" id="stok_addproduk" placeholder="Stok Produk" name="stok_addproduk" required>
                                 <label for="stok_addproduk">Stok Produk</label>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="stokMin_addproduk" placeholder="Stok Produk" name="stokMin_addproduk" required>
+                                <input type="number" class="form-control" id="stokMin_addproduk" placeholder="Stok Produk" name="stokMin_addproduk" required>
                                 <label for="stokMin_addproduk">Stok Minimum</label>
                             </div>
                         </div>
