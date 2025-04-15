@@ -21,38 +21,42 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $contact = $request->input('input_contactpetugas');
-        $password = $request->input('input_passwordpetugas');
+        try {
+            $contact = $request->input('input_contactpetugas');
+            $password = $request->input('input_passwordpetugas');
 
-        // Kirim request ke REST API
-        $response = Http::post('http://localhost:1111/api/users/login', [
-            'p_contactUsers' => $contact,
-            'p_passwordUsers' => $password,
-        ]);
+            // Kirim request ke REST API
+            $response = Http::post('http://localhost:1111/api/users/login', [
+                'p_contactUsers' => $contact,
+                'p_passwordUsers' => $password,
+            ]);
 
-        if ($response->successful()) {
-            $result = $response->json();
+            if ($response->successful()) {
+                $result = $response->json();
 
-            if (isset($result['message']) && $result['message'] === 'Login berhasil') {
-                $data = $result['data'];
+                if (isset($result['message']) && $result['message'] === 'Login berhasil') {
+                    $data = $result['data'];
 
-                // Simpan data ke session
-                Session::put('tb_petugas', $data);
-                Session::put('foto_petugas', $data['gambar_user']);
+                    // Simpan data ke session
+                    Session::put('tb_petugas', $data);
+                    Session::put('foto_petugas', $data['gambar_user']);
 
-                // Redirect berdasarkan role
-                if ($data['role_user'] === 'admin') {
-                    return redirect('admin/dashboard');
-                } elseif ($data['role_user'] === 'kasir') {
-                    return redirect('kasir/dashboard');
+                    // Redirect berdasarkan role
+                    if ($data['role_user'] === 'admin') {
+                        return redirect('admin/dashboard');
+                    } elseif ($data['role_user'] === 'kasir') {
+                        return redirect('kasir/dashboard');
+                    } else {
+                        return redirect('/'); // fallback jika role tidak dikenali
+                    }
                 } else {
-                    return redirect('/'); // fallback jika role tidak dikenali
+                    return back()->with('error', $result['message'] ?? 'Gagal login');
                 }
             } else {
-                return back()->with('error', $result['message'] ?? 'Gagal login');
+                return back()->with('error', 'Tidak dapat terhubung ke server login.');
             }
-        } else {
-            return back()->with('error', 'Tidak dapat terhubung ke server login.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Terjadi kesalahan pada koneksi');
         }
     }
 

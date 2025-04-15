@@ -85,5 +85,20 @@
         </div>
     </div>
 </body>
+<script>
+    @if (session('success'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil!',
+            text: '{{ session('success') }}'
+        })
+    @elseif(session('error'))
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal!',
+            text: '{{ session('error') }}'
+        })
+    @endif
+</script>
 @yield('scripts')
 </html>

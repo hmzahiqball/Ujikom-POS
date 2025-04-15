@@ -114,66 +114,54 @@ class AdminDataProdukController extends Controller
      */
     public function update(Request $request)
     {
-        // Validate the request...
         $request->validate([
-            'id_editproduk' => 'required|numeric',
-            'kategori_editproduk' => 'required',
-            'kd_editproduk' => 'required',
-            'nama_editproduk' => 'required',
-            'stok_editproduk' => 'required|numeric',
-            'diskon_editproduk' => 'required|numeric',
-            'harga_editproduk' => 'required|numeric',
-            'lokasi_editproduk' => 'required',
-            'status_editproduk' => 'required',
-            'foto_editproduk' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'id_editproduk'       => 'required|numeric',
+            'hargaModal_editproduk'    => 'required|numeric',
+            'hargaJual_editproduk'    => 'required|numeric',
+            'diskon_editproduk'   => 'required|numeric',
+            'stok_editproduk'     => 'required|numeric',
+            'stokMin_editproduk'  => 'required|numeric',
+            'status_editproduk'   => 'required',
+            'deskripsi_editproduk'=> 'required',
+            'foto_editproduk'     => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        // Ambil semua data yang dikirimkan oleh formulir
         $id_produk = $request->input('id_editproduk');
-        $kategori = $request->input('kategori_editproduk');
-        $kode_produk = $request->input('kd_editproduk');
-        $nama_produk = $request->input('nama_editproduk');
-        $stok_produk = $request->input('stok_editproduk');
-        $diskon_produk = $request->input('diskon_editproduk');
-        $harga_produk = $request->input('harga_editproduk');
-        $lokasi_produk = $request->input('lokasi_editproduk');
-        $status_produk = $request->input('status_editproduk');
+
+        // Siapkan data
+        $data = [
+            'p_modalProduk'        => $request->hargaModal_editproduk,
+            'p_hargaProduk'        => $request->hargaJual_editproduk,
+            'p_diskonProduk'       => $request->diskon_editproduk,
+            'p_stokProduk'         => $request->stok_editproduk,
+            'p_stokMinimumProduk'  => $request->stokMin_editproduk,
+            'p_statusProduk'       => $request->status_editproduk,
+            'p_deskripsiProduk'    => $request->deskripsi_editproduk,
+        ];
+
+        // Siapkan permintaan HTTP dengan atau tanpa file
+        $url = "http://localhost:1111/api/produk/{$id_produk}";
+        // dd($url, $data);
 
         if ($request->hasFile('foto_editproduk')) {
-            $fileName = time(). '.'. $request->foto_editproduk->extension();
-            $request->foto_editproduk->move(public_path('uploads'), $fileName);
-            $foto_produk = $fileName;
+            $image = $request->file('foto_editproduk');
 
-            // Panggil stored procedure untuk update
-            DB::statement("CALL sp_edit_dataproduk(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array(
-                $id_produk,
-                $kategori,
-                $kode_produk,
-                $nama_produk,
-                $stok_produk,
-                $diskon_produk,
-                $harga_produk,
-                $lokasi_produk,
-                $status_produk,
-                $foto_produk
-            ));
+            $response = Http::withHeaders([
+                'Content-Type' => 'multipart/form-data',
+            ])->attach(
+                'p_gambarProduk',
+                fopen($image->getPathname(), 'r'),
+                $image->getClientOriginalName()
+            )->put($url, $data);
         } else {
-            // Panggil stored procedure untuk update
-            DB::statement("CALL sp_edit_dataproduk(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array(
-                $id_produk,
-                $kategori,
-                $kode_produk,
-                $nama_produk,
-                $stok_produk,
-                $diskon_produk,
-                $harga_produk,
-                $lokasi_produk,
-                $status_produk,
-                ''
-            ));
+            $response = Http::asForm()->put($url, $data);
         }
 
-        return redirect('admin/dataproduk');
+        if ($response->successful()) {
+            return redirect('admin/dataproduk')->with('success', 'Produk berhasil diperbarui.');
+        } else {
+            return redirect()->back()->with('error', 'Gagal memperbarui produk: ' . $response->json()['message']);
+        }
     }
 
     /**
@@ -181,14 +169,24 @@ class AdminDataProdukController extends Controller
      */
     public function destroy(Request $request)
     {
-        // Ambil semua data yang dikirimkan oleh formulir
+        $request->validate([
+            'id_deleteproduk' => 'required|numeric',
+        ]);
+    
         $id_produk = $request->input('id_deleteproduk');
-
-        // Panggil stored procedure untuk update
-        DB::statement("CALL sp_delete_dataproduk(?)", array(
-            $id_produk,
-        ));
-
-        return redirect('admin/dataproduk');
+    
+        try {
+            $response = Http::withHeaders([
+                'Accept' => 'application/json',
+            ])->delete("http://localhost:1111/api/produk/{$id_produk}");
+            
+            if ($response->successful()) {
+                return redirect('admin/dataproduk')->with('success', 'Produk berhasil dihapus.');
+            } else {
+                return redirect()->back()->with('error', 'Gagal menghapus produk: ' . $response->json()['message']);
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menghapus produk: ' . $e->getMessage());
+        }
     }
 }
