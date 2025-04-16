@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use App\Helpers\HttpHelper;
 
 class AdminDataPetugasController extends Controller
 {
@@ -108,57 +109,59 @@ class AdminDataPetugasController extends Controller
     // /**
     //  * Update the specified resource in storage.
     //  */
-    // public function update(Request $request)
-    // {
-    //     // Validate the request...
-    //     $request->validate([
-    //         'id_editpetugas' => 'required',
-    //         'kd_editpetugas' => 'required',
-    //         'nama_editpetugas' => 'required',
-    //         'telp_editpetugas' => 'required|numeric',
-    //         'email_editpetugas' => 'required',
-    //         'username_editpetugas' => 'required',
-    //         'password_editpetugas' => 'required',
-    //         'status_editpetugas' => 'required',
-    //         'role_editpetugas' => 'required',
-    //         'alamat_editpetugas' => 'required',
-    //         'foto_editpetugas' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-    //     ]);
+    public function update(Request $request)
+    {
+        // Validate the request...
+        $request->validate([
+            'id_editpetugas' => 'required|numeric',
+            'idUser_editpetugas' => 'required|numeric',
+            'contact_editpetugas' => 'required|numeric',
+            'password_editpetugas' => 'nullable',
+            'role_editpetugas' => 'required',
+            'posisi_editpetugas' => 'required',
+            'gaji_editpetugas' => 'required|numeric',
+            'alamat_editpetugas' => 'required',
+            'shift_editpetugas' => 'required|numeric',
+            'foto_editpetugas' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
 
-    //     // Handle the file upload...
-    //     $fileName = time(). '.'. $request->foto_editpetugas->extension();
-    //     $request->foto_editpetugas->move(public_path('uploads'), $fileName);
+        try {
+            $idKaryawan = $request->id_editpetugas;
+            $idUser = $request->idUser_editpetugas;
 
-    //     // Ambil semua data yang dikirimkan oleh formulir
-    //     $id_petugas = $request->input('id_editpetugas');
-    //     $kd_petugas = $request->input('kd_editpetugas');
-    //     $nama_petugas = $request->input('nama_editpetugas');
-    //     $telp_petugas = $request->input('telp_editpetugas');
-    //     $email_petugas = $request->input('email_editpetugas');
-    //     $username_petugas = $request->input('username_editpetugas');
-    //     $password_petugas = $request->input('password_editpetugas');
-    //     $status_petugas = $request->input('status_editpetugas');
-    //     $role_petugas = $request->input('role_editpetugas');
-    //     $alamat_petugas = $request->input('alamat_editpetugas');
-    //     $foto_petugas = $fileName;
+            // 1. Update ke endpoint Karyawan
+            $karyawanResponse = Http::put("http://localhost:1111/api/karyawan/{$idKaryawan}", [
+                'p_posisiKaryawan' => $request->posisi_editpetugas,
+                'p_gajiKaryawan'   => $request->gaji_editpetugas,
+                'p_alamatKaryawan' => $request->alamat_editpetugas,
+                'p_idShifts'       => $request->shift_editpetugas,
+            ]);
 
-    //     // Panggil stored procedure untuk update
-    //     DB::statement("CALL sp_edit_datapetugas(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array(
-    //         $id_petugas,
-    //         $kd_petugas,
-    //         $nama_petugas,
-    //         $telp_petugas,
-    //         $email_petugas,
-    //         $username_petugas,
-    //         $password_petugas,
-    //         $status_petugas,
-    //         $foto_petugas,
-    //         $alamat_petugas,
-    //         $role_petugas
-    //     ));
+            // 2. Update ke endpoint User dengan atau tanpa gambar
+            $userPayload = [
+                'p_contactUsers'  => $request->contact_editpetugas,
+                'p_passwordUsers' => $request->password_editpetugas,
+                'p_roleUsers'     => $request->role_editpetugas,
+            ];
 
-    //     return redirect('admin/datapetugas');
-    // }
+            $userResponse = HttpHelper::putMultipart(
+                "http://localhost:1111/api/users/{$idUser}",
+                $userPayload,
+                'p_gambarUser',
+                $request->file('foto_editpetugas')
+            );
+
+            // Cek status response dari kedua API
+            if ($karyawanResponse->successful() && $userResponse->successful()) {
+                return redirect('admin/datapetugas')->with('success', 'Data berhasil diperbarui!');
+            } else {
+                return back()->with('error', 'Gagal update ke salah satu endpoint');
+            }
+
+        } catch (\Exception $e) {
+            return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
+    }
 
     // /**
     //  * Remove the specified resource from storage.

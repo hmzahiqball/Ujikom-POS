@@ -14,7 +14,8 @@
                         <div class="col">
                             <div class="form-floating mb-3">
                                 <input type="hidden" class="form-control" id="id_editpetugas" name="id_editpetugas">
-                                <input type="text" class="form-control" id="kd_editpetugas" placeholder="ID Petugas" name="kd_editpetugas" required>
+                                <input type="hidden" class="form-control" id="idUser_editpetugas" name="idUser_editpetugas">
+                                <input type="text" class="form-control" id="kd_editpetugas" placeholder="ID Petugas" name="kd_editpetugas" required disabled>
                                 <label for="kd_editpetugas">ID Petugas</label>
                             </div>
                         </div>
@@ -26,11 +27,17 @@
                                 <label for="contact_editpetugas">No. Telp</label>
                             </div>
                         </div>
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <input type="password" class="form-control" id="password_editpetugas" placeholder="Password" name="password_editpetugas" required>
+                                <label for="password_editpetugas">Password</label>
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="nama_editpetugas" placeholder="Nama Petugas" name="nama_editpetugas" required>
+                                <input type="text" class="form-control" id="nama_editpetugas" placeholder="Nama Petugas" name="nama_editpetugas" required disabled>
                                 <label for="nama_editpetugas">Nama Lengkap</label>
                             </div>
                         </div>
@@ -39,7 +46,7 @@
                         <div class="col">
                             <div class="form-floating mb-3">
                                 <select class="form-select" aria-label="Default select example" id="status_editpetugas"
-                                    name="status_editpetugas" required>
+                                    name="status_editpetugas" required disabled>
                                     <option selected>Pilih Status Petugas</option>
                                     <option value="aktif">Aktif</option>
                                     <option value="non-aktif">Tidak Aktif</option>
@@ -140,7 +147,7 @@
             $('#waktushift_editpetugas').val('');
         }
     });
-    
+
     function formatNumber(num) {
         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
@@ -181,6 +188,7 @@
                 endtime = btn.data('endtime');
 
             $('#editpetugasModal').find('#id_editpetugas').val(idpetugas);
+            $('#editpetugasModal').find('#idUser_editpetugas').val(iduser);
             $('#editpetugasModal').find('#kd_editpetugas').val(kodepetugas);
             $('#editpetugasModal').find('#contact_editpetugas').val(telppetugas);
             $('#editpetugasModal').find('#nama_editpetugas').val(namapetugas);
