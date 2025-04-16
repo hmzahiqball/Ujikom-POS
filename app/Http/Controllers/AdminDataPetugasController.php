@@ -137,19 +137,26 @@ class AdminDataPetugasController extends Controller
         }
     }
 
-    // /**
-    //  * Remove the specified resource from storage.
-    //  */
-    // public function destroy(Request $request)
-    // {
-    //     // Ambil semua data yang dikirimkan oleh formulir
-    //     $id_petugas = $request->input('id_deletepetugas');
+    public function destroy(Request $request)
+    {
+        $request->validate([
+            'id_deletepetugas' => 'required|numeric',
+        ]);
 
-    //     // Panggil stored procedure untuk update
-    //     DB::statement("CALL sp_delete_datapetugas(?)", array(
-    //         $id_petugas,
-    //     ));
+        $idPetugas = $request->id_deletepetugas;
 
-    //     return redirect('admin/datapetugas');
-    // }
+        try {
+            $response = Http::withHeaders([
+                'Accept' => 'application/json',
+            ])->delete("http://localhost:1111/api/karyawan/{$idPetugas}");
+
+            if ($response->successful()) {
+                return redirect('admin/datapetugas')->with('success', 'Data berhasil dihapus.');
+            }
+
+            return redirect()->back()->with('error', 'Gagal menghapus data: ' . $response->json()['message']);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menghapus data: ' . $e->getMessage());
+        }
+    }
 }
