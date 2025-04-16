@@ -133,20 +133,6 @@
 </div>
 <script src="{{ URL::asset('js/jquery-3.7.1.min.js') }}"></script>
 <script>
-    const shiftData = @json($shifts);
-
-    $('#shift_editpetugas').on('change', function () {
-        const selectedId = $(this).val();
-        const selectedShift = shiftData.find(shift => shift.id_shifts == selectedId);
-
-        if (selectedShift) {
-            const start = selectedShift.start_time.slice(0, 5);
-            const end = selectedShift.end_time.slice(0, 5);
-            $('#waktushift_editpetugas').val(`${start} - ${end}`);
-        } else {
-            $('#waktushift_editpetugas').val('');
-        }
-    });
 
     function formatNumber(num) {
         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");

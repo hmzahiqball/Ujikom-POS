@@ -38,77 +38,51 @@ class AdminDataPetugasController extends Controller
             ]);
         }
     }
-    /**
-     * Store a newly created resource in storage.
-     */
-    // public function store(Request $request)
-    // {
-    //     // Validate the request...
-    //     $request->validate([
-    //         'kd_addpetugas' => 'required',
-    //         'nama_addpetugas' => 'required',
-    //         'telp_addpetugas' => 'required|numeric',
-    //         'email_addpetugas' => 'required',
-    //         'username_addpetugas' => 'required',
-    //         'password_addpetugas' => 'required',
-    //         'status_addpetugas' => 'required',
-    //         'role_addpetugas' => 'required',
-    //         'alamat_addpetugas' => 'required',
-    //         'foto_addpetugas' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-    //     ]);
 
-    //     // Handle the file upload...
-    //     $fileName = time(). '.'. $request->foto_addpetugas->extension();
-    //     $request->foto_addpetugas->move(public_path('uploads'), $fileName);
+    public function store(Request $request)
+{
+    $request->validate([
+        'contact_addpetugas' => 'required|numeric',
+        'password_addpetugas' => 'required',
+        'nama_addpetugas' => 'required',
+        'role_addpetugas' => 'required',
+        'posisi_addpetugas' => 'required',
+        'gaji_addpetugas' => 'required|numeric',
+        'alamat_addpetugas' => 'required',
+        'shift_addpetugas' => 'required|numeric',
+        'foto_addpetugas' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+    ]);
 
-    //     // Ambil semua data yang dikirimkan oleh formulir
-    //     $kd_petugas = $request->input('kd_addpetugas');
-    //     $nama_petugas = $request->input('nama_addpetugas');
-    //     $telp_petugas = $request->input('telp_addpetugas');
-    //     $email_petugas = $request->input('email_addpetugas');
-    //     $username_petugas = $request->input('username_addpetugas');
-    //     $password_petugas = $request->input('password_addpetugas');
-    //     $status_petugas = $request->input('status_addpetugas');
-    //     $role_petugas = $request->input('role_addpetugas');
-    //     $alamat_petugas = $request->input('alamat_addpetugas');
-    //     $foto_petugas = $fileName;
+    try {
+        // Payload lengkap ke satu endpoint
+        $payload = [
+            'p_namaUsers'       => $request->nama_addpetugas,
+            'p_contactUsers'    => $request->contact_addpetugas,
+            'p_passwordUsers'   => $request->password_addpetugas,
+            'p_roleUsers'       => $request->role_addpetugas,
+            'p_posisiKaryawan'  => $request->posisi_addpetugas,
+            'p_gajiKaryawan'    => $request->gaji_addpetugas,
+            'p_alamatKaryawan'  => $request->alamat_addpetugas,
+            'p_idShifts'        => $request->shift_addpetugas,
+        ];
 
-    //     // Panggil stored procedure untuk update
-    //     DB::statement("CALL sp_add_datapetugas(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array(
-    //         $kd_petugas,
-    //         $nama_petugas,
-    //         $telp_petugas,
-    //         $email_petugas,
-    //         $username_petugas,
-    //         $password_petugas,
-    //         $status_petugas,
-    //         $foto_petugas,
-    //         $alamat_petugas,
-    //         $role_petugas
-    //     ));
+        $response = HttpHelper::postMultipart(
+            "http://localhost:1111/api/karyawan",
+            $payload,
+            'p_gambarUser',
+            $request->file('foto_addpetugas')
+        );
 
-    //     return redirect('admin/datapetugas');
-    // }
+        if (!$response->successful()) {
+            return back()->with('error', 'Gagal menambahkan data petugas');
+        }
 
-    // /**
-    //  * Display the specified resource.
-    //  */
-    // public function show(string $id)
-    // {
-    //     //
-    // }
+        return redirect('/admin/datapetugas')->with('success', 'Data petugas berhasil ditambahkan!');
+    } catch (\Exception $e) {
+        return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+    }
+}
 
-    // /**
-    //  * Show the form for editing the specified resource.
-    //  */
-    // public function edit(string $id)
-    // {
-    //     //
-    // }
-
-    // /**
-    //  * Update the specified resource in storage.
-    //  */
     public function update(Request $request)
     {
         // Validate the request...
