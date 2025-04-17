@@ -4,12 +4,12 @@
         // SweetAlert confirmation
         $('.deleteSwal').click(function() {
             var current_object = $(this);
-            var id_member = current_object.data('idmember');
-            var namamember = current_object.data('namamember');
+            var id_member = current_object.data('idcustomers');
+            var namaCustomers = current_object.data('namacustomers');
             var action = current_object.data('action');
 
             Swal.fire({
-                title: 'Yakin Untuk Menghapus Data ' + namamember + ' ?',
+                title: 'Yakin Untuk Menghapus Data ' + namaCustomers + ' ?',
                 icon: 'warning',
                 iconColor: 'red',
                 showCancelButton: true,

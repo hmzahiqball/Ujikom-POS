@@ -33,25 +33,32 @@
                             @foreach($member as $key => $item)
                             <tr>
                                 <td>{{ $key + 1 }}</td>
-                                <td>{{ $item->status_member }}</td>
-                                <td>{{ $item->nama_member }}</td>
-                                <td>{{ $item->telp_member }}</td>
-                                <td>{{ $item->email_member }}</td>
-                                <td>{{ $item->tgllahir_member }}</td>
-                                <td>{{ $item->gender_member }}</td>
+                                <td>{{ ucfirst($item['status_customers']) }}</td>
+                                <td>{{ $item['nama_customers'] }}</td>
+                                <td>{{ $item['telp_customers'] }}</td>
+                                <td>{{ $item['email_customers'] }}</td>
+                                <td>{{ $item['tglLahir_customers'] !== '0000-00-00' ? $item['tglLahir_customers'] : '-' }}</td>
+                                <td>{{ $item['gender_customers'] ?: '-' }}</td>
                                 <td>
-                                    <button class="btn btn-primary mr-2" data-bs-toggle="modal" data-bs-target="#editmemberModal"
-                                    data-idmember="{{ $item->id_member }}"
-                                    data-namamember="{{ $item->nama_member }}"
-                                    data-alamatmember="{{ $item->alamat_member }}"
-                                    data-telpmember="{{ $item->telp_member }}"
-                                    data-emailmember="{{ $item->email_member }}"
-                                    data-tgllahirmember="{{ $item->tgllahir_member }}"
-                                    data-gendermember="{{ $item->gender_member }}"
-                                    data-statusmember="{{ $item->status_member }}">Edit</button>
-                                    <button class="btn btn-danger mr-2 deleteSwal"
-                                    data-idmember="{{ $item->id_member }}" data-namamember="{{ $item->nama_member }}"
-                                    data-action="{{ route('admin.datamember.delete', $item->id_member) }}">Delete</button>
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#editmemberModal"
+                                            data-idCustomers="{{ $item['id_customers'] }}"
+                                            data-namaCustomers="{{ $item['nama_customers'] }}"
+                                            data-genderCustomers="{{ $item['gender_customers'] }}"
+                                            data-tglLahirCustomers="{{ $item['tglLahir_customers'] }}"
+                                            data-telpCustomers="{{ $item['telp_customers'] }}"
+                                            data-emailCustomers="{{ $item['email_customers'] }}"
+                                            data-alamatCustomers="{{ $item['alamat_customers'] }}"
+                                            data-statusCustomers="{{ $item['status_customers'] }}">
+                                            Edit
+                                        </button>
+                                        <button class="btn btn-danger w-100 deleteSwal"
+                                            data-idCustomers="{{ $item['id_customers'] }}"
+                                            data-namaCustomers="{{ $item['nama_customers'] }}"
+                                            data-action="{{ route('admin.datamember.delete', $item['id_customers']) }}">
+                                            Delete
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                             @endforeach

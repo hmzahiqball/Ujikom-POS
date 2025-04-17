@@ -17,10 +17,22 @@
                                 <label for="nama_addmember">Nama Lengkap Member</label>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col">
                             <div class="form-floating mb-3">
                                 <input type="date" class="form-control" id="tgllahir_addmember" placeholder="Tanggal Lahir Member" name="tgllahir_addmember" required>
                                 <label for="tgllahir_addmember">Tanggal Lahir Member</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" aria-label="Default select example" id="gender_addmember" name="gender_addmember">
+                                    <option>Pilih Gender Member</option>
+                                    <option value="Laki-Laki">Laki - Laki</option>
+                                    <option value="Perempuan">Perempuan</option>
+                                </select>
+                                <label for="gender_addmember">Gender Member</label>
                             </div>
                         </div>
                     </div>
@@ -35,28 +47,6 @@
                             <div class="form-floating mb-3">
                                 <input type="email" class="form-control" id="email_addmember" placeholder="E-mail Member" name="email_addmember" required>
                                 <label for="email_addmember">E-mail Member</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-floating mb-3">
-                                <select class="form-select" aria-label="Default select example" id="gender_addmember" name="gender_addmember">
-                                    <option>Pilih Gender Member</option>
-                                    <option value="Laki - Laki">Laki - Laki</option>
-                                    <option value="Perempuan">Perempuan</option>
-                                </select>
-                                <label for="gender_addmember">Gender Member</label>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-floating mb-3">
-                                <select class="form-select" aria-label="Default select example" id="status_addmember" name="status_addmember">
-                                    <option selected>Pilih Status Member</option>
-                                    <option value="Aktif">Aktif</option>
-                                    <option value="Tidak Aktif">Tidak Aktif</option>
-                                </select>
-                                <label for="status_addmember">Status Member</label>
                             </div>
                         </div>
                     </div>

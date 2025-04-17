@@ -14,13 +14,13 @@
                         <div class="col">
                             <div class="form-floating mb-3">
                                 <input type="hidden" class="form-control" id="id_editmember" name="id_editmember">
-                                <input type="text" class="form-control" id="nama_editmember" placeholder="Nama Lengkap Member" name="nama_editmember" required>
+                                <input type="text" class="form-control" id="nama_editmember" placeholder="Nama Lengkap Member" name="nama_editmember" required disabled>
                                 <label for="nama_editmember">Nama Lengkap Member</label>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-floating mb-3">
-                                <input type="date" class="form-control" id="tgllahir_editmember" placeholder="Tanggal Lahir Member" name="tgllahir_editmember" required>
+                                <input type="text" class="form-control" id="tgllahir_editmember" placeholder="Tanggal Lahir Member" name="tgllahir_editmember" required disabled>
                                 <label for="tgllahir_editmember">Tanggal Lahir Member</label>
                             </div>
                         </div>
@@ -42,9 +42,9 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-floating mb-3">
-                                <select class="form-select" aria-label="Default select example" id="gender_editmember" name="gender_editmember">
+                                <select class="form-select" aria-label="Default select example" id="gender_editmember" name="gender_editmember" disabled>
                                     <option>Pilih Gender Member</option>
-                                    <option value="Laki - Laki">Laki - Laki</option>
+                                    <option value="Laki-Laki">Laki - Laki</option>
                                     <option value="Perempuan">Perempuan</option>
                                 </select>
                                 <label for="gender_editmember">Gender Member</label>
@@ -54,8 +54,8 @@
                             <div class="form-floating mb-3">
                                 <select class="form-select" aria-label="Default select example" id="status_editmember" name="status_editmember">
                                     <option>Pilih Status Member</option>
-                                    <option value="Aktif">Aktif</option>
-                                    <option value="Tidak Aktif">Tidak Aktif</option>
+                                    <option value="aktif">Aktif</option>
+                                    <option value="non-aktif">Tidak Aktif</option>
                                 </select>
                                 <label for="status_editmember">Status Member</label>
                             </div>
@@ -83,24 +83,28 @@
     $(document).ready(function() {
         $('#editmemberModal').on('show.bs.modal', function(event) {
             var btn = $(event.relatedTarget),
-                idmember = btn.data('idmember'),
-                namamember = btn.data('namamember'),
-                alamatmember = btn.data('alamatmember'),
-                telpmember = btn.data('telpmember'),
-                emailmember = btn.data('emailmember'),
-                tgllahirmember = btn.data('tgllahirmember'),
-                gendermember = btn.data('gendermember'),
-                statusmember = btn.data('statusmember');
+                idCustomers = btn.data('idcustomers'),
+                namaCustomers = btn.data('namacustomers'),
+                genderCustomers = btn.data('gendercustomers'),
+                tglLahirCustomers = btn.data('tgllahircustomers'),
+                telpCustomers = btn.data('telpcustomers'),
+                emailCustomers = btn.data('emailcustomers'),
+                alamatCustomers = btn.data('alamatcustomers'),
+                statusCustomers = btn.data('statuscustomers');
 
-            $('#editmemberModal').find('#id_editmember').val(idmember);
-            $('#editmemberModal').find('#nama_editmember').val(namamember);
-            $('#editmemberModal').find('#alamat_editmember').val(alamatmember);
-            $('#editmemberModal').find('#telp_editmember').val(telpmember);
-            $('#editmemberModal').find('#email_editmember').val(emailmember);
-            $('#editmemberModal').find('#tgllahir_editmember').val(tgllahirmember);
-            $('#editmemberModal').find('#gender_editmember').val(gendermember);
-            $('#editmemberModal').find('#status_editmember').val(statusmember);
-            $('#editbutton_swal').data('namamemberswal', namamember);
+            $('#editmemberModal').find('#id_editmember').val(idCustomers);
+            $('#editmemberModal').find('#nama_editmember').val(namaCustomers);
+            if (genderCustomers == '') {
+                $('#editmemberModal').find('#gender_editmember').val($('#editmemberModal').find('#gender_editmember').find('option:first').val());
+            } else {
+                $('#editmemberModal').find('#gender_editmember').val(genderCustomers);
+            }
+            $('#editmemberModal').find('#tgllahir_editmember').val(tglLahirCustomers);
+            $('#editmemberModal').find('#telp_editmember').val(telpCustomers);
+            $('#editmemberModal').find('#email_editmember').val(emailCustomers);
+            $('#editmemberModal').find('#alamat_editmember').val(alamatCustomers);
+            $('#editmemberModal').find('#status_editmember').val(statusCustomers);
+            $('#editbutton_swal').data('namamemberswal', namaCustomers);
         });
 
         // SweetAlert confirmation

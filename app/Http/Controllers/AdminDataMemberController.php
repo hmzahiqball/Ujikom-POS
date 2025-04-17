@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 
 class AdminDataMemberController extends Controller
 {
@@ -12,9 +13,26 @@ class AdminDataMemberController extends Controller
      */
     public function index()
     {
-        $get_kategori = DB::select('CALL sp_get_datakategori()'); //mengambil data kategori dari database melalui stored procedure di mysql
-        $get_member = DB::select('CALL sp_get_datamember()'); //mengambil data member dari database melalui stored procedure di mysql
-        return view('admin.datamember' , ['member' => $get_member, 'kategori' => $get_kategori]);
+        try {
+            // Ambil data customer dari API eksternal
+            $response = Http::get('http://localhost:1111/api/customer/');
+
+            if ($response->successful()) {
+                $get_member = $response['data']; // ambil array data dari JSON
+            } else {
+                $get_member = []; // fallback kosong kalau gagal
+            }
+
+            return view('admin.datamember', [
+                'member' => $get_member,
+                'success' => $response['message']
+            ]);
+        } catch (\Exception $e) {
+            return view('admin.datamember', [
+                'member' => [],
+                'error' => 'Gagal mengambil data produk'
+            ]);
+        }
     }
 
     /**
@@ -30,37 +48,26 @@ class AdminDataMemberController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate the request...
-        $request->validate([
-            'nama_addmember' => 'required',
-            'tgllahir_addmember' => 'required',
-            'telp_addmember' => 'required|numeric',
-            'email_addmember' => 'required',
-            'gender_addmember' => 'required',
-            'alamat_addmember' => 'required'
-        ]);
+        try {
+            $data = [
+                'p_namaCustomers'     => $request->input('nama_addmember'),
+                'p_genderCustomers'   => $request->input('gender_addmember'),
+                'p_tglLahirCustomers' => $request->input('tgllahir_addmember'),
+                'p_telpCustomers'     => $request->input('telp_addmember'),
+                'p_emailCustomers'    => $request->input('email_addmember'),
+                'p_alamatCustomers'   => $request->input('alamat_addmember'),
+            ];
 
-        // Ambil semua data yang dikirimkan oleh formulir
-        $nama_member = $request->input('nama_addmember');
-        $tgllahir_member = $request->input('tgllahir_addmember');
-        $telp_member = $request->input('telp_addmember');
-        $email_member = $request->input('email_addmember');
-        $gender_member = $request->input('gender_addmember');
-        $status_member = 'Aktif';
-        $alamat_member = $request->input('alamat_addmember');
+            $response = Http::post('http://localhost:1111/api/customer/', $data);
 
-        // Panggil stored procedure untuk update
-        DB::statement("CALL sp_add_datamember(?, ?, ?, ?, ?, ?, ?)", array(
-            $nama_member,
-            $alamat_member,
-            $telp_member,
-            $email_member,
-            $tgllahir_member,
-            $gender_member,
-            $status_member,
-        ));
-
-        return redirect('admin/datamember');
+            if ($response->successful()) {
+                return redirect('admin/datamember')->with('success', 'Customer berhasil ditambahkan.');
+            } else {
+                return redirect('admin/datamember')->with('error', 'Gagal menambahkan customer.');
+            }
+        } catch (\Exception $e) {
+            return redirect('admin/datamember')->with('error', 'Terjadi kesalahan saat menambahkan customer');
+        }
     }
 
     /**
@@ -84,41 +91,28 @@ class AdminDataMemberController extends Controller
      */
     public function update(Request $request)
     {
-        // Validate the request...
-        $request->validate([
-            'id_editmember' => 'required|numeric',
-            'nama_editmember' => 'required',
-            'tgllahir_editmember' => 'required',
-            'telp_editmember' => 'required|numeric',
-            'email_editmember' => 'required',
-            'gender_editmember' => 'required',
-            'status_editmember' => 'required',
-            'alamat_editmember' => 'required'
-        ]);
+        try {
+            $idCustomers = $request->input('id_editmember');
 
-        // Ambil semua data yang dikirimkan oleh formulir
-        $id_member = $request->input('id_editmember');
-        $nama_member = $request->input('nama_editmember');
-        $tgllahir_member = $request->input('tgllahir_editmember');
-        $telp_member = $request->input('telp_editmember');
-        $email_member = $request->input('email_editmember');
-        $gender_member = $request->input('gender_editmember');
-        $status_member = $request->input('status_editmember');
-        $alamat_member = $request->input('alamat_editmember');
+            $url = "http://localhost:1111/api/customer/{$idCustomers}";
+            $data = [
+                'p_telpCustomers'     => $request->input('telp_editmember'),
+                'p_emailCustomers'   => $request->input('email_editmember'),
+                'p_alamatCustomers' => $request->input('alamat_editmember'),
+                'p_statusCustomers'     => $request->input('status_editmember'),
+            ];
+            // dd($data, $url);
 
-        // Panggil stored procedure untuk update
-        DB::statement("CALL sp_edit_datamember(?, ?, ?, ?, ?, ?, ?, ?)", array(
-            $id_member,
-            $nama_member,
-            $alamat_member,
-            $telp_member,
-            $email_member,
-            $tgllahir_member,
-            $gender_member,
-            $status_member,
-        ));
+            $response = Http::put($url, $data);
 
-        return redirect('admin/datamember');
+            if ($response->successful()) {
+                return redirect('admin/datamember')->with('success', $response['message']);
+            } else {
+                return redirect('admin/datamember')->with('error', 'Gagal menambahkan customer.');
+            }
+        } catch (\Exception $e) {
+            return redirect('admin/datamember')->with('error', 'Terjadi kesalahan saat menambahkan customer');
+        }
     }
 
     /**
@@ -126,14 +120,24 @@ class AdminDataMemberController extends Controller
      */
     public function destroy(Request $request)
     {
-        // Ambil semua data yang dikirimkan oleh formulir
-        $id_member = $request->input('id_deletemember');
+        $request->validate([
+            'id_deletemember' => 'required|numeric',
+        ]);
 
-        // Panggil stored procedure untuk update
-        DB::statement("CALL sp_delete_datamember(?)", array(
-            $id_member,
-        ));
+        $idCustomers = $request->id_deletemember;
 
-        return redirect('admin/datamember');
+        try {
+            $response = Http::withHeaders([
+                'Accept' => 'application/json',
+            ])->delete("http://localhost:1111/api/customer/{$idCustomers}");
+
+            if ($response->successful()) {
+                return redirect('admin/datamember')->with('success', 'Customer berhasil dihapus.');
+            }
+
+            return redirect()->back()->with('error', 'Gagal menghapus customer: ' . $response->json()['message']);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menghapus customer: ' . $e->getMessage());
+        }
     }
 }
