@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\session;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Http;
 
 class KasirTransaksiController extends Controller
 {
@@ -14,10 +16,32 @@ class KasirTransaksiController extends Controller
      */
     public function index()
     {
-        $get_kategori = DB::select('CALL sp_get_datakategori()');
-        $get_produk = DB::select('CALL sp_get_dataproduk()');
-        $get_member = DB::select('CALL sp_get_datamember()');
-        return view('kasir.transaksi', ['data_kategori' => $get_kategori, 'data_produk' => $get_produk, 'data_member' => $get_member]);
+        try {
+            // Ambil data kategori dari API
+            $kategoriResponse = Http::get('http://localhost:1111/api/kategori/');
+            $data_kategori = $kategoriResponse->successful() ? $kategoriResponse->json('data') : [];
+
+            // Ambil data produk dari API
+            $produkResponse = Http::get('http://localhost:1111/api/produk/');
+            $data_produk = $produkResponse->successful() ? $produkResponse->json('data') : [];
+
+            // Ambil data member/customer dari API
+            $memberResponse = Http::get('http://localhost:1111/api/customer/');
+            $data_member = $memberResponse->successful() ? $memberResponse->json('data') : [];
+
+            return view('kasir.transaksi', [
+                'data_kategori' => $data_kategori,
+                'data_produk' => $data_produk,
+                'data_member' => $data_member
+            ]);
+        } catch (\Exception $e) {
+            return view('kasir.transaksi', [
+                'data_kategori' => [],
+                'data_produk' => [],
+                'data_member' => [],
+                'error' => 'Gagal mengambil data produk: ' . $e->getMessage()
+            ]);
+        }
     }
 
     /**
@@ -34,73 +58,53 @@ class KasirTransaksiController extends Controller
 
     public function store(Request $request)
     {
-        // Validasi data yang dikirimkan
-        $validatedData = $request->validate([
-            'member_transaksi' => 'required',
-            'totalharga_transaksi' => 'required',
-            'totalbayar_transaksi' => 'required',
-            'cartData' => 'required',
-        ]);
-
-        // Ambil data dari request
-        $id_petugas = Session::get('tb_petugas')->id_petugas;
-        $member_transaksi = $request->input('member_transaksi');
-        $totalharga_transaksi = $request->input('totalharga_transaksi');
-        $totalbayar_transaksi = $request->input('totalbayar_transaksi');
-        $cartData = json_decode($request->cartData, true);
-        $status_transaksi = 'Berhasil';
-
-        // Ambil kode petugas dari session
-        $kode_petugas = Session::get('tb_petugas')->kode_petugas;
-
-        // Ambil tanggal, bulan, dan tahun saat ini
-        $tanggal = date('d');
-        $bulan = date('m');
-        $tahun = date('y');
-
-        // Ambil nomor pembelian pada hari itu dari database
-        $nomor_pembelian = DB::table('tb_transaksi')
-        ->whereDate('tgl_transaksi', now())
-        ->count() + 1;
-
-        // Format nomor pembelian menjadi 4 digit dengan leading zero
-        $nomor_pembelian_formatted = str_pad($nomor_pembelian, 4, '0', STR_PAD_LEFT);
-
-        // Buat nomor transaksi
-        $no_transaksi = $kode_petugas . '-' . $tanggal . $bulan . $tahun . $nomor_pembelian_formatted;
-
-        // Mulai transaksi database
-        DB::beginTransaction();
-
         try {
-            // Panggil stored procedure untuk menambahkan data ke tb_transaksi
-            DB::statement('CALL sp_add_transaksi(?, ?, ?, ?, ?, ?)', [
-                $no_transaksi,
-                $id_petugas,
-                $member_transaksi,
-                $totalharga_transaksi,
-                $totalbayar_transaksi,
-                $status_transaksi,
-            ]);
+            // Ambil data dari session
+            $sessionUser = session('tb_petugas');
+            $id_karyawan = $sessionUser['data_user']['id_karyawan'] ?? null;
 
-            // Ambil id_transaksi terakhir yang dimasukkan
-            $id_transaksi = DB::getPdo()->lastInsertId();
+            // Ambil request data
+            $id_customer = (int) $request->input('member_transaksi');
+            $total_harga = (int) $request->input('totalharga_transaksi');
+            $total_bayar = (int) $request->input('totalbayar_transaksi');
+            $total_kembalian = (int) $request->input('kembalian_transaksi');
+            $cartData = json_decode($request->input('cartData'), true);
 
-            // Panggil stored procedure untuk menambahkan data ke tb_detailtransaksi
-            foreach ($cartData as $item) {
-                DB::statement('CALL sp_add_detailtransaksi(?, ?, ?, ?, ?)', [
-                    $no_transaksi,
-                    $item['namaproduk_transaksi'],
-                    $item['kuantitas_transaksi'],
-                    $item['hargaproduk_transaksi'],
-                    $item['potongan_transaksi']
-                ]);
+            // Buat tanggal sekarang
+            $tanggal = Carbon::now()->format('Y-m-d H:i:s');
+
+            // Format detail produk
+            $detailPenjualan = collect($cartData)->map(function ($item) {
+                return [
+                    'p_idProduk' => (int) $item['namaproduk_transaksi'], // pastikan ini ID produk
+                    'p_kuantitas' => (int) $item['kuantitas_transaksi'],
+                    'p_harga' => (int) $item['hargaproduk_transaksi'],
+                    'p_subTotal' => (int) ($item['hargaproduk_transaksi'] * $item['kuantitas_transaksi']),
+                ];
+            })->toArray();
+
+            // Bangun body request API
+            $body = [
+                'p_idCustomers' => $id_customer,
+                'p_idKaryawan' => $id_karyawan,
+                'p_totalHarga' => $total_harga,
+                'p_totalBayar' => $total_bayar,
+                'p_totalKembalian' => $total_kembalian,
+                'p_diskon' => 0,
+                'p_tanggal' => $tanggal,
+                'p_detailPenjualan' => $detailPenjualan
+            ];
+
+            // Kirim ke API
+            $response = Http::post('http://localhost:1111/api/laporanPenjualan/', $body);
+
+            if ($response->successful()) {
+                return redirect()->back()->with('success', 'Transaksi berhasil!');
+            } else {
+                return redirect()->back()->with('error', 'Gagal menyimpan transaksi: ' . $response->body());
             }
-
-            DB::commit();
-            return redirect('kasir/riwayattransaksi');
         } catch (\Exception $e) {
-            echo "error => Terjadi kesalahan saat menambahkan transaksi: ";
+            return redirect()->back()->with('error', 'Gagal menyimpan transaksi: ' . $e->getMessage());
         }
     }
 
