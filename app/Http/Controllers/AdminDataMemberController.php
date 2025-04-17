@@ -17,7 +17,7 @@ class AdminDataMemberController extends Controller
             // Ambil data customer dari API eksternal
             $response = Http::get('http://localhost:1111/api/customer/');
 
-            if ($response->successful()) {
+            if ($response['status'] === 200) {
                 $get_member = $response['data']; // ambil array data dari JSON
             } else {
                 $get_member = []; // fallback kosong kalau gagal
@@ -60,7 +60,7 @@ class AdminDataMemberController extends Controller
 
             $response = Http::post('http://localhost:1111/api/customer/', $data);
 
-            if ($response->successful()) {
+            if ($response['status'] === 200) {
                 return redirect('admin/datamember')->with('success', 'Customer berhasil ditambahkan.');
             } else {
                 return redirect('admin/datamember')->with('error', 'Gagal menambahkan customer.');
@@ -105,7 +105,7 @@ class AdminDataMemberController extends Controller
 
             $response = Http::put($url, $data);
 
-            if ($response->successful()) {
+            if ($response['status'] === 200) {
                 return redirect('admin/datamember')->with('success', $response['message']);
             } else {
                 return redirect('admin/datamember')->with('error', 'Gagal menambahkan customer.');
@@ -131,7 +131,7 @@ class AdminDataMemberController extends Controller
                 'Accept' => 'application/json',
             ])->delete("http://localhost:1111/api/customer/{$idCustomers}");
 
-            if ($response->successful()) {
+            if ($response['status'] === 200) {
                 return redirect('admin/datamember')->with('success', 'Customer berhasil dihapus.');
             }
 

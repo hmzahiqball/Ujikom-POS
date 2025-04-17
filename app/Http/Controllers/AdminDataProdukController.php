@@ -15,7 +15,7 @@ class AdminDataProdukController extends Controller
             $produkResponse = Http::get('http://localhost:1111/api/produk/');
             $kategoriResponse = Http::get('http://localhost:1111/api/kategori/');
 
-            if ($produkResponse->successful() && $kategoriResponse->successful()) {
+            if ($produkResponse['status'] === 200 && $kategoriResponse['status'] === 200) {
                 return view('admin.dataproduk', [
                     'produk' => $produkResponse['data'],
                     'kategori' => $kategoriResponse['data'],
@@ -81,7 +81,7 @@ class AdminDataProdukController extends Controller
             $image->getClientOriginalName()
         )->post('http://localhost:1111/api/produk', $payload);
 
-        if ($response->successful()) {
+        if ($response['status'] === 200) {
             return redirect('admin/dataproduk')->with('success', 'Produk berhasil ditambahkan.');
         }
 
@@ -133,7 +133,7 @@ class AdminDataProdukController extends Controller
             $request->file('foto_editproduk')
         );
 
-        if ($response->successful()) {
+        if ($response['status'] === 200) {
             return redirect('admin/dataproduk')->with('success', 'Produk berhasil diperbarui.');
         }
 
@@ -153,7 +153,7 @@ class AdminDataProdukController extends Controller
                 'Accept' => 'application/json',
             ])->delete("http://localhost:1111/api/produk/{$idProduk}");
 
-            if ($response->successful()) {
+            if ($response['status'] === 200) {
                 return redirect('admin/dataproduk')->with('success', 'Produk berhasil dihapus.');
             }
 

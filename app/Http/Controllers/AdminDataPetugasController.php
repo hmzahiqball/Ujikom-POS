@@ -17,7 +17,7 @@ class AdminDataPetugasController extends Controller
             $karyawanResponse = Http::get('http://localhost:1111/api/karyawan/');
             $shiftsResponse = Http::get('http://localhost:1111/api/shifts/');
 
-            if ($karyawanResponse->successful() && $shiftsResponse->successful()) {
+            if ($karyawanResponse['status'] === 200 && $shiftsResponse['status'] === 200) {
                 return view('admin.datapetugas', [
                     'petugas' => $karyawanResponse['data'],
                     'shifts' => $shiftsResponse['data'],
@@ -73,7 +73,7 @@ class AdminDataPetugasController extends Controller
             $request->file('foto_addpetugas')
         );
 
-        if (!$response->successful()) {
+        if (!$response['status'] === 200) {
             return back()->with('error', 'Gagal menambahkan data petugas');
         }
 
@@ -126,7 +126,7 @@ class AdminDataPetugasController extends Controller
             );
 
             // Cek status response dari kedua API
-            if ($karyawanResponse->successful() && $userResponse->successful()) {
+            if ($karyawanResponse['status'] === 200 && $userResponse['status'] === 200) {
                 return redirect('admin/datapetugas')->with('success', 'Data berhasil diperbarui!');
             } else {
                 return back()->with('error', 'Gagal update ke salah satu endpoint');
@@ -150,7 +150,7 @@ class AdminDataPetugasController extends Controller
                 'Accept' => 'application/json',
             ])->delete("http://localhost:1111/api/karyawan/{$idPetugas}");
 
-            if ($response->successful()) {
+            if ($response['status'] === 200) {
                 return redirect('admin/datapetugas')->with('success', 'Data berhasil dihapus.');
             }
 
