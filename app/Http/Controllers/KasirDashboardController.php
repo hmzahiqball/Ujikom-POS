@@ -2,26 +2,69 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Session;
 
 class KasirDashboardController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $id_petugas = session()->get('tb_petugas')['id_user'];
-        $get_produk = DB::select('CALL sp_get_dataproduk()'); //mengambil data produk dari database melalui stored procedure di mysql
-        $get_kategori = collect(DB::select('CALL sp_get_datakategori()')); //mengambil data kategori dari database melalui stored procedure di mysql
-        $kategori_unik = $get_kategori->unique('id_kategori');
-        $get_penjualanperiode = DB::select('CALL sp_get_datatransaksi(?, ?)', [date('Y-m-d'), $id_petugas]);
+        try {
+            // Ambil ID petugas dari session
+            $id_petugas = Session::get('tb_petugas')['data_user']['id_karyawan'];
 
-        // Hitung jumlah total data
-        $total_data = count($get_penjualanperiode);
-        $total_produk = count($get_produk);
+            // Ambil tanggal awal dan akhir bulan ini
+            $startDate = Carbon::now()->startOfMonth()->format('Y-m-d');
+            $endDate = Carbon::now()->endOfMonth()->format('Y-m-d');
+            $tanggal = $startDate . '_' . $endDate;
 
-        // Menghitung total nilai dari kolom total_transaksi
-        $total_penjualan = collect($get_penjualanperiode)->sum('total_harga');
+            // Ambil data produk
+            $produkResponse = Http::get('http://localhost:1111/api/produk/');
+            $get_produk = $produkResponse->successful() ? $produkResponse->json('data') : [];
 
-        return view('kasir.dashboard' , ['penjualan' => $get_penjualanperiode, 'periodepenjualan' => $total_data, 'totalpenjualan' => $total_penjualan, 'kategori' => $get_kategori, 'totalproduk' => $total_produk]);
+            // Ambil data kategori
+            $kategoriResponse = Http::get('http://localhost:1111/api/kategori/');
+            $get_kategori = $kategoriResponse->successful() ? collect($kategoriResponse->json('data')) : collect([]);
+
+            // Filter kategori unik berdasarkan id_kategori
+            $kategori_unik = $get_kategori->unique('id_kategori');
+
+            // Ambil data penjualan (periode hari ini default)
+            $penjualanResponse = Http::get('http://localhost:1111/api/laporanPenjualan', [
+                'idpetugas' => $id_petugas,
+                'tanggal' => $tanggal
+            ]);
+            $get_penjualanperiode = $penjualanResponse->successful() ? $penjualanResponse->json('data') : [];
+
+            // Hitung total data penjualan
+            $total_data = count($get_penjualanperiode);
+            $total_produk = count($get_produk);
+
+            // Total nilai penjualan
+            $total_penjualan = collect($get_penjualanperiode)->sum(function ($item) {
+                return (int)$item['total_harga'];
+            });
+
+            return view('kasir.dashboard', [
+                'penjualan' => $get_penjualanperiode,
+                'periodepenjualan' => $total_data,
+                'totalpenjualan' => $total_penjualan,
+                'totalproduk' => $total_produk,
+                'kategori' => $get_kategori,
+                'kategori_unik' => $kategori_unik
+            ]);
+        } catch (\Exception $e) {
+            return view('kasir.dashboard', [
+                'penjualan' => [],
+                'periodepenjualan' => 0,
+                'totalpenjualan' => 0,
+                'totalproduk' => 0,
+                'kategori' => collect([]),
+                'kategori_unik' => collect([]),
+                'error' => 'Gagal mengambil data dashboard: ' . $e->getMessage()
+            ]);
+        }
     }
 }

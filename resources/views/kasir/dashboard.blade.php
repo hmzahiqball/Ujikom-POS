@@ -88,7 +88,7 @@
                         </div>
                         <p class="mt-3 mb-0 text-muted text-sm">
                             <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> Rp.</span>
-                            <span class="text-success mr-2"></i> {{ number_format($totalpenjualan, 0, ',', '.') }}</span>
+                            <span class="text-success mr-2"></i>{{ number_format($totalpenjualan, 0, ',', '.') }}</span>
                         </p>
                     </div>
                 </div>
@@ -108,7 +108,7 @@
                             </div>
                         </div>
                         <p class="mt-3 mb-0 text-muted text-sm">
-                            <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> {{ $totalproduk }}</span>
+                            <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> {{$totalproduk}}</span>
                             <span class="text-nowrap">Produk</span>
                         </p>
                     </div>
@@ -132,12 +132,12 @@
                                     <strong>Alamat Rumah :</strong>
                                 </p>
                                 <p class="card-text">
-                                    {{ Session::has('tb_petugas') ? Session::get('tb_petugas')['alamat_karyawan'] : 'Alamat Petugas' }}<br>
+                                    {{ Session::has('tb_petugas') ? Session::get('tb_petugas')['data_user']['alamat_karyawan'] : 'Alamat Petugas' }}<br>
                                 </p>
                             </div>
                             <div class="col-auto">
-                                <img src="{{ Session::has('foto_petugas') ? asset('uploads/' . Session::get('foto_petugas')) : 'Foto Petugas' }}" alt="Foto Petugas"
-                                class="profile-photo" height="200px" width="200px">
+                                <img src="{{ session('foto_petugas') ? session('foto_petugas') : 'https://placehold.co/200' }}"
+                                alt="Foto Petugas" class="profile-photo" height="200px" width="200px">
                             </div>
                         </div>
 
@@ -177,9 +177,9 @@
                             <tbody>
                                 @foreach($penjualan as $key => $item)
                                 <tr>
-                                    <td>{{ $item->kode_penjualan }}</td>
-                                    <td>Rp. {{ number_format($item->total_harga, 0, ',', '.') }}</td>
-                                    <td>{{ $item->tanggal_penjualan }}</td>
+                                    <td>{{ $item['kode_penjualan'] }}</td>
+                                    <td>Rp. {{ number_format($item['total_harga'], 0, ',', '.') }}</td>
+                                    <td>{{ $item['tanggal_penjualan'] }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>

@@ -43,8 +43,8 @@
         <div class="dropdown pb-4">
             <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
                 id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="{{ Session::has('foto_petugas') ? asset('uploads/' . Session::get('foto_petugas')) : 'Foto Petugas' }}" alt="Foto Petugas"
-                width="30" height="30" class="rounded-circle">
+                <img src="{{ session('foto_petugas') ? session('foto_petugas') : 'https://placehold.co/200' }}"
+                                alt="Foto Petugas" class="rounded-circle" height="30" width="30">
                 <span class="d-none d-sm-inline mx-1">{{ Session::has('tb_petugas') ? Session::get('tb_petugas')['nama_user'] : 'Nama Petugas' }}</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">

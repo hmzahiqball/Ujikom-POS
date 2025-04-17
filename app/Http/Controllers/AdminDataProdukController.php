@@ -15,7 +15,7 @@ class AdminDataProdukController extends Controller
             $produkResponse = Http::get('http://localhost:1111/api/produk/');
             $kategoriResponse = Http::get('http://localhost:1111/api/kategori/');
 
-            if ($produkResponse['status'] === 200 && $kategoriResponse['status'] === 200) {
+            if ($produkResponse['status'] === 200 && $kategoriResponse->successful()) {
                 return view('admin.dataproduk', [
                     'produk' => $produkResponse['data'],
                     'kategori' => $kategoriResponse['data'],

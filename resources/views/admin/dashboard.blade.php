@@ -177,9 +177,9 @@
                             <tbody>
                                 @foreach($penjualan as $key => $item)
                                 <tr>
-                                    <td>{{ $item->kode_penjualan }}</td>
-                                    <td>Rp. {{ number_format($item->total_harga, 0, ',', '.') }}</td>
-                                    <td>{{ $item->tanggal_penjualan }}</td>
+                                    <td>{{ $item['kode_penjualan'] }}</td>
+                                    <td>Rp. {{ number_format($item['total_harga'], 0, ',', '.') }}</td>
+                                    <td>{{ $item['tanggal_penjualan'] }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>

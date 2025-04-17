@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Session;
 
 class AdminDashboardController extends Controller
 {
@@ -12,67 +14,56 @@ class AdminDashboardController extends Controller
      */
     public function index()
     {
-        $id_petugas = null;
-        $get_produk = DB::select('CALL sp_get_dataproduk()'); //mengambil data produk dari database melalui stored procedure di mysql
-        $get_kategori = collect(DB::select('CALL sp_get_datakategori()')); //mengambil data kategori dari database melalui stored procedure di mysql
-        $kategori_unik = $get_kategori->unique('id_kategori');
-        $get_penjualanperiode = DB::select('CALL sp_get_datatransaksi(?, ?)', [date('Y-m-d'), $id_petugas]);
+        try {
+            // Ambil tanggal awal dan akhir bulan ini
+            $startDate = Carbon::now()->startOfMonth()->format('Y-m-d');
+            $endDate = Carbon::now()->endOfMonth()->format('Y-m-d');
+            $tanggal = $startDate . '_' . $endDate;
 
-        // Hitung jumlah total data
-        $total_data = count($get_penjualanperiode);
-        $total_produk = count($get_produk);
+            // Ambil data produk
+            $produkResponse = Http::get('http://localhost:1111/api/produk/');
+            $get_produk = $produkResponse->successful() ? $produkResponse->json('data') : [];
 
-        // Menghitung total nilai dari kolom total_transaksi
-        $total_penjualan = collect($get_penjualanperiode)->sum('total_harga');
+            // Ambil data kategori
+            $kategoriResponse = Http::get('http://localhost:1111/api/kategori/');
+            $get_kategori = $kategoriResponse->successful() ? collect($kategoriResponse->json('data')) : collect([]);
 
-        return view('admin.dashboard' , ['penjualan' => $get_penjualanperiode, 'periodepenjualan' => $total_data, 'totalpenjualan' => $total_penjualan, 'totalproduk' => $total_produk, 'kategori' => $get_kategori, 'kategori_unik' => $kategori_unik]);
-    }
+            // Filter kategori unik berdasarkan id_kategori
+            $kategori_unik = $get_kategori->unique('id_kategori');
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+            // Ambil data penjualan (periode hari ini default)
+            $penjualanResponse = Http::get('http://localhost:1111/api/laporanPenjualan', [
+                'tanggal' => $tanggal
+            ]);
+            $get_penjualanperiode = $penjualanResponse->successful() ? $penjualanResponse->json('data') : [];
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+            // Hitung total data penjualan
+            $total_data = count($get_penjualanperiode);
+            $total_produk = count($get_produk);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+            // Total nilai penjualan
+            $total_penjualan = collect($get_penjualanperiode)->sum(function ($item) {
+                return (int)$item['total_harga'];
+            });
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+            return view('kasir.dashboard', [
+                'penjualan' => $get_penjualanperiode,
+                'periodepenjualan' => $total_data,
+                'totalpenjualan' => $total_penjualan,
+                'totalproduk' => $total_produk,
+                'kategori' => $get_kategori,
+                'kategori_unik' => $kategori_unik
+            ]);
+        } catch (\Exception $e) {
+            return view('kasir.dashboard', [
+                'penjualan' => [],
+                'periodepenjualan' => 0,
+                'totalpenjualan' => 0,
+                'totalproduk' => 0,
+                'kategori' => collect([]),
+                'kategori_unik' => collect([]),
+                'error' => 'Gagal mengambil data dashboard: ' . $e->getMessage()
+            ]);
+        }
     }
 }
