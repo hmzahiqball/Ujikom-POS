@@ -66,9 +66,9 @@
             </div>
         </div>
     </div>
-    @extends('admin.modal.addsupplier')
-    @extends('admin.modal.editsupplier')
-    @extends('admin.modal.deletesupplier')
+    @extends('admin.modal.supplier.addsupplier')
+    @extends('admin.modal.supplier.editsupplier')
+    @extends('admin.modal.supplier.deletesupplier')
 @endsection
 @section('scripts')
     <script>

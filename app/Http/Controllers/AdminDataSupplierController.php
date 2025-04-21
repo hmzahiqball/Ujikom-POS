@@ -42,29 +42,32 @@ class AdminDataSupplierController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'nama_addsupplier'        => 'required',
-            'contactPerson_addsupplier'    => 'required|numeric',
-            'contactSuppliers_addsupplier' => 'required|numeric',
-            'email_addsupplier'  => 'required',
-            'alamat_addsupplier' => 'required',
-        ]);
+        try {
+            $request->validate([
+                'nama_addsupplier'        => 'required',
+                'contactPerson_addsupplier'    => 'required|numeric',
+                'contactSuppliers_addsupplier' => 'required|numeric',
+                'email_addsupplier'  => 'required',
+                'alamat_addsupplier' => 'required',
+            ]);
+        
+            $data = [
+                'p_namaSuppliers'         => $request->nama_addsupplier,
+                'p_contactPerson'         => $request->contactPerson_addsupplier,
+                'p_contactSuppliers'         => $request->contactSuppliers_addsupplier,
+                'p_emailSuppliers'         => $request->email_addsupplier,
+                'p_alamatSuppliers'         => $request->alamat_addsupplier,
+            ];
+            $response = Http::post('http://localhost:1111/api/suppliers/', $data);
 
-        $data = [
-            'p_namaSuppliers'         => $request->nama_addsupplier,
-            'p_contactPerson'         => $request->contactPerson_addsupplier,
-            'p_contactSuppliers'         => $request->contactSuppliers_addsupplier,
-            'p_emailSuppliers'         => $request->email_addsupplier,
-            'p_alamatSuppliers'         => $request->alamat_addsupplier,
-        ];
+            if ($response['status'] === 200) {
+                return redirect('admin/datasupplier')->with('success', 'Supplier berhasil ditambahkan.');
+            }
 
-        $response = Http::post('http://localhost:1111/api/suppliers/', $data);
-
-        if ($response['status'] === 200) {
-            return redirect('admin/datasupplier')->with('success', 'Supplier berhasil ditambahkan.');
+            return redirect()->back()->with('error', 'Gagal menambahkan supplier: ' . $response->json()['message']);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menambahkan supplier: ' . $e->getMessage());
         }
-
-        return redirect()->back()->with('error', 'Gagal menambahkan supplier: ' . $response->body());
     }
 
     /**

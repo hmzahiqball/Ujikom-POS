@@ -61,8 +61,8 @@
             </div>
         </div>
     </div>
-    @extends('admin.modal.viewpenjualan')
-    @extends('admin.modal.deletepenjualan')
+    @extends('admin.modal.penjualan.viewpenjualan')
+    @extends('admin.modal.penjualan.deletepenjualan')
 @endsection
 @section('scripts')
     <script>

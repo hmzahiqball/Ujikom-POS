@@ -71,9 +71,9 @@
             </div>
         </div>
     </div>
-    @extends('admin.modal.addpetugas')
-    @extends('admin.modal.editpetugas')
-    @extends('admin.modal.deletepetugas')
+    @extends('admin.modal.petugas.addpetugas')
+    @extends('admin.modal.petugas.editpetugas')
+    @extends('admin.modal.petugas.deletepetugas')
 @endsection
 @section('scripts')
     <script>

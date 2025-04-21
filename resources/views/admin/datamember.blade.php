@@ -68,9 +68,9 @@
             </div>
         </div>
     </div>
-    @extends('admin.modal.addmember')
-    @extends('admin.modal.editmember')
-    @extends('admin.modal.deletemember')
+    @extends('admin.modal.member.addmember')
+    @extends('admin.modal.member.editmember')
+    @extends('admin.modal.member.deletemember')
 @endsection
 @section('scripts')
     <script>

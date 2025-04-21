@@ -63,9 +63,9 @@
             </div>
         </div>
     </div>
-    @extends('admin.modal.addproduk')
-    @extends('admin.modal.editproduk')
-    @extends('admin.modal.deleteproduk')
+    @extends('admin.modal.produk.addproduk')
+    @extends('admin.modal.produk.editproduk')
+    @extends('admin.modal.produk.deleteproduk')
 @endsection
 @section('scripts')
     <script>
