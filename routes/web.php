@@ -16,6 +16,7 @@ use App\Http\Controllers\AdminDataPetugasController;
 use App\Http\Controllers\AdminDataPenjualanController;
 use App\Http\Controllers\AdminDataMemberController;
 use App\Http\Controllers\AdminDataSupplierController;
+use App\Http\Controllers\AdminDataKategoriProdukController;
 
 
 /*
@@ -43,6 +44,11 @@ Route::middleware(['admin'])->group(function () {
     Route::post('admin/dataproduk/add', [AdminDataProdukController::class, 'store']);
     Route::post('admin/dataproduk/update', [AdminDataProdukController::class, 'update']);
     Route::post('admin/dataproduk/delete', [AdminDataProdukController::class, 'destroy'])->name('admin.dataproduk.delete');
+
+    Route::resource('admin/datakategori', AdminDataKategoriProdukController::class);
+    Route::post('admin/datakategori/add', [AdminDataKategoriProdukController::class, 'store']);
+    Route::post('admin/datakategori/update', [AdminDataKategoriProdukController::class, 'update']);
+    Route::post('admin/datakategori/delete', [AdminDataKategoriProdukController::class, 'destroy'])->name('admin.datakategori.delete');
 
     Route::resource('admin/datapetugas', AdminDataPetugasController::class);
     Route::post('admin/datapetugas/add', [AdminDataPetugasController::class, 'store']);
