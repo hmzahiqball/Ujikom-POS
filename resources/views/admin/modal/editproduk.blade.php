@@ -154,7 +154,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="editbutton_swal" data-namaprodukswal="">Save changes</button>
+                    <button type="button" class="btn btn-primary" id="editbutton_swal">Save changes</button>
                 </div>
             </form>
         </div>
@@ -265,6 +265,7 @@
             $('#editprodukModal').find('#status_editproduk').val(statusproduk);
             $('#editprodukModal').find('#deskripsi_editproduk').val(deskripsiproduk);
             $('#editprodukModal').find('#foto_preview').attr('src', fotoproduk);
+            $('#editbutton_swal').data('namapetugasswal', namaproduk);
         });
 
         // Format unformat sebelum submit

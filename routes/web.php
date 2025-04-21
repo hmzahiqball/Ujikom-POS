@@ -15,6 +15,8 @@ use App\Http\Controllers\AdminDataProdukController;
 use App\Http\Controllers\AdminDataPetugasController;
 use App\Http\Controllers\AdminDataPenjualanController;
 use App\Http\Controllers\AdminDataMemberController;
+use App\Http\Controllers\AdminDataSupplierController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +51,11 @@ Route::middleware(['admin'])->group(function () {
 
     Route::resource('admin/datapenjualan', AdminDataPenjualanController::class);
     Route::post('admin/datapenjualan/delete', [AdminDataPenjualanController::class, 'destroy'])->name('admin.datapenjualan.delete');
+
+    Route::resource('admin/datasupplier', AdminDataSupplierController::class);
+    Route::post('admin/datasupplier/add', [AdminDataSupplierController::class, 'store']);
+    Route::post('admin/datasupplier/update', [AdminDataSupplierController::class, 'update']);
+    Route::post('admin/datasupplier/delete', [AdminDataSupplierController::class, 'destroy'])->name('admin.datasupplier.delete');
 
     Route::resource('admin/datamember', AdminDataMemberController::class);
     Route::post('admin/datamember/add', [AdminDataMemberController::class, 'store']);
