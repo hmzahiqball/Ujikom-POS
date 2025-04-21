@@ -38,20 +38,20 @@
                                     <td>{{ $item['status_pembayaran'] }}</td>
                                     <td>
                                         <button class="btn btn-secondary mr-2"
-        data-bs-toggle="modal"
-        data-bs-target="#viewpenjualanModal"
-        data-idtransaksi="{{ $item['id_penjualan'] }}"
-        data-notransaksi="{{ $item['kode_penjualan'] }}"
-        data-namapetugas="{{ $item['karyawan']['nama_user'] ?? '-' }}"
-        data-tgltransaksi="{{ $item['tanggal_penjualan'] }}"
-        data-namamember="{{ $item['customers']['nama_customers'] ?? 'Non-Member' }}"
-        data-totaltransaksi="{{ number_format($item['total_harga'], 0, ',', '.') }}"
-        data-totalbayar="{{ number_format($item['total_bayar'], 0, ',', '.') }}"
-        data-kembaliantransaksi="{{ number_format($item['total_kembalian'], 0, ',', '.') }}"
-        data-statustransaksi="{{ $item['status_pembayaran'] }}"
-        data-detail='@json($item['detail_penjualan'])'>
-    View
-</button>
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#viewpenjualanModal"
+                                                data-idtransaksi="{{ $item['id_penjualan'] }}"
+                                                data-notransaksi="{{ $item['kode_penjualan'] }}"
+                                                data-namapetugas="{{ $item['karyawan']['nama_user'] ?? '-' }}"
+                                                data-tgltransaksi="{{ $item['tanggal_penjualan'] }}"
+                                                data-namamember="{{ $item['customers']['nama_customers'] ?? 'Non-Member' }}"
+                                                data-totaltransaksi="{{ number_format($item['total_harga'], 0, ',', '.') }}"
+                                                data-totalbayar="{{ number_format($item['total_bayar'], 0, ',', '.') }}"
+                                                data-kembaliantransaksi="{{ number_format($item['total_kembalian'], 0, ',', '.') }}"
+                                                data-statustransaksi="{{ $item['status_pembayaran'] }}"
+                                                data-detail='@json($item['detail_penjualan'])'>
+                                            View
+                                        </button>
                                     </td>
                                 </tr>
                             @endforeach

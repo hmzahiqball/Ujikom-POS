@@ -122,10 +122,7 @@
                     totaltransaksi = btn.data('totaltransaksi'),
                     totalbayar = btn.data('totalbayar'),
                     statustransaksi = btn.data('statustransaksi'),
-                    namaproduk = btn.data('namaproduk'),
-                    stokproduk = btn.data('stokproduk'),
-                    hargaproduk = btn.data('hargaproduk'),
-                    diskonproduk = btn.data('diskonproduk');
+                    detail = btn.data('detail');
 
                 $('#viewpenjualanModal').find('#id_viewtransaksi').val(idtransaksi);
                 $('#viewpenjualanModal').find('#no_viewtransaksi').val(notransaksi);
@@ -137,29 +134,21 @@
                 $('#viewpenjualanModal').find('#total_viewtransaksi').val(totaltransaksi);
                 $('#viewpenjualanModal').find('#status_viewtransaksi').val(statustransaksi);
 
-
                 // Bersihkan data barang sebelumnya
                 $('#product-details').empty();
 
-                // Pisahkan nilai nama_barang berdasarkan koma
-                var namaBarangArray = namaproduk.split(',');
-                var stokBarangArray = stokproduk.split(',');
-                var hargaBarangArray = hargaproduk.split(',');
-                var diskonBarangArray = diskonproduk.split(',');
-
                 // Tampilkan data barang pada modal
-                // Tampilkan data produk pada modal
-            for (var i = 0; i < namaBarangArray.length; i++) {
-                var row = `
-                    <tr>
-                        <td>${namaBarangArray[i].trim()}</td>
-                        <td>${stokBarangArray[i].trim()}</td>
-                        <td>${hargaBarangArray[i].trim()}</td>
-                        <td>${diskonBarangArray[i].trim()}</td>
-                    </tr>
-                `;
-                $('#product-details').append(row);
-            }
+                detail.forEach(item => {
+                    var row = `
+                        <tr>
+                            <td>${item.produk.nama_produk}</td>
+                            <td>${item.kuantitas}</td>
+                            <td>${item.harga}</td>
+                            <td>${item.diskon_produk}</td>
+                        </tr>
+                    `;
+                    $('#product-details').append(row);
+                });
             });
         });
     </script>
@@ -192,33 +181,72 @@
             // Membuat halaman baru untuk pencetakan
             var printWindow = window.open('', '_blank');
             printWindow.document.open();
-            printWindow.document.write('<html><head><title>Cetak Nota ' + noTransaksi + '</title>');
-            printWindow.document.write('<link rel="stylesheet" href="css/print.css?time=' + Date.now() + '">');
-            printWindow.document.write('</head><body class="struk" onload="printOut()">');
-            printWindow.document.write('<section class="sheet">');
-            printWindow.document.write('<h2>Nota Pembelian</h2>');
-            printWindow.document.write('<table>');
-            printWindow.document.write('<tr><td>Tanggal Transaksi:</td><td>' + tglTransaksi + '</td></tr>');
-            printWindow.document.write('<tr><td>No. Transaksi:</td><td>' + noTransaksi + '</td></tr>');
-            printWindow.document.write('<tr><td>Status Transaksi:</td><td>' + statusTransaksi + '</td></tr>');
-            printWindow.document.write('<tr><td>Total Transaksi:</td><td>' + totalTransaksi + '</td></tr>');
-            printWindow.document.write('<tr><td>Total Bayar:</td><td>' + totalBayar + '</td></tr>');
-            printWindow.document.write('<tr><td>Kembalian Transaksi:</td><td>' + kembalianTransaksi + '</td></tr>');
-            printWindow.document.write('<tr><td>Kasir:</td><td>' + petugas + '</td></tr>');
-            printWindow.document.write('<tr><td>Member:</td><td>' + member + '</td></tr>');
-            printWindow.document.write('</table>');
-            printWindow.document.write('<h3>Detail Produk</h3>');
-            printWindow.document.write('<table>');
-            printWindow.document.write('<tr><th>Nama Produk</th><th>Stok Produk</th><th>Harga Produk</th><th>Diskon Produk</th></tr>');
-            printWindow.document.write(productsHTML);
-            printWindow.document.write('</table>');
-            printWindow.document.write('</section>');
-            printWindow.document.write('</body></html>');
-            printWindow.document.close();
+        printWindow.document.write('<html><head><title>Cetak Nota ' + noTransaksi + '</title>');
+        printWindow.document.write('<style>');
+        printWindow.document.write(`
+            body {
+                font-family: Arial, sans-serif;
+                padding: 20px;
+                text-align: center;
+            }
+            .nota-container {
+                max-width: 350px;
+                margin: 0 auto;
+                border: 1px solid #000;
+                padding: 15px;
+            }
+            h2, h3 {
+                margin: 10px 0;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 10px 0;
+            }
+            table th, table td {
+                border: 1px solid #000;
+                padding: 4px;
+                font-size: 12px;
+                text-align: left;
+            }
+            table th {
+                background-color: #f0f0f0;
+            }
+            .info-table td {
+                border: none;
+                padding: 2px 0;
+            }
+        `);
+        printWindow.document.write('</style>');
+        printWindow.document.write('</head><body onload="print()">');
 
-            // Mencetak halaman baru
-            printWindow.print();
-        }
+        printWindow.document.write('<div class="nota-container">');
+        printWindow.document.write('<h2>Nota Pembelian</h2>');
+        printWindow.document.write('<table class="info-table">');
+        printWindow.document.write('<tr><td>Tanggal:</td><td>' + tglTransaksi + '</td></tr>');
+        printWindow.document.write('<tr><td>No. Transaksi:</td><td>' + noTransaksi + '</td></tr>');
+        printWindow.document.write('<tr><td>Status:</td><td>' + statusTransaksi + '</td></tr>');
+        printWindow.document.write('<tr><td>Kasir:</td><td>' + petugas + '</td></tr>');
+        printWindow.document.write('<tr><td>Member:</td><td>' + member + '</td></tr>');
+        printWindow.document.write('</table>');
+
+        printWindow.document.write('<h3>Detail Produk</h3>');
+        printWindow.document.write('<table>');
+        printWindow.document.write('<tr><th>Nama</th><th>Qty</th><th>Harga</th><th>Diskon</th></tr>');
+        printWindow.document.write(productsHTML);
+        printWindow.document.write('</table>');
+
+        printWindow.document.write('<table class="info-table">');
+        printWindow.document.write('<tr><td><strong>Total:</strong></td><td>' + totalTransaksi + '</td></tr>');
+        printWindow.document.write('<tr><td><strong>Bayar:</strong></td><td>' + totalBayar + '</td></tr>');
+        printWindow.document.write('<tr><td><strong>Kembalian:</strong></td><td>' + kembalianTransaksi + '</td></tr>');
+        printWindow.document.write('</table>');
+        printWindow.document.write('<p>Terima kasih atas kunjungannya!</p>');
+        printWindow.document.write('</div>');
+
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+    }
 
         // Menambahkan event listener untuk tombol cetak
         document.getElementById('btnPrint').addEventListener('click', printNota);
