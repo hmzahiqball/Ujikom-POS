@@ -22,7 +22,6 @@
                                 <th>Nama Produk</th>
                                 <th>Stok Produk</th>
                                 <th>Harga Jual</th>
-                                <th>Status Produk</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -30,19 +29,25 @@
                             @foreach($produk as $key => $item)
                             <tr>
                                 <td>{{ $key + 1 }}</td>
-                                <td>{{ $item->kode_produk }}</td>
-                                <td>{{ $item->nama_kategori }}</td>
-                                <td>{{ $item->nama_produk }}</td>
-                                <td>{{ $item->stok_produk }}</td>
-                                <td>Rp. {{ number_format($item->harga_produk, 0, ',', '.') }}</td>
-                                <td>{{ $item->status_produk }}</td>
+                                <td>{{ $item['sku_produk'] }}</td>
+                                <td>{{ $item['kategori'][0]['nama_kategori'] }}</td>
+                                <td>{{ $item['nama_produk'] }}</td>
+                                <td>{{ $item['stok_produk'] }}</td>
+                                <td>Rp. {{ number_format($item['harga_produk'], 0, ',', '.') }}</td>
                                 <td>
-                                    <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#viewprodukModal"
-                                    data-idproduk="{{ $item->id_produk }}" data-kodeproduk="{{ $item->kode_produk }}"
-                                    data-namakategori="{{ $item->nama_kategori }}" data-namaproduk="{{ $item->nama_produk }}"
-                                    data-stokproduk="{{ $item->stok_produk }}" data-hargaproduk="{{ $item->harga_produk }}"
-                                    data-diskonproduk="{{ $item->diskon_produk }}" data-lokasiproduk="{{ $item->lokasi_produk }}"
-                                    data-fotoproduk="{{ $item->foto_produk }}" data-statusproduk="{{ $item->status_produk }}">View</button>
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-secondary w-100" data-bs-toggle="modal" data-bs-target="#viewprodukModal"
+                                        data-idproduk="{{ $item['id_produk'] }}" data-kodeproduk="{{ $item['sku_produk'] }}"
+                                        data-idkategori="{{ $item['kategori'][0]['id_kategori'] }}" data-idsubkategori="{{ $item['kategori'][0]['id_subkategori'] }}"
+                                        data-namakategori="{{ $item['kategori'][0]['nama_kategori'] }}" data-namasubkategori="{{ $item['kategori'][0]['nama_subkategori'] }}"
+                                        data-namaproduk="{{ $item['nama_produk'] }}" data-barcodeproduk="{{ $item['barcode_produk'] }}"
+                                        data-deskripsiproduk="{{ $item['deskripsi_produk'] }}" data-hargaproduk="{{ $item['harga_produk'] }}"
+                                        data-modalproduk="{{ $item['modal_produk'] }}" data-diskonproduk="{{ $item['diskon_prpduk'] }}"
+                                        data-stokproduk="{{ $item['stok_produk'] }}" data-stokminimumproduk="{{ $item['stok_minimum_produk'] }}"
+                                        data-statusproduk="{{ $item['status_produk'] }}" data-fotoproduk="{{ $item['gambar_produk'] }}">
+                                            view
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                             @endforeach

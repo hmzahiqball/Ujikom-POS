@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
+use App\Helpers\ProdukHelper;
+use App\Helpers\HttpHelper;
 
 class KasirDataTableController extends Controller
 {
@@ -12,9 +14,24 @@ class KasirDataTableController extends Controller
      */
     public function index()
     {
-        $get_kategori = DB::select('CALL sp_get_datakategori()'); //mengambil data kategori dari database melalui stored procedure di mysql
-        $get_produk = DB::select('CALL sp_get_dataproduk()'); //mengambil data produk dari database melalui stored procedure di mysql
-        return view('kasir.dataproduk' , ['produk' => $get_produk, 'kategori' => $get_kategori]);
+        try {
+            $produkResponse = Http::get('http://localhost:1111/api/produk/');
+            $kategoriResponse = Http::get('http://localhost:1111/api/kategori/');
+
+            if ($produkResponse['status'] === 200 && $kategoriResponse->successful()) {
+                return view('kasir.dataproduk', [
+                    'produk' => $produkResponse['data'],
+                    'kategori' => $kategoriResponse['data'],
+                    'success' => $produkResponse['message']
+                ]);
+            }
+        } catch (\Exception $e) {
+            return view('kasir.dataproduk', [
+                'produk' => [],
+                'kategori' => [],
+                'error' => 'Gagal mengambil data produk'
+            ]);
+        }
     }
 
     /**
