@@ -7,10 +7,10 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{ URL::asset('/admin/datasupplier/edit') }}" method="POST"
+                <form action="{{ URL::asset('/admin/datasupplier/update') }}" method="POST"
                 enctype="multipart/form-data">
                 @csrf
-                    <input type="hidden" class="form-control" id="id_editSupplier"name="id_editSupplier" required>
+                    <input type="hidden" class="form-control" id="id_editSupplier" name="id_editSupplier" required>
                     <div class="row">
                         <div class="col">
                             <div class="form-floating mb-3">

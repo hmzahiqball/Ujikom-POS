@@ -42,7 +42,29 @@ class AdminDataSupplierController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama_addsupplier'        => 'required',
+            'contactPerson_addsupplier'    => 'required|numeric',
+            'contactSuppliers_addsupplier' => 'required|numeric',
+            'email_addsupplier'  => 'required',
+            'alamat_addsupplier' => 'required',
+        ]);
+
+        $data = [
+            'p_namaSuppliers'         => $request->nama_addsupplier,
+            'p_contactPerson'         => $request->contactPerson_addsupplier,
+            'p_contactSuppliers'         => $request->contactSuppliers_addsupplier,
+            'p_emailSuppliers'         => $request->email_addsupplier,
+            'p_alamatSuppliers'         => $request->alamat_addsupplier,
+        ];
+
+        $response = Http::post('http://localhost:1111/api/suppliers/', $data);
+
+        if ($response['status'] === 200) {
+            return redirect('admin/datasupplier')->with('success', 'Supplier berhasil ditambahkan.');
+        }
+
+        return redirect()->back()->with('error', 'Gagal menambahkan supplier: ' . $response->body());
     }
 
     /**
@@ -64,16 +86,60 @@ class AdminDataSupplierController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        $request->validate([
+            'id_editSupplier'        => 'required|numeric',
+            'nama_editSupplier'        => 'required',
+            'contactPerson_editSupplier'    => 'required|numeric',
+            'contactSuppliers_editSupplier' => 'required|numeric',
+            'email_editSupplier'  => 'required',
+            'alamat_editSupplier' => 'required',
+        ]);
+
+        $id = $request->id_editSupplier;
+        $url = "http://localhost:1111/api/suppliers/{$id}";
+
+        $data = [
+            'p_namaSuppliers'         => $request->nama_editSupplier,
+            'p_contactPerson'         => $request->contactPerson_editSupplier,
+            'p_contactSuppliers'         => $request->contactSuppliers_editSupplier,
+            'p_emailSuppliers'         => $request->email_editSupplier,
+            'p_alamatSuppliers'         => $request->alamat_editSupplier,
+        ];
+
+        $response = Http::put($url, $data);
+
+        if ($response['status'] === 200) {
+            return redirect('admin/datasupplier')->with('success', 'Supplier berhasil diperbarui.');
+        }
+
+        return redirect()->back()->with('error', 'Gagal memperbarui supplier: ' . $response->body());
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        $request->validate([
+            'id_deletesupplier' => 'required|numeric',
+        ]);
+
+        $idSupplier = $request->id_deletesupplier;
+
+        try {
+            $response = Http::withHeaders([
+                'Accept' => 'application/json',
+            ])->delete("http://localhost:1111/api/suppliers/{$idSupplier}");
+
+            if ($response['status'] === 200) {
+                return redirect('admin/datasupplier')->with('success', 'Supplier berhasil dihapus.');
+            }
+
+            return redirect()->back()->with('error', 'Gagal menghapus supplier: ' . $response->json()['message']);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menghapus supplier: ' . $e->getMessage());
+        }
     }
 }
