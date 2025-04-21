@@ -80,6 +80,7 @@ class KasirTransaksiController extends Controller
                     'p_kuantitas' => (int) $item['kuantitas_transaksi'],
                     'p_harga' => (int) $item['hargaproduk_transaksi'],
                     'p_subTotal' => (int) ($item['hargaproduk_transaksi'] * $item['kuantitas_transaksi']),
+                    'p_diskonProduk' => (int) $item['potongan_transaksi'],
                 ];
             })->toArray();
 

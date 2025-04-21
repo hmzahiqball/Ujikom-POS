@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 
 class KasirDataMemberController extends Controller
 {
@@ -28,37 +29,26 @@ class KasirDataMemberController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate the request...
-        $request->validate([
-            'nama_addmember' => 'required',
-            'tgllahir_addmember' => 'required',
-            'telp_addmember' => 'required|numeric',
-            'email_addmember' => 'required',
-            'gender_addmember' => 'required',
-            'alamat_addmember' => 'required'
-        ]);
+        try {
+            $data = [
+                'p_namaCustomers'     => $request->input('nama_addmember'),
+                'p_genderCustomers'   => $request->input('gender_addmember'),
+                'p_tglLahirCustomers' => $request->input('tgllahir_addmember'),
+                'p_telpCustomers'     => $request->input('telp_addmember'),
+                'p_emailCustomers'    => $request->input('email_addmember'),
+                'p_alamatCustomers'   => $request->input('alamat_addmember'),
+            ];
 
-        // Ambil semua data yang dikirimkan oleh formulir
-        $nama_member = $request->input('nama_addmember');
-        $tgllahir_member = $request->input('tgllahir_addmember');
-        $telp_member = $request->input('telp_addmember');
-        $email_member = $request->input('email_addmember');
-        $gender_member = $request->input('gender_addmember');
-        $status_member = 'Aktif';
-        $alamat_member = $request->input('alamat_addmember');
+            $response = Http::post('http://localhost:1111/api/customer/', $data);
 
-        // Panggil stored procedure untuk update
-        DB::statement("CALL sp_add_datamember(?, ?, ?, ?, ?, ?, ?)", array(
-            $nama_member,
-            $alamat_member,
-            $telp_member,
-            $email_member,
-            $tgllahir_member,
-            $gender_member,
-            $status_member,
-        ));
-
-        return redirect('kasir/dashboard');
+            if ($response['status'] === 200) {
+                return redirect('kasir/dashboard')->with('success', 'Customer berhasil ditambahkan.');
+            } else {
+                return redirect('kasir/dashboard')->with('error', 'Gagal menambahkan customer.');
+            }
+        } catch (\Exception $e) {
+            return redirect('kasir/dashboard')->with('error', 'Terjadi kesalahan saat menambahkan customer');
+        }
     }
 
     /**
