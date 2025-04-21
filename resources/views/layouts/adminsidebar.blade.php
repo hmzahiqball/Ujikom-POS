@@ -12,29 +12,109 @@
                 </a>
             </li>
             <li>
-                <a href="#submenutabel" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
-                    <i class="bi bi-table text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Tabel
+                <a href="#submenuMasterData" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
+                    <i class="bi bi-table text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Master
                         Data</span></a>
-                <ul class="collapse nav flex-column ms-4" id="submenutabel" data-bs-parent="#menu">
+                <ul class="collapse nav flex-column ms-4" id="submenuMasterData" data-bs-parent="#menu">
                     <li class="w-100 h-100">
                         <a href="{{ URL('/admin/dataproduk') }}" class="nav-link px-0 text-abu"><i
-                                class="fa-solid fa-shirt text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Data
+                                class="fa-solid fa-box text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Data
                                 Produk</span></a>
                     </li>
                     <li class="w-100 h-100">
+                        <a href="{{ URL('/admin/datakategori') }}" class="nav-link px-0 text-abu"><i
+                                class="fa-solid fa-layer-group text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Data
+                                Kategori</span></a>
+                    </li>
+                    <li class="w-100 h-100">
                         <a href="{{ URL('/admin/datapetugas') }}" class="nav-link px-0 text-abu"><i
-                                class="fa-solid fa-user text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Data
+                                class="fa-solid fa-user-shield text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Data
                                 Petugas</span></a>
                     </li>
                     <li class="w-100 h-100">
-                        <a href="{{ URL('/admin/datapenjualan') }}" class="nav-link px-0 text-abu"><i
-                                class="fa-solid fa-cart-shopping text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Data
-                                Penjualan</span></a>
+                        <a href="{{ URL('/admin/datasupplier') }}" class="nav-link px-0 text-abu"><i
+                                class="fa-solid fa-truck text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Data
+                                Supplier</span></a>
                     </li>
                     <li class="w-100 h-100">
                         <a href="{{ URL('/admin/datamember') }}" class="nav-link px-0 text-abu"><i
-                                class="fa-solid fa-user-tag text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Data
+                                class="fa-solid fa-users text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Data
                                 Member</span></a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#submenuManajemenToko" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
+                    <i class="fa-solid fa-store text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Manajemen
+                        Toko</span></a>
+                <ul class="collapse nav flex-column ms-4" id="submenuManajemenToko" data-bs-parent="#menu">
+                    <li class="w-100 h-100">
+                        <a href="{{ URL('/admin/datapembelian') }}" class="nav-link px-0 text-abu"><i
+                                class="fa-solid fa-cart-arrow-down text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Data
+                                Pembelian</span></a>
+                    </li>
+                    <li class="w-100 h-100">
+                        <a href="{{ URL('/admin/datapengeluaran') }}" class="nav-link px-0 text-abu"><i
+                                class="fa-solid fa-money-bill-wave text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Data
+                                Pengeluaran</span></a>
+                    </li>
+                    <li class="w-100 h-100">
+                        <a href="{{ URL('/admin/stokproduk') }}" class="nav-link px-0 text-abu"><i
+                                class="fa-solid fa-warehouse text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Stok
+                                Produk</span></a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#submenuKaryawan" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
+                    <i class="fa-solid fa-user-shield text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Karyawan</span></a>
+                <ul class="collapse nav flex-column ms-4" id="submenuKaryawan" data-bs-parent="#menu">
+                    <li class="w-100 h-100">
+                        <a href="{{ URL('/admin/datashift') }}" class="nav-link px-0 text-abu"><i
+                                class="fa-solid fa-calendar-alt text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Shift
+                                Karyawan</span></a>
+                    </li>
+                    <li class="w-100 h-100">
+                        <a href="{{ URL('/admin/dataabsensi') }}" class="nav-link px-0 text-abu"><i
+                                class="fa-solid fa-clipboard-user text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Absensi
+                                Karyawan</span></a>
+                    </li>
+                    <li class="w-100 h-100">
+                        <a href="{{ URL('/admin/dataizinkaryawan') }}" class="nav-link px-0 text-abu"><i
+                                class="fa-solid fa-file-circle-exclamatio text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Izin
+                                Karyawan</span></a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#submenuTransaksi" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
+                    <i class="fa-solid fa-cart-shopping text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Data Transaksi</span></a>
+                <ul class="collapse nav flex-column ms-4" id="submenuTransaksi" data-bs-parent="#menu">
+                    <li class="w-100 h-100">
+                        <a href="{{ URL('/admin/datapenjualan') }}" class="nav-link px-0 text-abu"><i
+                                class="fa-solid fa-clock-rotate-left text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Data
+                                Transaksi</span></a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#submenuLaporan" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
+                    <i class="fa-solid fa-file-lines text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Laporan</span></a>
+                <ul class="collapse nav flex-column ms-4" id="submenuLaporan" data-bs-parent="#menu">
+                    <li class="w-100 h-100">
+                        <a href="{{ URL('/admin/datapenjualan') }}" class="nav-link px-0 text-abu"><i
+                                class="fa-solid fa-file-invoice-dollar text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Laporan
+                                Penjualan</span></a>
+                    </li>
+                    <li class="w-100 h-100">
+                        <a href="{{ URL('/admin/datapenjualan') }}" class="nav-link px-0 text-abu"><i
+                                class="fa-solid fa-file-circle-check text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Laporan
+                                Pembelian</span></a>
+                    </li>
+                    <li class="w-100 h-100">
+                        <a href="{{ URL('/admin/datapenjualan') }}" class="nav-link px-0 text-abu"><i
+                                class="fa-solid fa-file-invoice text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Laporan
+                                Pengeluaran</span></a>
                     </li>
                 </ul>
             </li>
