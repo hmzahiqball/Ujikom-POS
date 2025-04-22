@@ -189,7 +189,7 @@
             </div>
         </div>
     </div>
-    @extends('kasir.modal.addmember')
+    @extends('kasir.modal.member.addmember')
 @endsection
 @section('scripts')
     <script>

@@ -76,14 +76,14 @@
             $('#editsupplierModal').find('#contactSuppliers_editSupplier').val(contactsupplier);
             $('#editsupplierModal').find('#email_editSupplier').val(emailsupplier);
             $('#editsupplierModal').find('#alamat_editSupplier').val(alamatsupplier);
-            $('#editbutton_swal').data('namapetugasswal', namasupplier);
+            $('#editbutton_swal').data('namasupplierswal', namasupplier);
         });
 
         // SweetAlert
         $('#editbutton_swal').click(function () {
             const current_object = $(this);
             Swal.fire({
-                title: 'Yakin Untuk Mengubah Data ' + current_object.data('namaprodukswal') + '?',
+                title: 'Yakin Untuk Mengubah Data ' + current_object.data('namasupplierswal') + '?',
                 icon: 'question',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',

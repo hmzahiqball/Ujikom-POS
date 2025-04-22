@@ -265,7 +265,7 @@
             $('#editprodukModal').find('#status_editproduk').val(statusproduk);
             $('#editprodukModal').find('#deskripsi_editproduk').val(deskripsiproduk);
             $('#editprodukModal').find('#foto_preview').attr('src', fotoproduk);
-            $('#editbutton_swal').data('namapetugasswal', namaproduk);
+            $('#editbutton_swal').data('namaprodukswal', namaproduk);
         });
 
         // Format unformat sebelum submit
