@@ -13,10 +13,11 @@ use App\Http\Controllers\KasirDataMemberController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminDataProdukController;
 use App\Http\Controllers\AdminDataPetugasController;
-use App\Http\Controllers\AdminDataPenjualanController;
+use App\Http\Controllers\AdminDataLaporanPenjualanController;
 use App\Http\Controllers\AdminDataMemberController;
 use App\Http\Controllers\AdminDataSupplierController;
 use App\Http\Controllers\AdminDataKategoriProdukController;
+use App\Http\Controllers\AdminDataLaporanStokController;
 
 
 /*
@@ -38,8 +39,11 @@ Route::post('logout', [LoginController::class, 'logout']);
 
 // Route grup untuk admin
 Route::middleware(['admin'])->group(function () {
+
+    // Dashboard
     Route::resource('admin/dashboard', AdminDashboardController::class);
 
+    // Master Data
     Route::resource('admin/dataproduk', AdminDataProdukController::class);
     Route::post('admin/dataproduk/add', [AdminDataProdukController::class, 'store']);
     Route::post('admin/dataproduk/update', [AdminDataProdukController::class, 'update']);
@@ -55,9 +59,6 @@ Route::middleware(['admin'])->group(function () {
     Route::post('admin/datapetugas/update', [AdminDataPetugasController::class, 'update']);
     Route::post('admin/datapetugas/delete', [AdminDataPetugasController::class, 'destroy'])->name('admin.datapetugas.delete');
 
-    Route::resource('admin/datapenjualan', AdminDataPenjualanController::class);
-    Route::post('admin/datapenjualan/delete', [AdminDataPenjualanController::class, 'destroy'])->name('admin.datapenjualan.delete');
-
     Route::resource('admin/datasupplier', AdminDataSupplierController::class);
     Route::post('admin/datasupplier/add', [AdminDataSupplierController::class, 'store']);
     Route::post('admin/datasupplier/update', [AdminDataSupplierController::class, 'update']);
@@ -67,6 +68,13 @@ Route::middleware(['admin'])->group(function () {
     Route::post('admin/datamember/add', [AdminDataMemberController::class, 'store']);
     Route::post('admin/datamember/update', [AdminDataMemberController::class, 'update']);
     Route::post('admin/datamember/delete', [AdminDataMemberController::class, 'destroy'])->name('admin.datamember.delete');
+
+    // Laporan
+    Route::resource('admin/datastokproduk', AdminDataLaporanStokController::class);
+    Route::post('admin/datastokproduk/delete', [AdminDataLaporanStokController::class, 'destroy'])->name('admin.datastokproduk.delete');
+
+    Route::resource('admin/datapenjualan', AdminDataLaporanPenjualanController::class);
+    Route::post('admin/datapenjualan/delete', [AdminDataLaporanPenjualanController::class, 'destroy'])->name('admin.datapenjualan.delete');
 });
 
 // Route grup untuk kasir

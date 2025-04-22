@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
 
-class AdminDataPenjualanController extends Controller
+class AdminDataLaporanPenjualanController extends Controller
 {
     /**
      * Display a listing of the resource.
