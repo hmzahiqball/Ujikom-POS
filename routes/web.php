@@ -18,6 +18,7 @@ use App\Http\Controllers\AdminDataMemberController;
 use App\Http\Controllers\AdminDataSupplierController;
 use App\Http\Controllers\AdminDataKategoriProdukController;
 use App\Http\Controllers\AdminDataLaporanStokController;
+use App\Http\Controllers\AdminDataShiftController;
 
 
 /*
@@ -68,6 +69,15 @@ Route::middleware(['admin'])->group(function () {
     Route::post('admin/datamember/add', [AdminDataMemberController::class, 'store']);
     Route::post('admin/datamember/update', [AdminDataMemberController::class, 'update']);
     Route::post('admin/datamember/delete', [AdminDataMemberController::class, 'destroy'])->name('admin.datamember.delete');
+
+    // Karyawan
+    Route::resource('admin/datashift', AdminDataShiftController::class);
+    Route::post('admin/datashift/add', [AdminDataShiftController::class, 'store']);
+    Route::post('admin/datashift/update', [AdminDataShiftController::class, 'update']);
+    Route::post('admin/datashift/delete', [AdminDataShiftController::class, 'destroy'])->name('admin.datashift.delete');
+
+    Route::resource('admin/datapenjualan', AdminDataLaporanPenjualanController::class);
+    Route::post('admin/datapenjualan/delete', [AdminDataLaporanPenjualanController::class, 'destroy'])->name('admin.datapenjualan.delete');
 
     // Laporan
     Route::resource('admin/datastokproduk', AdminDataLaporanStokController::class);
