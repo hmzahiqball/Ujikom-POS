@@ -17,8 +17,7 @@ class AdminDataKategoriProdukController extends Controller
 
             if ($kategoriResponse->successful()) {
                 return view('admin.datakategori', [
-                    'kategori' => $kategoriResponse['data'],
-                    'success' => $kategoriResponse['message']
+                    'kategori' => $kategoriResponse['data']
                 ]);
             }
         } catch (\Exception $e) {

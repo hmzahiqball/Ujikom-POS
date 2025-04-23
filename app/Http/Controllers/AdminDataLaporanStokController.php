@@ -23,8 +23,7 @@ class AdminDataLaporanStokController extends Controller
             }
 
             return view('admin.datalaporanstok', [
-                'laporanstok' => $get_laporan,
-                'success' => $response['message']
+                'laporanstok' => $get_laporan
             ]);
         } catch (\Exception $e) {
             return view('admin.datalaporanstok', [

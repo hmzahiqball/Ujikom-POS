@@ -17,8 +17,7 @@ class AdminDataSupplierController extends Controller
 
             if ($supplierResponse['status'] === 200) {
                 return view('admin.datasupplier', [
-                    'suppliers' => $supplierResponse['data'],
-                    'success' => $supplierResponse['message']
+                    'suppliers' => $supplierResponse['data']
                 ]);
             }
         } catch (\Exception $e) {
@@ -50,7 +49,7 @@ class AdminDataSupplierController extends Controller
                 'email_addsupplier'  => 'required',
                 'alamat_addsupplier' => 'required',
             ]);
-        
+
             $data = [
                 'p_namaSuppliers'         => $request->nama_addsupplier,
                 'p_contactPerson'         => $request->contactPerson_addsupplier,

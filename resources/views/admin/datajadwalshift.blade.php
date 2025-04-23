@@ -65,12 +65,31 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
+            const d = new Date();
+            const tanggal = `Data Jadwal Shift-${('0' + d.getDate()).slice(-2)}${('0' + (d.getMonth() + 1)).slice(-2)}${d.getFullYear()}`;
             $('#tableShift').DataTable({
                 layout: {
-                topStart: {
-                    buttons: ['copyHtml5', 'excelHtml5', 'csvHtml5', 'pdfHtml5']
+                    topStart: {
+                    buttons: [
+                        {
+                            extend: 'copyHtml5',
+                            title: tanggal
+                        },
+                        {
+                            extend: 'excelHtml5',
+                            title: tanggal
+                        },
+                        {
+                            extend: 'pdfHtml5',
+                            title: tanggal
+                        },
+                        {
+                            extend: 'csvHtml5',
+                            title: tanggal
+                        }
+                    ]
                 }
-            }
+            },
             });
         });
     </script>

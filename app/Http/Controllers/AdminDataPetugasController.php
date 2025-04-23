@@ -20,8 +20,7 @@ class AdminDataPetugasController extends Controller
             if ($karyawanResponse['status'] === 200 && $shiftsResponse['status'] === 200) {
                 return view('admin.datapetugas', [
                     'petugas' => $karyawanResponse['data'],
-                    'shifts' => $shiftsResponse['data'],
-                    'success' => $karyawanResponse['message'],
+                    'shifts' => $shiftsResponse['data']
                 ]);
             } else {
                 return view('admin.datapetugas', [

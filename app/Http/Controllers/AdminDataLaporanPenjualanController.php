@@ -37,8 +37,7 @@ class AdminDataLaporanPenjualanController extends Controller
 
             return view('admin.datapenjualan', [
                 'penjualan' => $data_penjualan,
-                'tanggal' => $tanggal,
-                'success' => $response['message']
+                'tanggal' => $tanggal
             ]);
         } catch (\Exception $e) {
             return view('admin.datapenjualan', [

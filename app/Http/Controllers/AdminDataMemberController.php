@@ -23,8 +23,7 @@ class AdminDataMemberController extends Controller
             }
 
             return view('admin.datamember', [
-                'member' => $get_member,
-                'success' => $response['message']
+                'member' => $get_member
             ]);
         } catch (\Exception $e) {
             return view('admin.datamember', [
