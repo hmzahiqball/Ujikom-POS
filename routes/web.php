@@ -20,6 +20,7 @@ use App\Http\Controllers\AdminDataKategoriProdukController;
 use App\Http\Controllers\AdminDataLaporanStokController;
 use App\Http\Controllers\AdminDataShiftController;
 use App\Http\Controllers\AdminDataAbsensiController;
+use App\Http\Controllers\AdminDataRiwayatPenjualanController;
 
 
 /*
@@ -81,12 +82,15 @@ Route::middleware(['admin'])->group(function () {
     Route::post('admin/dataabsensi/add', [AdminDataAbsensiController::class, 'store']);
     Route::post('admin/dataabsensi/delete', [AdminDataAbsensiController::class, 'destroy'])->name('admin.dataabsensi.delete');
 
+    // Data Transaksi
+    Route::resource('admin/datapenjualan', AdminDataRiwayatPenjualanController::class);
+    Route::post('admin/datapenjualan/delete', [AdminDataRiwayatPenjualanController::class, 'destroy'])->name('admin.datapenjualan.delete');
+
     // Laporan
     Route::resource('admin/datastokproduk', AdminDataLaporanStokController::class);
     Route::post('admin/datastokproduk/delete', [AdminDataLaporanStokController::class, 'destroy'])->name('admin.datastokproduk.delete');
 
-    Route::resource('admin/datapenjualan', AdminDataLaporanPenjualanController::class);
-    Route::post('admin/datapenjualan/delete', [AdminDataLaporanPenjualanController::class, 'destroy'])->name('admin.datapenjualan.delete');
+    Route::resource('admin/datalaporanpenjualan', AdminDataLaporanPenjualanController::class);
 });
 
 // Route grup untuk kasir

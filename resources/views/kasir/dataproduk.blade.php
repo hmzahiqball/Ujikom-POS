@@ -57,8 +57,8 @@
             </div>
         </div>
     </div>
-    @extends('kasir.modal.addmember')
-    @extends('kasir.modal.viewproduk')
+    @extends('kasir.modal.member.addmember')
+    @extends('kasir.modal.produk.viewproduk')
 @endsection
 @section('scripts')
     <script>
