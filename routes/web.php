@@ -21,6 +21,7 @@ use App\Http\Controllers\AdminDataLaporanStokController;
 use App\Http\Controllers\AdminDataShiftController;
 use App\Http\Controllers\AdminDataAbsensiController;
 use App\Http\Controllers\AdminDataRiwayatPenjualanController;
+use App\Http\Controllers\AdminDataIzinKaryawanController;
 
 
 /*
@@ -81,6 +82,13 @@ Route::middleware(['admin'])->group(function () {
     Route::resource('admin/dataabsensi', AdminDataAbsensiController::class);
     Route::post('admin/dataabsensi/add', [AdminDataAbsensiController::class, 'store']);
     Route::post('admin/dataabsensi/delete', [AdminDataAbsensiController::class, 'destroy'])->name('admin.dataabsensi.delete');
+
+    Route::resource('admin/dataizinkaryawan', AdminDataIzinKaryawanController::class);
+    Route::post('admin/dataizinkaryawan/add', [AdminDataIzinKaryawanController::class, 'store']);
+    Route::post('admin/dataizinkaryawan/addJenisPerizinan', [AdminDataIzinKaryawanController::class, 'storeKategoriIzin']);
+    Route::post('admin/dataizinkaryawan/update', [AdminDataIzinKaryawanController::class, 'update']);
+    Route::post('admin/dataizinkaryawan/delete', [AdminDataIzinKaryawanController::class, 'destroy'])->name('admin.dataizin.delete');
+    Route::post('admin/dataizinkaryawan/delete', [AdminDataIzinKaryawanController::class, 'destroyKategoriIzin'])->name('admin.dataizin.deleteKategoriIzin');
 
     // Data Transaksi
     Route::resource('admin/datapenjualan', AdminDataRiwayatPenjualanController::class);

@@ -61,15 +61,9 @@
     @extends('kasir.modal.produk.viewproduk')
 @endsection
 @section('scripts')
-    <script>
+    <script>+
         $(document).ready(function() {
-            $('#tableProduk').DataTable({
-                layout: {
-                topStart: {
-                    buttons: ['copyHtml5', 'excelHtml5', 'csvHtml5', 'pdfHtml5']
-                }
-            }
-            });
+            $('#tableProduk').DataTable({});
         });
     </script>
 @endsection

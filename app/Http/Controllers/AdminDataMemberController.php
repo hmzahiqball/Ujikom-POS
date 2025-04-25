@@ -106,10 +106,10 @@ class AdminDataMemberController extends Controller
             if ($response['status'] === 200) {
                 return redirect('admin/datamember')->with('success', $response['message']);
             } else {
-                return redirect('admin/datamember')->with('error', 'Gagal menambahkan customer.');
+                return redirect('admin/datamember')->with('error', 'Gagal mengubah customer.');
             }
         } catch (\Exception $e) {
-            return redirect('admin/datamember')->with('error', 'Terjadi kesalahan saat menambahkan customer');
+            return redirect('admin/datamember')->with('error', 'Terjadi kesalahan saat mengubah customer');
         }
     }
 
