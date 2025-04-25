@@ -66,6 +66,7 @@
                                     <option value="Approved">Approved</option>
                                     <option value="Pending">Pending</option>
                                     <option value="Rejected">Rejected</option>
+                                    <option value="Canceled">Canceled</option>
                                 </select>
                                 <label for="statusIzin_editIzin">Status</label>
                             </div>

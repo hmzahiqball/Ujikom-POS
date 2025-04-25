@@ -69,6 +69,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-danger" id="cancelizin_swal">Cancel Pengajuan</button>
                 <button type="button" class="btn btn-primary" id="editizin_swal">Simpan Perubahan</button>
             </div>
         </div>
@@ -103,6 +104,24 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $('#editIzinModal form').submit();
+                }
+            });
+        });
+
+        $('#cancelizin_swal').click(function () {
+            var current_object = $(this);
+            Swal.fire({
+                title: 'Yakin ingin membatalkan izin ' + $('#namaKaryawan_editIzin').val() + '?',
+                text: "Status akan diubah menjadi 'Canceled'.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, Batalkan!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#statusIzin_editIzin').val('Canceled'); // ubah status
+                    $('#editIzinModal form').submit(); // kirim form
                 }
             });
         });
