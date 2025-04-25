@@ -98,6 +98,7 @@ Route::middleware(['admin'])->group(function () {
     // Laporan
     Route::resource('admin/datastokproduk', AdminDataLaporanStokController::class);
     Route::post('admin/datastokproduk/delete', [AdminDataLaporanStokController::class, 'destroy'])->name('admin.datastokproduk.delete');
+    Route::post('/stokproduk/bulk-delete', [AdminDataLaporanStokController::class, 'bulkDelete'])->name('admin.datastokproduk.bulkdelete');
 
     Route::resource('admin/datalaporanpenjualan', AdminDataLaporanPenjualanController::class);
 });

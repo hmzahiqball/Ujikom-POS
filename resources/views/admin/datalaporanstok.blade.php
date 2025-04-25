@@ -20,8 +20,7 @@
                             <tr>
                                 <th>No.</th>
                                 <th>Kode Laporan</th>
-                                <th>Nama Produk</th>
-                                <th>Perubahan Stok</th>
+                                <th>Produk | Pengurangan Stok</th>
                                 <th>Alasan Perubahan</th>
                                 <th>Nama Karyawan</th>
                                 <th>Tanggal Perubahan</th>
@@ -33,19 +32,24 @@
                             <tr>
                                 <td>{{ $key + 1 }}</td>
                                 <td>{{ $item['kode_laporan'] }}</td>
-                                <td>{{ $item['perubahan_stok'] }}</td>
+                                <td>
+                                    <ul class="mb-0">
+                                        @foreach($item['produk'] as $produk)
+                                        <li>{{ $produk['nama_produk'] }} | {{ $produk['perubahan_stok'] }}</li>
+                                        @endforeach
+                                    </ul>
+                                </td>
                                 <td>{{ $item['alasan_perubahan'] }}</td>
                                 <td>{{ $item['nama_karyawan'] }}</td>
                                 <td>{{ $item['created_at'] }}</td>
                                 <td>
-                                    <div class="d-flex gap-2">
-                                        <button class="btn btn-danger w-100 deleteSwal"
-                                            data-idLaporanStok="{{ $item['id_laporan_stok'] }}"
-                                            data-namaProduk="{{ $item['nama_produk'] }}"
-                                            data-action="{{ route('admin.datastokproduk.delete', $item['id_laporan_stok']) }}">
-                                            Delete
-                                        </button>
-                                    </div>
+                                    <form method="POST" action="{{ route('admin.datastokproduk.bulkdelete') }}">
+                                        @csrf
+                                        @foreach($item['ids'] as $id)
+                                            <input type="hidden" name="ids[]" value="{{ $id }}">
+                                        @endforeach
+                                        <button class="btn btn-danger w-100 deleteSwal">Delete</button>
+                                    </form>
                                 </td>
                             </tr>
                             @endforeach

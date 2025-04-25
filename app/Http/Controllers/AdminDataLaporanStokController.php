@@ -13,18 +13,41 @@ class AdminDataLaporanStokController extends Controller
     public function index()
     {
         try {
-            // Ambil data customer dari API eksternal
             $response = Http::get('http://localhost:1111/api/laporanstok/');
-
+        
+            $groupedLaporan = [];
+        
             if ($response['status'] === 200) {
-                $get_laporan = $response['data']; // ambil array data dari JSON
-            } else {
-                $get_laporan = []; // fallback kosong kalau gagal
+                $data = $response['data'];
+            
+                foreach ($data as $item) {
+                    $kode = $item['kode_laporan'];
+                
+                    if (!isset($groupedLaporan[$kode])) {
+                        $groupedLaporan[$kode] = [
+                            'kode_laporan' => $kode,
+                            'alasan_perubahan' => $item['alasan_perubahan'],
+                            'nama_karyawan' => $item['nama_karyawan'],
+                            'created_at' => $item['created_at'],
+                            'produk' => [],
+                            'ids' => [], // untuk delete
+                        ];
+                    }
+                
+                    $groupedLaporan[$kode]['produk'][] = [
+                        'nama_produk' => $item['nama_produk'],
+                        'perubahan_stok' => $item['perubahan_stok']
+                    ];
+                
+                    $groupedLaporan[$kode]['ids'][] = $item['id_laporan_stok'];
+                }
+            
             }
-
+        
             return view('admin.datalaporanstok', [
-                'laporanstok' => $get_laporan
+                'laporanstok' => array_values($groupedLaporan)
             ]);
+        
         } catch (\Exception $e) {
             return view('admin.datalaporanstok', [
                 'laporanstok' => [],
@@ -32,6 +55,7 @@ class AdminDataLaporanStokController extends Controller
             ]);
         }
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -65,5 +89,15 @@ class AdminDataLaporanStokController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Terjadi kesalahan saat menghapus laporan: ' . $e->getMessage());
         }
+    }
+
+    public function bulkDelete(Request $request)
+    {
+        $ids = $request->input('ids', []);
+        foreach ($ids as $id) {
+            Http::delete("http://localhost:1111/api/laporanstok/$id");
+        }
+
+        return redirect()->back()->with('success', 'Laporan berhasil dihapus.');
     }
 }
