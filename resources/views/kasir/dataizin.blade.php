@@ -13,9 +13,9 @@
             <h3>Permintaan Izin Kehadiran Karyawan</h3>
             <button class="btn btn-success mb-3"
                 data-bs-toggle="modal"
-                data-bs-target="#addizinModal"
+                data-bs-target="#addIzinModal"
                 data-kategori="{{ json_encode($kategoriIzin) }}">
-                Add Kategori Perizinan
+                Add Perizinan
             </button>
         </div>
         <div class="card">
@@ -63,9 +63,8 @@
             </div>
         </div>
     </div>
-    @extends('admin.modal.izinKaryawan.addKategoriIzin')
-    @extends('admin.modal.izinKaryawan.editIzinKaryawan')
-    @extends('admin.modal.izinKaryawan.deleteKategoriIzin')
+    @extends('kasir.modal.izinKaryawan.addIzinKaryawan')
+    @extends('kasir.modal.izinKaryawan.editIzinKaryawan')
 @endsection
 @section('scripts')
     <script>

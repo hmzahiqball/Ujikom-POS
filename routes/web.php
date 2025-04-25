@@ -9,6 +9,7 @@ use App\Http\Controllers\KasirTransaksiController;
 use App\Http\Controllers\KasirDataTableController;
 use App\Http\Controllers\KasirDataTransaksiController;
 use App\Http\Controllers\KasirDataMemberController;
+use App\Http\Controllers\KasirDataIzinKaryawanController;
 
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminDataProdukController;
@@ -103,19 +104,28 @@ Route::middleware(['admin'])->group(function () {
 
 // Route grup untuk kasir
 Route::middleware(['kasir'])->group(function () {
+    // Dashboard
     Route::resource('kasir/dashboard', KasirDashboardController::class);
+
+    // Transaksi
     Route::resource('kasir/transaksi', KasirTransaksiController::class);
     Route::post('kasir/transaksi/add', [KasirTransaksiController::class, 'store']);
     Route::get('kasir/riwayattransaksi/print', [KasirTransaksiController::class, 'printInvoice'])->name('print.invoice');
 
-
+    // Member
     Route::resource('kasir/datamember', KasirDataMemberController::class);
     Route::post('kasir/datamember/add', [KasirDataMemberController::class, 'store']);
     Route::post('kasir/datamember/update', [KasirDataMemberController::class, 'update']);
     Route::post('kasir/datamember/delete', [KasirDataMemberController::class, 'destroy'])->name('admin.datamember.delete');
-    
+
+    // Tabel Data
     Route::resource('kasir/dataproduk', KasirDataTableController::class);
     Route::resource('kasir/riwayattransaksi', KasirDataTransaksiController::class);
+
+    // Pengajuan Izin
+    Route::resource('kasir/izinkaryawan', KasirDataIzinKaryawanController::class);
+    Route::post('kasir/izinkaryawan/add', [KasirDataIzinKaryawanController::class, 'store']);
+    Route::post('kasir/izinkaryawan/update', [KasirDataIzinKaryawanController::class, 'update']);
 });
 
 
