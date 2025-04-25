@@ -13,7 +13,25 @@ class KasirDataMemberController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            // Ambil data customer dari API eksternal
+            $response = Http::get('http://localhost:1111/api/customer/');
+
+            if ($response['status'] === 200) {
+                $get_member = $response['data']; // ambil array data dari JSON
+            } else {
+                $get_member = []; // fallback kosong kalau gagal
+            }
+
+            return view('kasir.datamember', [
+                'member' => $get_member
+            ]);
+        } catch (\Exception $e) {
+            return view('kasir.datamember', [
+                'member' => [],
+                'error' => 'Gagal mengambil data member'
+            ]);
+        }
     }
 
     /**

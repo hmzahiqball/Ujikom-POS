@@ -108,7 +108,12 @@ Route::middleware(['kasir'])->group(function () {
     Route::post('kasir/transaksi/add', [KasirTransaksiController::class, 'store']);
     Route::get('kasir/riwayattransaksi/print', [KasirTransaksiController::class, 'printInvoice'])->name('print.invoice');
 
+
+    Route::resource('kasir/datamember', KasirDataMemberController::class);
     Route::post('kasir/datamember/add', [KasirDataMemberController::class, 'store']);
+    Route::post('kasir/datamember/update', [KasirDataMemberController::class, 'update']);
+    Route::post('kasir/datamember/delete', [KasirDataMemberController::class, 'destroy'])->name('admin.datamember.delete');
+    
     Route::resource('kasir/dataproduk', KasirDataTableController::class);
     Route::resource('kasir/riwayattransaksi', KasirDataTransaksiController::class);
 });
