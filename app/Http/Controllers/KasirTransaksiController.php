@@ -100,6 +100,18 @@ class KasirTransaksiController extends Controller
             $response = Http::post('http://localhost:1111/api/laporanPenjualan/', $body);
 
             if ($response->successful()) {
+                $kode_penjualan = $response->json()['data']['kode_penjualan'] ?? null;
+
+                // Kirim laporan pengurangan stok untuk setiap produk yang terjual
+                foreach ($detailPenjualan as $item) {
+                    Http::post('http://localhost:1111/api/laporanStok', [
+                        'p_kodeLaporan' => $kode_penjualan,
+                        'p_idProduk' => $item['p_idProduk'],
+                        'p_namaKaryawan' => $sessionUser['nama_user'], // pastikan field ini sesuai dengan backend
+                        'p_perubahanStok' => -abs($item['p_kuantitas']), // negatif karena pengurangan
+                        'p_alasanPerubahan' => 'Penjualan Produk',
+                    ]);
+                }
                 return redirect()->back()->with('success', 'Transaksi berhasil!');
             } else {
                 return redirect()->back()->with('error', 'Gagal menyimpan transaksi: ' . $response->body());

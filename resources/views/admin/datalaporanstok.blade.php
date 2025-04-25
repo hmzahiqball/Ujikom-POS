@@ -19,6 +19,7 @@
                         <thead class="table-dark">
                             <tr>
                                 <th>No.</th>
+                                <th>Kode Laporan</th>
                                 <th>Nama Produk</th>
                                 <th>Perubahan Stok</th>
                                 <th>Alasan Perubahan</th>
@@ -31,7 +32,7 @@
                             @foreach($laporanstok as $key => $item)
                             <tr>
                                 <td>{{ $key + 1 }}</td>
-                                <td>{{ $item['nama_produk'] }}</td>
+                                <td>{{ $item['kode_laporan'] }}</td>
                                 <td>{{ $item['perubahan_stok'] }}</td>
                                 <td>{{ $item['alasan_perubahan'] }}</td>
                                 <td>{{ $item['nama_karyawan'] }}</td>
