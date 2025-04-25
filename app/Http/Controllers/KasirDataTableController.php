@@ -21,8 +21,7 @@ class KasirDataTableController extends Controller
             if ($produkResponse['status'] === 200 && $kategoriResponse->successful()) {
                 return view('kasir.dataproduk', [
                     'produk' => $produkResponse['data'],
-                    'kategori' => $kategoriResponse['data'],
-                    'success' => $produkResponse['message']
+                    'kategori' => $kategoriResponse['data']
                 ]);
             }
         } catch (\Exception $e) {

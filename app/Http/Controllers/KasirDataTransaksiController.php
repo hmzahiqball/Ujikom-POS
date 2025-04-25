@@ -40,8 +40,7 @@ class KasirDataTransaksiController extends Controller
 
             return view('kasir.datatransaksi', [
                 'penjualan' => $data_penjualan,
-                'tanggal' => $tanggal,
-                'success' => $response['message']
+                'tanggal' => $tanggal
             ]);
         } catch (\Exception $e) {
             return view('kasir.datatransaksi', [
