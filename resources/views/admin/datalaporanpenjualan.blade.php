@@ -29,7 +29,21 @@
 @endsection
 @section('content')
     <div class="container">
-        <h3>Laporan Penjualan Tahun ini</h3>
+        <div class="row align-items-center mb-3">
+            <div class="col-md-6">
+                <h3>Laporan Penjualan Tahun 2025</h3>
+            </div>
+            <div class="col-md-6 text-end">
+                <form action="#" method="GET" class="d-inline-block" id="tahunForm">
+                    <div class="input-group">
+                        <button type="button" class="btn btn-outline-secondary" id="decreaseYear">-</button>
+                        <input type="number" class="form-control text-center" id="tahunInput" name="tahun" value="{{ $tahun }}" readonly>
+                        <button type="button" class="btn btn-outline-secondary" id="increaseYear">+</button>
+                        <button type="submit" class="btn btn-outline-primary">Terapkan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
         <div class="row mb-3">
             <div class="col-xl-3 col-lg-6">
                 <div class="card card-stats h-100 mb-4 mb-xl-0">
@@ -152,65 +166,77 @@
     </div>
 @endsection
 @section('scripts')
-    <script>
-        $(document).ready(function() {
-            $('#tableProduk').DataTable({
-                lengthChange: false
-            });
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const tahunInput = document.getElementById('tahunInput');
+        document.getElementById('decreaseYear').addEventListener('click', function () {
+            tahunInput.value = parseInt(tahunInput.value) - 1;
         });
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        const ctx = document.getElementById('penjualanChart').getContext('2d');
 
-        const chart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: {!! json_encode($chart_labels) !!}, // ex: ['Jan', 'Feb', 'Mar']
-                datasets: [{
-                    label: 'Penjualan Bulanan',
-                    data: {!! json_encode($chart_values) !!}, // ex: [1000000, 2000000, 1500000]
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 2,
-                    pointRadius: 4,
-                    pointBackgroundColor: 'rgba(54, 162, 235, 1)',
-                    fill: 'start', // ini aktifkan area bawah
-                    tension: 0.4,  // ini bikin smooth
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Grafik Penjualan Bulanan'
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                let value = context.raw;
-                                return 'Rp ' + value.toLocaleString();
-                            }
+        document.getElementById('increaseYear').addEventListener('click', function () {
+            tahunInput.value = parseInt(tahunInput.value) + 1;
+        });
+    });
+
+    $(document).ready(function() {
+        $('#tableProduk').DataTable({
+            lengthChange: false,
+            searching: false,
+            ordering: false
+        });
+    });
+
+    const ctx = document.getElementById('penjualanChart').getContext('2d');
+
+    const chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: {!! json_encode($chart_labels) !!}, // ex: ['Jan', 'Feb', 'Mar']
+            datasets: [{
+                label: 'Penjualan Bulanan',
+                data: {!! json_encode($chart_values) !!}, // ex: [1000000, 2000000, 1500000]
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 2,
+                pointRadius: 4,
+                pointBackgroundColor: 'rgba(54, 162, 235, 1)',
+                fill: 'start', // ini aktifkan area bawah
+                tension: 0.4,  // ini bikin smooth
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Grafik Penjualan Bulanan'
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let value = context.raw;
+                            return 'Rp ' + value.toLocaleString();
                         }
                     }
-                },
-                elements: {
-                    line: {
-                        tension: 0.4 // smooth garis
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            callback: function(value) {
-                                return 'Rp ' + value.toLocaleString();
-                            }
+                }
+            },
+            elements: {
+                line: {
+                    tension: 0.4 // smooth garis
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return 'Rp ' + value.toLocaleString();
                         }
                     }
                 }
             }
-        });
-    </script>
+        }
+    });
+</script>
 @endsection

@@ -14,15 +14,15 @@ class AdminDataLaporanPenjualanController extends Controller
     public function index(Request $request)
     {
         try {
-            // Ambil input tanggal, jika kosong maka set default awal dan akhir bulan ini
-            $tanggal = $request->input('tanggal');
-            if (!$tanggal) {
-                $startDate = Carbon::now()->startOfYear()->format('Y-m-d');
-                $endDate = Carbon::now()->endOfYear()->format('Y-m-d');
-                $tanggal = $startDate . '_' . $endDate;
-            }
+            // Ambil input tahun dari request, default ke tahun ini
+            $tahun = $request->input('tahun', now()->year);
+            session(['tahun' => $tahun]);
 
-            // Tidak ada idpetugas, jadi biarkan null (jangan dikirim ke API)
+            // Set start dan end date dari tahun
+            $startDate = Carbon::createFromDate($tahun, 1, 1)->format('Y-m-d');
+            $endDate = Carbon::createFromDate($tahun, 12, 31)->format('Y-m-d');
+            $tanggal = $startDate . '_' . $endDate;
+
             $url = 'http://localhost:1111/api/laporanPenjualan';
 
             $response = Http::get($url, [
@@ -58,33 +58,30 @@ class AdminDataLaporanPenjualanController extends Controller
                     }
                 }
 
-                arsort($produkTerlaris); // urutkan berdasarkan total penjualan terbesar
-
-                // Ambil produk terlaris (pertama dari array yang sudah di-arsort)
+                arsort($produkTerlaris);
                 $namaProdukTerlaris = array_key_first($produkTerlaris);
 
-                // Hitung penjualan per karyawan
+                // Penjualan per karyawan
                 $penjualanKaryawan = [];
                 foreach ($data_penjualan as $penjualan) {
                     $namaKasir = $penjualan['karyawan']['nama_user'] ?? 'Tidak Diketahui';
                     $penjualanKaryawan[$namaKasir] = ($penjualanKaryawan[$namaKasir] ?? 0) + $penjualan['total_kuantitas'];
                 }
 
-                // Ambil karyawan dengan penjualan terbanyak
                 arsort($penjualanKaryawan);
                 $karyawanTerbaik = array_key_first($penjualanKaryawan);
 
-                // Buat data chart per bulan
+                // Chart per bulan
                 $penjualanPerBulan = [];
                 foreach ($data_penjualan as $penjualan) {
                     $bulan = Carbon::parse($penjualan['tanggal_penjualan'])->format('Y-m');
                     $penjualanPerBulan[$bulan] = ($penjualanPerBulan[$bulan] ?? 0) + (int) $penjualan['total_bayar'];
                 }
-                ksort($penjualanPerBulan); // urutkan bulan
+                ksort($penjualanPerBulan);
 
                 return view('admin.datalaporanpenjualan', [
                     'penjualan' => $data_penjualan,
-                    'tanggal' => $startDate . '_' . $endDate,
+                    'tanggal' => $tanggal,
                     'total_kuantitas' => $totalKuantitas,
                     'total_pemasukan' => $totalPemasukan,
                     'total_keuntungan' => $totalPendapatan,
@@ -92,13 +89,13 @@ class AdminDataLaporanPenjualanController extends Controller
                     'nama_produk_terlaris' => $namaProdukTerlaris,
                     'karyawan_terbaik' => $karyawanTerbaik,
                     'chart_labels' => array_keys($penjualanPerBulan),
-                    'chart_values' => array_values($penjualanPerBulan)
+                    'chart_values' => array_values($penjualanPerBulan),
+                    'tahun' => $tahun
                 ]);
             } else {
-                $data_penjualan = [];
                 return view('admin.datalaporanpenjualan', [
                     'penjualan' => [],
-                    'tanggal' => $startDate . '_' . $endDate,
+                    'tanggal' => $tanggal,
                     'total_kuantitas' => 0,
                     'total_pemasukan' => 0,
                     'total_keuntungan' => 0,
@@ -106,14 +103,16 @@ class AdminDataLaporanPenjualanController extends Controller
                     'nama_produk_terlaris' => '',
                     'karyawan_terbaik' => '',
                     'chart_labels' => [],
-                    'chart_values' => []
+                    'chart_values' => [],
+                    'tahun' => $tahun
                 ]);
             }
         } catch (\Exception $e) {
             return view('admin.datalaporanpenjualan', [
                 'penjualan' => [],
                 'tanggal' => [],
-                'error' => 'Gagal mengambil data penjualan'
+                'error' => 'Gagal mengambil data penjualan',
+                'tahun' => now()->year
             ]);
         }
     }
