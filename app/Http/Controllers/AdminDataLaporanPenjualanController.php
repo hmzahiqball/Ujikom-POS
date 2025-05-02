@@ -62,18 +62,18 @@ class AdminDataLaporanPenjualanController extends Controller
 
                 // Ambil produk terlaris (pertama dari array yang sudah di-arsort)
                 $namaProdukTerlaris = array_key_first($produkTerlaris);
-                            
+
                 // Hitung penjualan per karyawan
                 $penjualanKaryawan = [];
                 foreach ($data_penjualan as $penjualan) {
                     $namaKasir = $penjualan['karyawan']['nama_user'] ?? 'Tidak Diketahui';
                     $penjualanKaryawan[$namaKasir] = ($penjualanKaryawan[$namaKasir] ?? 0) + $penjualan['total_kuantitas'];
                 }
-                
+
                 // Ambil karyawan dengan penjualan terbanyak
                 arsort($penjualanKaryawan);
                 $karyawanTerbaik = array_key_first($penjualanKaryawan);
-                
+
                 // Buat data chart per bulan
                 $penjualanPerBulan = [];
                 foreach ($data_penjualan as $penjualan) {
@@ -81,7 +81,7 @@ class AdminDataLaporanPenjualanController extends Controller
                     $penjualanPerBulan[$bulan] = ($penjualanPerBulan[$bulan] ?? 0) + (int) $penjualan['total_bayar'];
                 }
                 ksort($penjualanPerBulan); // urutkan bulan
-                
+
                 return view('admin.datalaporanpenjualan', [
                     'penjualan' => $data_penjualan,
                     'tanggal' => $startDate . '_' . $endDate,
