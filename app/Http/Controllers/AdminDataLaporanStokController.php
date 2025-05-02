@@ -4,25 +4,59 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Carbon;
 
 class AdminDataLaporanStokController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $response = Http::get('http://localhost:1111/api/laporanstok/');
-        
+            // 1. Cek apakah user submit form dengan startdate dan enddate
+            if ($request->has('startdate') && $request->has('enddate')) {
+                $startDate = $request->input('startdate');
+                $endDate = $request->input('enddate');
+                $tanggal = $startDate . '_' . $endDate;
+
+                // Simpan ke session
+                session([
+                    'startDate' => $startDate,
+                    'endDate' => $endDate,
+                    'tanggal' => $tanggal
+                ]);
+            }
+
+            // 2. Jika tidak ada input, ambil dari session atau default awal–akhir tahun
+            if (!session()->has('tanggal')) {
+                $startDate = Carbon::now()->startOfMonth()->format('Y-m-d');
+                $endDate = Carbon::now()->endOfMonth()->format('Y-m-d');
+                $tanggal = $startDate . '_' . $endDate;
+
+                // Simpan ke session
+                session([
+                    'startDate' => $startDate,
+                    'endDate' => $endDate,
+                    'tanggal' => $tanggal
+                ]);
+            } else {
+                $tanggal = session('tanggal');
+            }
+
+            // Kirim request ke API dengan parameter tanggal (periode)
+            $response = Http::get('http://localhost:1111/api/laporanstok', [
+                'tanggal' => $tanggal
+            ]);
+
             $groupedLaporan = [];
-        
+
             if ($response['status'] === 200) {
                 $data = $response['data'];
-            
+
                 foreach ($data as $item) {
                     $kode = $item['kode_laporan'];
-                
+
                     if (!isset($groupedLaporan[$kode])) {
                         $groupedLaporan[$kode] = [
                             'kode_laporan' => $kode,
@@ -30,24 +64,23 @@ class AdminDataLaporanStokController extends Controller
                             'nama_karyawan' => $item['nama_karyawan'],
                             'created_at' => $item['created_at'],
                             'produk' => [],
-                            'ids' => [], // untuk delete
+                            'ids' => [],
                         ];
                     }
-                
+
                     $groupedLaporan[$kode]['produk'][] = [
                         'nama_produk' => $item['nama_produk'],
                         'perubahan_stok' => $item['perubahan_stok']
                     ];
-                
+
                     $groupedLaporan[$kode]['ids'][] = $item['id_laporan_stok'];
                 }
-            
             }
-        
+
             return view('admin.datalaporanstok', [
                 'laporanstok' => array_values($groupedLaporan)
             ]);
-        
+
         } catch (\Exception $e) {
             return view('admin.datalaporanstok', [
                 'laporanstok' => [],

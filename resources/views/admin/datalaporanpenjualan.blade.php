@@ -223,7 +223,7 @@
             },
             elements: {
                 line: {
-                    tension: 0.4 // smooth garis
+                    tension: 0.8 // smooth garis
                 }
             },
             scales: {
