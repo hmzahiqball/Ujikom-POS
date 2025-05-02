@@ -44,6 +44,23 @@
                 </ul>
             </li>
             <li>
+                <a href="#submenuManajemenToko" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
+                    <i class="fa-solid fa-store text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Manajemen
+                        Toko</span></a>
+                <ul class="collapse nav flex-column ms-4" id="submenuManajemenToko" data-bs-parent="#menu">
+                    <li class="w-100 h-100">
+                        <a href="{{ URL('/admin/datapembelian') }}" class="nav-link px-0 text-abu">
+                            <span class="ms-1 d-none d-sm-inline text-abu">Data
+                                Pembelian</span></a>
+                    </li>
+                    <li class="w-100 h-100">
+                        <a href="{{ URL('/admin/datapengeluaran') }}" class="nav-link px-0 text-abu">
+                            <span class="ms-1 d-none d-sm-inline text-abu">Data
+                                Pengeluaran</span></a>
+                    </li>
+                </ul>
+            </li>
+            <li>
                 <a href="#submenuKaryawan" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
                     <i class="fa-solid fa-user-shield text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Karyawan</span></a>
                 <ul class="collapse nav flex-column ms-4" id="submenuKaryawan" data-bs-parent="#menu">

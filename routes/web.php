@@ -23,6 +23,7 @@ use App\Http\Controllers\AdminDataShiftController;
 use App\Http\Controllers\AdminDataAbsensiController;
 use App\Http\Controllers\AdminDataRiwayatPenjualanController;
 use App\Http\Controllers\AdminDataIzinKaryawanController;
+use App\Http\Controllers\AdminDataPembelianController;
 
 
 /*
@@ -73,6 +74,12 @@ Route::middleware(['admin'])->group(function () {
     Route::post('admin/datamember/add', [AdminDataMemberController::class, 'store']);
     Route::post('admin/datamember/update', [AdminDataMemberController::class, 'update']);
     Route::post('admin/datamember/delete', [AdminDataMemberController::class, 'destroy'])->name('admin.datamember.delete');
+
+    // Manajemen Toko
+    Route::resource('admin/datapembelian', AdminDataPembelianController::class);
+    Route::post('admin/datapembelian/add', [AdminDataPembelianController::class, 'store']);
+    Route::post('admin/datapembelian/update', [AdminDataPembelianController::class, 'update']);
+    Route::post('admin/datapembelian/delete', [AdminDataPembelianController::class, 'destroy'])->name('admin.datapembelian.delete');
 
     // Karyawan
     Route::resource('admin/datashift', AdminDataShiftController::class);

@@ -50,7 +50,7 @@
                                     <td>{{ $item['tanggal_penjualan'] }}</td>
                                     <td>{{ $item['customers']['nama_customers'] ?? 'Non-Member' }}</td>
                                     <td>Rp. {{ number_format($item['total_harga'], 0, ',', '.') }}</td>
-                                    <td>{{ $item['status_pembayaran'] }}</td>
+                                    <td style="background-color: {{ $item['status_pembayaran'] == 'Success' ? '#C6F7D0' : ($item['status_pembayaran'] == 'Pending' ? '#87CEEB' : '#FFC5C5') }}">{{ $item['status_pembayaran'] }}</td>
                                     <td>
                                         <button class="btn btn-secondary mr-2"
                                                 data-bs-toggle="modal"

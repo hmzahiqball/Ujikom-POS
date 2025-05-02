@@ -28,7 +28,7 @@ class AdminDataMemberController extends Controller
         } catch (\Exception $e) {
             return view('admin.datamember', [
                 'member' => [],
-                'error' => 'Gagal mengambil data produk'
+                'error' => 'Gagal mengambil data member'
             ]);
         }
     }
