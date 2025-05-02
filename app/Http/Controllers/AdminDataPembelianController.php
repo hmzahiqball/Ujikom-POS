@@ -46,6 +46,8 @@ class AdminDataPembelianController extends Controller
 
             // 3. Ambil data dari API
             $url = 'http://localhost:1111/api/laporanpembelian';
+            $supplierResponse = Http::get('http://localhost:1111/api/suppliers/');
+            $produkResponse = Http::get('http://localhost:1111/api/produk/');
 
             $response = Http::get($url, [
                 'tanggal' => $tanggal
@@ -55,13 +57,25 @@ class AdminDataPembelianController extends Controller
                 ? $response->json('data')
                 : [];
 
+            $data_supplier = $supplierResponse->successful()
+                ? $supplierResponse->json('data')
+                : [];
+
+            $data_produk = $produkResponse->successful()
+                ? $produkResponse->json('data')
+                : [];
+
             return view('admin.datapembelian', [
                 'pembelian' => $data_pembelian,
+                'supplier' => $data_supplier,
+                'produk' => $data_produk,
                 'tanggal' => $tanggal
             ]);
         } catch (\Exception $e) {
             return view('admin.datapembelian', [
                 'pembelian' => [],
+                'supplier' => [],
+                'produk' => [],
                 'tanggal' => '',
                 'error' => 'Gagal mengambil data pembelian'
             ]);
