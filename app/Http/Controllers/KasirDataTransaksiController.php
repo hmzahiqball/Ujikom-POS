@@ -14,38 +14,56 @@ class KasirDataTransaksiController extends Controller
     public function index(Request $request)
     {
         try {
-            // Ambil input tanggal, jika kosong maka set default awal dan akhir bulan ini
             $id_karyawan = session('tb_petugas') ? session('tb_petugas')['data_user']['id_karyawan'] : null;
-            $tanggal = $request->input('tanggal');
-            if (!$tanggal) {
-                $startDate = Carbon::now()->startOfMonth()->format('Y-m-d');
-                $endDate = Carbon::now()->endOfMonth()->format('Y-m-d');
+            // 1. Cek apakah user submit form dengan startdate dan enddate
+            if ($request->has('startdate') && $request->has('enddate')) {
+                $startDate = $request->input('startdate');
+                $endDate = $request->input('enddate');
                 $tanggal = $startDate . '_' . $endDate;
+
+                // Simpan ke session
+                session([
+                    'startDate' => $startDate,
+                    'endDate' => $endDate,
+                    'tanggal' => $tanggal
+                ]);
             }
 
-            // Tidak ada idpetugas, jadi biarkan null (jangan dikirim ke API)
+            // 2. Jika tidak ada input, ambil dari session atau default awal–akhir tahun
+            if (!session()->has('tanggal')) {
+                $startDate = Carbon::now()->startOfYear()->format('Y-m-d');
+                $endDate = Carbon::now()->endOfYear()->format('Y-m-d');
+                $tanggal = $startDate . '_' . $endDate;
+
+                // Simpan ke session
+                session([
+                    'startDate' => $startDate,
+                    'endDate' => $endDate,
+                    'tanggal' => $tanggal
+                ]);
+            } else {
+                $tanggal = session('tanggal');
+            }
+
+            // 3. Ambil data dari API
             $url = 'http://localhost:1111/api/laporanPenjualan';
-            // dd($url, $id_karyawan, $tanggal);
 
             $response = Http::get($url, [
-                'idpetugas' => $id_karyawan,
                 'tanggal' => $tanggal
             ]);
 
-            if ($response->successful()) {
-                $data_penjualan = $response->json('data');
-            } else {
-                $data_penjualan = [];
-            }
+            $data_penjualan = $response->successful()
+                ? $response->json('data')
+                : [];
 
-            return view('kasir.datatransaksi', [
+            return view('admin.datapenjualan', [
                 'penjualan' => $data_penjualan,
                 'tanggal' => $tanggal
             ]);
         } catch (\Exception $e) {
-            return view('kasir.datatransaksi', [
+            return view('admin.datapenjualan', [
                 'penjualan' => [],
-                'tanggal' => [],
+                'tanggal' => '',
                 'error' => 'Gagal mengambil data penjualan'
             ]);
         }

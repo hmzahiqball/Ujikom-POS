@@ -9,7 +9,22 @@
 @endsection
 @section('content')
     <div class="container">
-        <h3>Data Riwayat Transaksi</h3>
+        <div class="row align-items-center mb-3">
+            <div class="col-md-6">
+                <h3>Data Riwayat Transaksi</h3>
+            </div>
+            <div class="col-md-6 text-end">
+                <form action="#" method="GET" class="d-inline-block">
+                    <div class="input-group">
+                        <span class="input-group-text bg-dark text-white">Periode</span>
+                        <input type="date" class="form-control" name="startdate" value="{{ session('startDate', \Carbon\Carbon::now()->startOfYear()->format('Y-m-d')) }}">
+                        <span class="input-group-text">-</span>
+                        <input type="date" class="form-control" name="enddate" value="{{ session('endDate', \Carbon\Carbon::now()->endOfYear()->format('Y-m-d')) }}">
+                        <button type="submit" class="btn btn-outline-primary">Terapkan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive">
