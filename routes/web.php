@@ -25,6 +25,7 @@ use App\Http\Controllers\AdminDataRiwayatPenjualanController;
 use App\Http\Controllers\AdminDataIzinKaryawanController;
 use App\Http\Controllers\AdminDataPembelianController;
 use App\Http\Controllers\AdminDataLaporanPembelianController;
+use App\Http\Controllers\AdminDataPengeluaranController;
 
 
 /*
@@ -81,6 +82,11 @@ Route::middleware(['admin'])->group(function () {
     Route::post('admin/datapembelian/add', [AdminDataPembelianController::class, 'store']);
     Route::post('admin/datapembelian/update', [AdminDataPembelianController::class, 'update']);
     Route::post('admin/datapembelian/delete', [AdminDataPembelianController::class, 'destroy'])->name('admin.datapembelian.delete');
+
+    Route::resource('admin/datapengeluaran', AdminDataPengeluaranController::class);
+    Route::post('admin/datapengeluaran/add', [AdminDataPengeluaranController::class, 'store']);
+    Route::post('admin/datapengeluaran/update', [AdminDataPengeluaranController::class, 'update']);
+    Route::post('admin/datapengeluaran/delete', [AdminDataPengeluaranController::class, 'destroy'])->name('admin.datapengeluaran.delete');
 
     // Karyawan
     Route::resource('admin/datashift', AdminDataShiftController::class);

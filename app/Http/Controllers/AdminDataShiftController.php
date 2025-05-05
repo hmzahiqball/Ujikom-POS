@@ -57,7 +57,7 @@ class AdminDataShiftController extends Controller
                 return redirect('admin/datashift')->with('success', 'Jadwal berhasil ditambahkan.');
             }
 
-            // return redirect()->back()->with('error', 'Gagal menambahkan jadwal: ' . $response->json()['message']);
+            return redirect()->back()->with('error', 'Gagal menambahkan jadwal: ' . $response->json()['message']);
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Terjadi kesalahan saat menambahkan jadwal: ' . $e->getMessage());
         }

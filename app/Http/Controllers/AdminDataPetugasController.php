@@ -39,48 +39,48 @@ class AdminDataPetugasController extends Controller
     }
 
     public function store(Request $request)
-{
-    $request->validate([
-        'contact_addpetugas' => 'required|numeric',
-        'password_addpetugas' => 'required',
-        'nama_addpetugas' => 'required',
-        'role_addpetugas' => 'required',
-        'posisi_addpetugas' => 'required',
-        'gaji_addpetugas' => 'required|numeric',
-        'alamat_addpetugas' => 'required',
-        'shift_addpetugas' => 'required|numeric',
-        'foto_addpetugas' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-    ]);
-
-    try {
-        // Payload lengkap ke satu endpoint
-        $payload = [
-            'p_namaUsers'       => $request->nama_addpetugas,
-            'p_contactUsers'    => $request->contact_addpetugas,
-            'p_passwordUsers'   => $request->password_addpetugas,
-            'p_roleUsers'       => $request->role_addpetugas,
-            'p_posisiKaryawan'  => $request->posisi_addpetugas,
-            'p_gajiKaryawan'    => $request->gaji_addpetugas,
-            'p_alamatKaryawan'  => $request->alamat_addpetugas,
-            'p_idShifts'        => $request->shift_addpetugas,
-        ];
-
-        $response = HttpHelper::postMultipart(
-            "http://localhost:1111/api/karyawan",
-            $payload,
-            'p_gambarUser',
-            $request->file('foto_addpetugas')
-        );
-
-        if (!$response['status'] === 200) {
-            return back()->with('error', 'Gagal menambahkan data petugas');
+    {
+        $request->validate([
+            'contact_addpetugas' => 'required|numeric',
+            'password_addpetugas' => 'required',
+            'nama_addpetugas' => 'required',
+            'role_addpetugas' => 'required',
+            'posisi_addpetugas' => 'required',
+            'gaji_addpetugas' => 'required|numeric',
+            'alamat_addpetugas' => 'required',
+            'shift_addpetugas' => 'required|numeric',
+            'foto_addpetugas' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+    
+        try {
+            // Payload lengkap ke satu endpoint
+            $payload = [
+                'p_namaUsers'       => $request->nama_addpetugas,
+                'p_contactUsers'    => $request->contact_addpetugas,
+                'p_passwordUsers'   => $request->password_addpetugas,
+                'p_roleUsers'       => $request->role_addpetugas,
+                'p_posisiKaryawan'  => $request->posisi_addpetugas,
+                'p_gajiKaryawan'    => $request->gaji_addpetugas,
+                'p_alamatKaryawan'  => $request->alamat_addpetugas,
+                'p_idShifts'        => $request->shift_addpetugas,
+            ];
+        
+            $response = HttpHelper::postMultipart(
+                "http://localhost:1111/api/karyawan",
+                $payload,
+                'p_gambarUser',
+                $request->file('foto_addpetugas')
+            );
+        
+            if (!$response['status'] === 200) {
+                return back()->with('error', 'Gagal menambahkan data petugas');
+            }
+        
+            return redirect('/admin/datapetugas')->with('success', 'Data petugas berhasil ditambahkan!');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
-
-        return redirect('/admin/datapetugas')->with('success', 'Data petugas berhasil ditambahkan!');
-    } catch (\Exception $e) {
-        return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
     }
-}
 
     public function update(Request $request)
     {
