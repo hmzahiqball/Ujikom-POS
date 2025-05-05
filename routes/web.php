@@ -24,6 +24,7 @@ use App\Http\Controllers\AdminDataAbsensiController;
 use App\Http\Controllers\AdminDataRiwayatPenjualanController;
 use App\Http\Controllers\AdminDataIzinKaryawanController;
 use App\Http\Controllers\AdminDataPembelianController;
+use App\Http\Controllers\AdminDataLaporanPembelianController;
 
 
 /*
@@ -108,6 +109,8 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/stokproduk/bulk-delete', [AdminDataLaporanStokController::class, 'bulkDelete'])->name('admin.datastokproduk.bulkdelete');
 
     Route::resource('admin/datalaporanpenjualan', AdminDataLaporanPenjualanController::class);
+
+    Route::resource('admin/datalaporanpembelian', AdminDataLaporanPembelianController::class);
 });
 
 // Route grup untuk kasir

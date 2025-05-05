@@ -106,6 +106,11 @@
                             <span class="ms-1 d-none d-sm-inline text-abu">Laporan
                                 Penjualan</span></a>
                     </li>
+                    <li class="w-100 h-100">
+                        <a href="{{ URL('/admin/datalaporanpembelian') }}" class="nav-link px-0 text-abu">
+                            <span class="ms-1 d-none d-sm-inline text-abu">Laporan
+                                Pembelian</span></a>
+                    </li>
                 </ul>
             </li>
         </ul>
