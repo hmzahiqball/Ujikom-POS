@@ -15,8 +15,8 @@ class KasirDataTableController extends Controller
     public function index()
     {
         try {
-            $produkResponse = Http::get('http://localhost:1111/api/produk/');
-            $kategoriResponse = Http::get('http://localhost:1111/api/kategori/');
+            $produkResponse = Http::get(config('api.base_url') . 'produk/');
+            $kategoriResponse = Http::get(config('api.base_url') . 'kategori/');
 
             if ($produkResponse['status'] === 200 && $kategoriResponse->successful()) {
                 return view('kasir.dataproduk', [
@@ -81,3 +81,4 @@ class KasirDataTableController extends Controller
         //
     }
 }
+

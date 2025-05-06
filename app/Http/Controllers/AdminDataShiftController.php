@@ -14,7 +14,7 @@ class AdminDataShiftController extends Controller
     {
         try {
             // Ambil data customer dari API eksternal
-            $response = Http::get('http://localhost:1111/api/shifts/');
+            $response = Http::get(config('api.base_url') . 'shifts/');
 
             if ($response['status'] === 200) {
                 $get_shift = $response['data']; // ambil array data dari JSON
@@ -51,7 +51,7 @@ class AdminDataShiftController extends Controller
                 'p_endTime'         => $request->endTime_addshift . ':00',
             ];
 
-            $response = Http::post('http://localhost:1111/api/shifts/', $data);
+            $response = Http::post(config('api.base_url') . 'shifts/', $data);
 
             if ($response['status'] === 200) {
                 return redirect('admin/datashift')->with('success', 'Jadwal berhasil ditambahkan.');
@@ -96,7 +96,7 @@ class AdminDataShiftController extends Controller
             $id = $request->id_editshift;
             $startTime = normalizeTime($request->startTime_editshift);
             $endTime = normalizeTime($request->endTime_editshift);
-            $url = "http://localhost:1111/api/shifts/{$id}";
+            $url = config('api.base_url') . "shifts/{$id}";
 
             $data = [
                 'p_namaShifts'         => $request->jadwal_editshift,
@@ -130,7 +130,7 @@ class AdminDataShiftController extends Controller
         try {
             $response = Http::withHeaders([
                 'Accept' => 'application/json',
-            ])->delete("http://localhost:1111/api/shifts/{$idShift}");
+            ])->delete(config('api.base_url') . "shifts/{$idShift}");
 
             if ($response['status'] === 200) {
                 return redirect('admin/datashift')->with('success', 'Jadwal berhasil dihapus.');
@@ -142,3 +142,4 @@ class AdminDataShiftController extends Controller
         }
     }
 }
+

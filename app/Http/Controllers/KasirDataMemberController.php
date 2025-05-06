@@ -15,7 +15,7 @@ class KasirDataMemberController extends Controller
     {
         try {
             // Ambil data customer dari API eksternal
-            $response = Http::get('http://localhost:1111/api/customer/');
+            $response = Http::get(config('api.base_url') . 'customer/');
 
             if ($response['status'] === 200) {
                 $get_member = $response['data']; // ambil array data dari JSON
@@ -57,7 +57,7 @@ class KasirDataMemberController extends Controller
                 'p_alamatCustomers'   => $request->input('alamat_addmember'),
             ];
 
-            $response = Http::post('http://localhost:1111/api/customer/', $data);
+            $response = Http::post(config('api.base_url') . 'customer/', $data);
 
             if ($response['status'] === 200) {
                 return redirect('kasir/dashboard')->with('success', 'Customer berhasil ditambahkan.');
@@ -101,3 +101,4 @@ class KasirDataMemberController extends Controller
         //
     }
 }
+

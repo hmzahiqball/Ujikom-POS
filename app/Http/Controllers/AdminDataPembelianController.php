@@ -45,9 +45,9 @@ class AdminDataPembelianController extends Controller
             }
 
             // 3. Ambil data dari API
-            $url = 'http://localhost:1111/api/laporanpembelian';
-            $supplierResponse = Http::get('http://localhost:1111/api/suppliers/');
-            $produkResponse = Http::get('http://localhost:1111/api/produk/');
+            $url = config('api.base_url') . 'laporanpembelian';
+            $supplierResponse = Http::get(config('api.base_url') . 'suppliers/');
+            $produkResponse = Http::get(config('api.base_url') . 'produk/');
 
             $response = Http::get($url, [
                 'tanggal' => $tanggal
@@ -99,7 +99,7 @@ class AdminDataPembelianController extends Controller
             $idpembelian = $request->input('id_editpembelian');
             $totalHarga = (int) str_replace('.', '', $request->input('total_editpembelian'));
 
-            $url = "http://localhost:1111/api/laporanpembelian/{$idpembelian}";
+            $url = config('api.base_url') . "laporanpembelian/{$idpembelian}";
             $data = [
                 'p_totalHarga'     => $totalHarga,
                 'p_statusPembelian'   => $request->input('status_editpembelian'),
@@ -132,7 +132,7 @@ class AdminDataPembelianController extends Controller
         try {
             $response = Http::withHeaders([
                 'Accept' => 'application/json',
-            ])->delete("http://localhost:1111/api/laporanpembelian/{$idPembelian}");
+            ])->delete(config('api.base_url') . "laporanpembelian/{$idPembelian}");
 
             if ($response['status'] === 200) {
                 return redirect('admin/datapembelian')->with('success', 'Riwayat berhasil dihapus.');
@@ -144,3 +144,4 @@ class AdminDataPembelianController extends Controller
         }
     }
 }
+

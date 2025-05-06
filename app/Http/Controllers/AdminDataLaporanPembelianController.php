@@ -21,7 +21,7 @@ class AdminDataLaporanPembelianController extends Controller
         $endDate = Carbon::createFromDate($tahun, 12, 31)->format('Y-m-d');
         $tanggal = $startDate . '_' . $endDate;
 
-        $url = 'http://localhost:1111/api/laporanPembelian';
+        $url = config('api.base_url') . 'laporanPembelian';
 
         $response = Http::get($url, [
             'tanggal' => $tanggal
@@ -108,3 +108,4 @@ class AdminDataLaporanPembelianController extends Controller
     }
 }
 }
+

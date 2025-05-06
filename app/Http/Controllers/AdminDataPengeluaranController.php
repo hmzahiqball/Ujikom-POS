@@ -45,8 +45,8 @@ class AdminDataPengeluaranController extends Controller
             }
 
             // 3. Ambil data dari API
-            $url = 'http://localhost:1111/api/laporanpengeluaran';
-            $kategoriResponse = Http::get('http://localhost:1111/api/kategoriPengeluaran/');
+            $url = config('api.base_url') . "laporanPengeluaran";
+            $kategoriResponse = Http::get(config('api.base_url') . "kategoriPengeluaran/");
 
             $response = Http::get($url, [
                 'tanggal' => $tanggal
@@ -103,7 +103,7 @@ class AdminDataPengeluaranController extends Controller
                 'p_tanggal'         => $request->tanggal_addPengeluaran,
             ];
 
-            $response = Http::post('http://localhost:1111/api/laporanPengeluaran/', $data);
+            $response = Http::post(config('api.base_url') . "laporanPengeluaran/", $data);
 
             if ($response['status'] === 200) {
                 return redirect('admin/datapengeluaran')->with('success', 'Data berhasil ditambahkan.');
@@ -138,7 +138,7 @@ class AdminDataPengeluaranController extends Controller
                 'p_tanggal'         => $request->tanggal_editPengeluaran,
             ];
 
-            $url = "http://localhost:1111/api/laporanPengeluaran/{$idPengeluaran}";
+            $url = config('api.base_url') . "laporanPengeluaran/{$idPengeluaran}";
 
             $response = Http::put($url, $data);
 
@@ -166,7 +166,7 @@ class AdminDataPengeluaranController extends Controller
         try {
             $response = Http::withHeaders([
                 'Accept' => 'application/json',
-            ])->delete("http://localhost:1111/api/laporanpengeluaran/{$idPengeluaran}");
+            ])->delete(config('api.base_url') . "laporanpengeluaran/{$idPengeluaran}");
 
             if ($response['status'] === 200) {
                 return redirect('admin/datapengeluaran')->with('success', 'Data berhasil dihapus.');

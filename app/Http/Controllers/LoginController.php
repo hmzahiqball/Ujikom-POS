@@ -25,7 +25,7 @@ class LoginController extends Controller
             $contact = $request->input('input_contactpetugas');
             $password = $request->input('input_passwordpetugas');
 
-            $response = Http::post('http://localhost:1111/api/users/login', [
+            $response = Http::post(config('api.base_url') . 'users/login', [
                 'p_contactUsers' => $contact,
                 'p_passwordUsers' => $password,
             ]);
@@ -41,7 +41,7 @@ class LoginController extends Controller
                     Session::put('foto_petugas', $data['gambar_user']);
 
                     // Clock-in
-                    $absenResponse = Http::post('http://localhost:1111/api/laporanabsen/', [
+                    $absenResponse = Http::post(config('api.base_url') . 'laporanabsen/', [
                         'p_idKaryawan' => $data['data_user']['id_karyawan'],
                     ]);
 
@@ -75,7 +75,7 @@ class LoginController extends Controller
         // Clock-out
         $idLaporanAbsen = Session::get('id_laporanabsen');
         if ($idLaporanAbsen) {
-            Http::put("http://localhost:1111/api/laporanabsen/{$idLaporanAbsen}");
+            Http::put(config('api.base_url') . "laporanabsen/{$idLaporanAbsen}");
         }
 
         // Hapus session
@@ -133,3 +133,4 @@ class LoginController extends Controller
         //
     }
 }
+

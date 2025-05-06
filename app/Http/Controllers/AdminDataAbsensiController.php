@@ -13,7 +13,7 @@ class AdminDataAbsensiController extends Controller
     public function index()
     {
         try {
-            $absensiResponse = Http::get('http://localhost:1111/api/laporanabsen/');
+            $absensiResponse = Http::get(config('api.base_url') . 'laporanabsen/');
 
             if ($absensiResponse['status'] === 200) {
                 return view('admin.dataabsensi', [
@@ -58,7 +58,7 @@ class AdminDataAbsensiController extends Controller
         try {
             $response = Http::withHeaders([
                 'Accept' => 'application/json',
-            ])->delete("http://localhost:1111/api/laporanabsen/{$id}");
+            ])->delete(config('api.base_url') . "laporanabsen/{$id}");
 
             if ($response['status'] === 200) {
                 return redirect('admin/dataabsensi')->with('success', 'Data berhasil dihapus.');
@@ -70,3 +70,4 @@ class AdminDataAbsensiController extends Controller
         }
     }
 }
+

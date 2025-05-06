@@ -46,7 +46,7 @@ class KasirDataTransaksiController extends Controller
             }
 
             // 3. Ambil data dari API
-            $url = 'http://localhost:1111/api/laporanPenjualan';
+            $url = config('api.base_url') . 'laporanPenjualan';
 
             $response = Http::get($url, [
                 'tanggal' => $tanggal
@@ -117,3 +117,4 @@ class KasirDataTransaksiController extends Controller
         //
     }
 }
+

@@ -13,7 +13,7 @@ class AdminDataSupplierController extends Controller
     public function index()
     {
         try {
-            $supplierResponse = Http::get('http://localhost:1111/api/suppliers/');
+            $supplierResponse = Http::get(config('api.base_url') . 'suppliers/');
 
             if ($supplierResponse['status'] === 200) {
                 return view('admin.datasupplier', [
@@ -57,7 +57,7 @@ class AdminDataSupplierController extends Controller
                 'p_emailSuppliers'         => $request->email_addsupplier,
                 'p_alamatSuppliers'         => $request->alamat_addsupplier,
             ];
-            $response = Http::post('http://localhost:1111/api/suppliers/', $data);
+            $response = Http::post(config('api.base_url') . 'suppliers/', $data);
 
             if ($response['status'] === 200) {
                 return redirect('admin/datasupplier')->with('success', 'Supplier berhasil ditambahkan.');
@@ -100,7 +100,7 @@ class AdminDataSupplierController extends Controller
         ]);
 
         $id = $request->id_editSupplier;
-        $url = "http://localhost:1111/api/suppliers/{$id}";
+        $url = config('api.base_url') . "suppliers/{$id}";
 
         $data = [
             'p_namaSuppliers'         => $request->nama_editSupplier,
@@ -133,7 +133,7 @@ class AdminDataSupplierController extends Controller
         try {
             $response = Http::withHeaders([
                 'Accept' => 'application/json',
-            ])->delete("http://localhost:1111/api/suppliers/{$idSupplier}");
+            ])->delete(config('api.base_url') . "suppliers/{$idSupplier}");
 
             if ($response['status'] === 200) {
                 return redirect('admin/datasupplier')->with('success', 'Supplier berhasil dihapus.');
@@ -145,3 +145,4 @@ class AdminDataSupplierController extends Controller
         }
     }
 }
+

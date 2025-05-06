@@ -14,8 +14,8 @@ class AdminDataPetugasController extends Controller
     public function index()
     {
         try {
-            $karyawanResponse = Http::get('http://localhost:1111/api/karyawan/');
-            $shiftsResponse = Http::get('http://localhost:1111/api/shifts/');
+            $karyawanResponse = Http::get(config('api.base_url') . 'karyawan/');
+            $shiftsResponse = Http::get(config('api.base_url') . 'shifts/');
 
             if ($karyawanResponse['status'] === 200 && $shiftsResponse['status'] === 200) {
                 return view('admin.datapetugas', [
@@ -51,7 +51,7 @@ class AdminDataPetugasController extends Controller
             'shift_addpetugas' => 'required|numeric',
             'foto_addpetugas' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-    
+
         try {
             // Payload lengkap ke satu endpoint
             $payload = [
@@ -64,18 +64,18 @@ class AdminDataPetugasController extends Controller
                 'p_alamatKaryawan'  => $request->alamat_addpetugas,
                 'p_idShifts'        => $request->shift_addpetugas,
             ];
-        
+
             $response = HttpHelper::postMultipart(
-                "http://localhost:1111/api/karyawan",
+                config('api.base_url') . 'karyawan',
                 $payload,
                 'p_gambarUser',
                 $request->file('foto_addpetugas')
             );
-        
+
             if (!$response['status'] === 200) {
                 return back()->with('error', 'Gagal menambahkan data petugas');
             }
-        
+
             return redirect('/admin/datapetugas')->with('success', 'Data petugas berhasil ditambahkan!');
         } catch (\Exception $e) {
             return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
@@ -103,7 +103,7 @@ class AdminDataPetugasController extends Controller
             $idUser = $request->idUser_editpetugas;
 
             // 1. Update ke endpoint Karyawan
-            $karyawanResponse = Http::put("http://localhost:1111/api/karyawan/{$idKaryawan}", [
+            $karyawanResponse = Http::put(config('api.base_url') . "karyawan/{$idKaryawan}", [
                 'p_posisiKaryawan' => $request->posisi_editpetugas,
                 'p_gajiKaryawan'   => $request->gaji_editpetugas,
                 'p_alamatKaryawan' => $request->alamat_editpetugas,
@@ -118,7 +118,7 @@ class AdminDataPetugasController extends Controller
             ];
 
             $userResponse = HttpHelper::putMultipart(
-                "http://localhost:1111/api/users/{$idUser}",
+                config('api.base_url') . "users/{$idUser}",
                 $userPayload,
                 'p_gambarUser',
                 $request->file('foto_editpetugas')
@@ -147,7 +147,7 @@ class AdminDataPetugasController extends Controller
         try {
             $response = Http::withHeaders([
                 'Accept' => 'application/json',
-            ])->delete("http://localhost:1111/api/karyawan/{$idPetugas}");
+            ])->delete(config('api.base_url') . "karyawan/{$idPetugas}");
 
             if ($response['status'] === 200) {
                 return redirect('admin/datapetugas')->with('success', 'Data berhasil dihapus.');
@@ -159,3 +159,4 @@ class AdminDataPetugasController extends Controller
         }
     }
 }
+

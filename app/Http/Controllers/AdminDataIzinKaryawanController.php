@@ -13,8 +13,8 @@ class AdminDataIzinKaryawanController extends Controller
     public function index()
     {
         try {
-            $izinResponse = Http::get('http://localhost:1111/api/laporanIzinKaryawan/');
-            $kategoriResponse = Http::get('http://localhost:1111/api/kategoriIzin/');
+            $izinResponse = Http::get(config('api.base_url') . 'laporanIzinKaryawan/');
+            $kategoriResponse = Http::get(config('api.base_url') . 'kategoriIzin/');
 
             if ($izinResponse['status'] === 200 && $kategoriResponse['status'] === 200) {
                 return view('admin.dataizin', [
@@ -49,7 +49,7 @@ class AdminDataIzinKaryawanController extends Controller
                 'p_namaKategoriIzin'     => $request->input('kategoriIzin_addIzin'),
             ];
 
-            $response = Http::post('http://localhost:1111/api/kategoriIzin/', $data);
+            $response = Http::post(config('api.base_url') . 'kategoriIzin/', $data);
 
             if ($response['status'] === 200) {
                 return redirect('admin/dataizinkaryawan')->with('success', 'Kategori Izin berhasil ditambahkan.');
@@ -69,7 +69,7 @@ class AdminDataIzinKaryawanController extends Controller
         try {
             $id = $request->input('idIzin_editIzin');
 
-            $url = "http://localhost:1111/api/laporanIzinKaryawan/{$id}";
+            $url = config('api.base_url') . "laporanIzinKaryawan/{$id}";
             $data = [
                 'p_startDate'   => $request->input('startDate_editIzinn'),
                 'p_endDate' => $request->input('endDate_editIzinn'),
@@ -102,7 +102,7 @@ class AdminDataIzinKaryawanController extends Controller
         try {
             $response = Http::withHeaders([
                 'Accept' => 'application/json',
-            ])->delete("http://localhost:1111/api/laporanIzinKaryawan/{$idCustomers}");
+            ])->delete(config('api.base_url') . "laporanIzinKaryawan/{$idCustomers}");
 
             if ($response['status'] === 200) {
                 return redirect('admin/dataizinkaryawan')->with('success', 'Laporan berhasil dihapus.');
@@ -125,7 +125,7 @@ class AdminDataIzinKaryawanController extends Controller
         try {
             $response = Http::withHeaders([
                 'Accept' => 'application/json',
-            ])->delete("http://localhost:1111/api/kategoriIzin/{$idKategoriIzin}");
+            ])->delete(config('api.base_url') . "kategoriIzin/{$idKategoriIzin}");
 
             if ($response['status'] === 200) {
                 return redirect('admin/dataizinkaryawan')->with('success', 'Kategori berhasil dihapus.');
@@ -137,3 +137,4 @@ class AdminDataIzinKaryawanController extends Controller
         }
     }
 }
+

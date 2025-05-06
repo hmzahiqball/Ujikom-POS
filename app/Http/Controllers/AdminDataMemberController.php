@@ -14,7 +14,7 @@ class AdminDataMemberController extends Controller
     {
         try {
             // Ambil data customer dari API eksternal
-            $response = Http::get('http://localhost:1111/api/customer/');
+            $response = Http::get(config('api.base_url') . 'customer/');
 
             if ($response['status'] === 200) {
                 $get_member = $response['data']; // ambil array data dari JSON
@@ -56,7 +56,7 @@ class AdminDataMemberController extends Controller
                 'p_alamatCustomers'   => $request->input('alamat_addmember'),
             ];
 
-            $response = Http::post('http://localhost:1111/api/customer/', $data);
+            $response = Http::post(config('api.base_url') . 'customer/', $data);
 
             if ($response['status'] === 200) {
                 return redirect('admin/datamember')->with('success', 'Customer berhasil ditambahkan.');
@@ -92,7 +92,7 @@ class AdminDataMemberController extends Controller
         try {
             $idCustomers = $request->input('id_editmember');
 
-            $url = "http://localhost:1111/api/customer/{$idCustomers}";
+            $url = config('api.base_url') . "customer/{$idCustomers}";
             $data = [
                 'p_telpCustomers'     => $request->input('telp_editmember'),
                 'p_emailCustomers'   => $request->input('email_editmember'),
@@ -127,7 +127,7 @@ class AdminDataMemberController extends Controller
         try {
             $response = Http::withHeaders([
                 'Accept' => 'application/json',
-            ])->delete("http://localhost:1111/api/customer/{$idCustomers}");
+            ])->delete(config('api.base_url') . "customer/{$idCustomers}");
 
             if ($response['status'] === 200) {
                 return redirect('admin/datamember')->with('success', 'Customer berhasil dihapus.');

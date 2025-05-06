@@ -12,8 +12,8 @@ class AdminDataProdukController extends Controller
     public function index()
     {
         try {
-            $produkResponse = Http::get('http://localhost:1111/api/produk/');
-            $kategoriResponse = Http::get('http://localhost:1111/api/kategori/notfiltered/');
+            $produkResponse = Http::get(config('api.base_url') . 'produk/');
+            $kategoriResponse = Http::get(config('api.base_url') . 'kategori/notfiltered/');
 
             if ($produkResponse['status'] === 200 && $kategoriResponse->successful()) {
                 return view('admin.dataproduk', [
@@ -78,7 +78,7 @@ class AdminDataProdukController extends Controller
             'p_gambarProduk',
             fopen($image->getPathname(), 'r'),
             $image->getClientOriginalName()
-        )->post('http://localhost:1111/api/produk', $payload);
+        )->post(config('api.base_url') . 'produk', $payload);
 
         if ($response['status'] === 200) {
             return redirect('admin/dataproduk')->with('success', 'Produk berhasil ditambahkan.');
@@ -123,7 +123,7 @@ class AdminDataProdukController extends Controller
             'p_deskripsiProduk'    => $request->deskripsi_editproduk,
         ];
 
-        $url = "http://localhost:1111/api/produk/{$idProduk}";
+        $url = config('api.base_url') . "produk/{$idProduk}";
 
         $response = HttpHelper::putMultipart(
             $url,
@@ -150,7 +150,7 @@ class AdminDataProdukController extends Controller
         try {
             $response = Http::withHeaders([
                 'Accept' => 'application/json',
-            ])->delete("http://localhost:1111/api/produk/{$idProduk}");
+            ])->delete(config('api.base_url') . "produk/{$idProduk}");
 
             if ($response['status'] === 200) {
                 return redirect('admin/dataproduk')->with('success', 'Produk berhasil dihapus.');
@@ -162,3 +162,4 @@ class AdminDataProdukController extends Controller
         }
     }
 }
+

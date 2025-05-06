@@ -18,15 +18,15 @@ class KasirTransaksiController extends Controller
     {
         try {
             // Ambil data kategori dari API
-            $kategoriResponse = Http::get('http://localhost:1111/api/kategori/');
+            $kategoriResponse = Http::get(config('api.base_url') . 'kategori/');
             $data_kategori = $kategoriResponse->successful() ? $kategoriResponse->json('data') : [];
 
             // Ambil data produk dari API
-            $produkResponse = Http::get('http://localhost:1111/api/produk/');
+            $produkResponse = Http::get(config('api.base_url') . 'produk/');
             $data_produk = $produkResponse->successful() ? $produkResponse->json('data') : [];
 
             // Ambil data member/customer dari API
-            $memberResponse = Http::get('http://localhost:1111/api/customer/');
+            $memberResponse = Http::get(config('api.base_url') . 'customer/');
             $data_member = $memberResponse->successful() ? $memberResponse->json('data') : [];
 
             return view('kasir.transaksi', [
@@ -97,14 +97,14 @@ class KasirTransaksiController extends Controller
             ];
 
             // Kirim ke API
-            $response = Http::post('http://localhost:1111/api/laporanPenjualan/', $body);
+            $response = Http::post(config('api.base_url') . 'laporanPenjualan/', $body);
 
             if ($response->successful()) {
                 $kode_penjualan = $response->json()['data']['kode_penjualan'] ?? null;
 
                 // Kirim laporan pengurangan stok untuk setiap produk yang terjual
                 foreach ($detailPenjualan as $item) {
-                    Http::post('http://localhost:1111/api/laporanStok', [
+                    Http::post(config('api.base_url') . 'laporanStok', [
                         'p_kodeLaporan' => $kode_penjualan,
                         'p_idProduk' => $item['p_idProduk'],
                         'p_namaKaryawan' => $sessionUser['nama_user'], // pastikan field ini sesuai dengan backend
@@ -164,3 +164,4 @@ class KasirTransaksiController extends Controller
         //
     }
 }
+

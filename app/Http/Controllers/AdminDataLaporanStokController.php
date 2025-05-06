@@ -45,7 +45,7 @@ class AdminDataLaporanStokController extends Controller
             }
 
             // Kirim request ke API dengan parameter tanggal (periode)
-            $response = Http::get('http://localhost:1111/api/laporanstok', [
+            $response = Http::get(config('api.base_url') . 'laporanstok', [
                 'tanggal' => $tanggal
             ]);
 
@@ -112,7 +112,7 @@ class AdminDataLaporanStokController extends Controller
         try {
             $response = Http::withHeaders([
                 'Accept' => 'application/json',
-            ])->delete("http://localhost:1111/api/laporanstok/{$idLaporan}");
+            ])->delete(config('api.base_url') . "laporanstok/{$idLaporan}");
 
             if ($response['status'] === 200) {
                 return redirect('admin/datastokproduk')->with('success', 'Laporan berhasil dihapus.');
@@ -128,7 +128,7 @@ class AdminDataLaporanStokController extends Controller
     {
         $ids = $request->input('ids', []);
         foreach ($ids as $id) {
-            Http::delete("http://localhost:1111/api/laporanstok/$id");
+            Http::delete(config('api.base_url') . "laporanstok/$id");
         }
 
         return redirect()->back()->with('success', 'Laporan berhasil dihapus.');
