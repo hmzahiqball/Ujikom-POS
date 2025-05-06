@@ -27,9 +27,12 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="total_addPengeluaran" placeholder="Total Pengeluaran" name="total_addPengeluaran" required>
-                                <label for="total_addPengeluaran">Total Pengeluaran</label>
+                            <div class="input-group mb-3">
+                              <span class="input-group-text">Rp.</span>
+                              <div class="form-floating">
+                                <input type="text" class="form-control" name="total_addPengeluaran" id="total_addPengeluaran" aria-describedby="basic-addon1" placeholder="Total Pengeluaran" required>
+                                <label for="floatingInputGroup1">Total Pengeluaran</label>
+                              </div>
                             </div>
                         </div>
                         <div class="col">

@@ -26,9 +26,12 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="total_editPengeluaran" placeholder="Total Pengeluaran" name="total_editPengeluaran" required>
-                                <label for="total_editPengeluaran">Total Pengeluaran</label>
+                            <div class="input-group mb-3">
+                              <span class="input-group-text">Rp.</span>
+                              <div class="form-floating">
+                                <input type="text" class="form-control" name="total_editPengeluaran" id="total_editPengeluaran" readonly>
+                                <label for="floatingInputGroup1">Total Pengeluaran</label>
+                              </div>
                             </div>
                         </div>
                         <div class="col">
@@ -41,7 +44,7 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-floating mb-3">
-                                <textarea class="form-control" placeholder="Deskripsi Pengeluaran" id="deskripsi_editPengeluaran" name="deskripsi_editPengeluaran"></textarea>
+                                <textarea class="form-control" placeholder="Deskripsi Pengeluaran" id="deskripsi_editPengeluaran" name="deskripsi_editPengeluaran" style="height: 150px;"></textarea>
                                 <label for="deskripsi_editPengeluaran">Deskripsi Pengeluaran</label>
                             </div>
                         </div>
