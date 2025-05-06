@@ -15,8 +15,10 @@
                             <div class="form-floating mb-3">
                                 <select class="form-select" id="kategori_addPengeluaran" name="kategori_addPengeluaran" required>
                                     <option selected disabled>Pilih Jenis Pengeluaran</option>
-                                    @foreach ($kategori_pengeluaran as $kat)
-                                        <option value="{{ $kat['id_kategori_pengeluaran'] }}">{{ $kat['nama_kategori_pengeluaran'] }}</option>
+                                    @foreach ($kategori_pengeluaran as $key => $kat)
+                                        @if ($key != 0)
+                                            <option value="{{ $kat['id_kategori_pengeluaran'] }}">{{ $kat['nama_kategori_pengeluaran'] }}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                                 <label for="kategori_addPengeluaran">Jenis Pengeluaran</label>

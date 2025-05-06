@@ -161,7 +161,9 @@
     $('#submitPembelian').click(function () {
   const p_idSuppliers = $('#supplier').val();
   const p_namaSupplier = $('#supplier option:selected').text();
-  const p_tanggal = $('#tanggal').val() + ' ' + new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  const p_tanggal = $('#tanggal').val() + ' ' + new Date().toLocaleTimeString('en-GB', {
+    hour: '2-digit', minute: '2-digit', second: '2-digit'
+  });
 
   const payload = {
     p_idSuppliers,
@@ -205,25 +207,39 @@
         contentType: 'application/json',
         data: JSON.stringify(payload),
         success: function (res) {
-          // Setelah pembelian sukses, kirim juga laporan pengeluaran
-          const pengeluaranPayload = {
-            p_idKategoriPengeluaran: 1,
-            p_totalPengeluaran: totalPengeluaran,
-            p_deskripsiPengeluaran: `Pembelian Produk ${namaProdukList.join(', ')} ke ${p_namaSupplier} pada ${p_tanggal}`,
-            p_tanggal: p_tanggal
-          };
+          // 🟡 Step 1: Update stok produk satu per satu
+          const updateStokPromises = payload.p_detailPembelian.map(item => {
+            return $.ajax({
+              url: `http://localhost:1111/api/produk/stok/${item.p_idProduk}`,
+              method: 'PUT',
+              contentType: 'application/json',
+              data: JSON.stringify({ p_addstokProduk: item.p_kuantitas })
+            });
+          });
 
-          $.ajax({
-            url: 'http://localhost:1111/api/laporanPengeluaran',
-            method: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(pengeluaranPayload),
-            success: function () {
-              Swal.fire('Berhasil', res.message, 'success').then(() => location.reload());
-            },
-            error: function () {
-              Swal.fire('Error', 'Pembelian tersimpan, tapi gagal menyimpan laporan pengeluaran.', 'warning').then(() => location.reload());
-            }
+          // 🟢 Step 2: Setelah semua update stok selesai, kirim laporan pengeluaran
+          Promise.all(updateStokPromises).then(() => {
+            const pengeluaranPayload = {
+              p_idKategoriPengeluaran: 1,
+              p_totalPengeluaran: totalPengeluaran,
+              p_deskripsiPengeluaran: `Pembelian Produk ${namaProdukList.join(', ')} ke ${p_namaSupplier} pada ${p_tanggal}`,
+              p_tanggal: p_tanggal
+            };
+
+            $.ajax({
+              url: 'http://localhost:1111/api/laporanPengeluaran',
+              method: 'POST',
+              contentType: 'application/json',
+              data: JSON.stringify(pengeluaranPayload),
+              success: function () {
+                Swal.fire('Berhasil', res.message, 'success').then(() => location.reload());
+              },
+              error: function () {
+                Swal.fire('Error', 'Pembelian tersimpan, tapi gagal menyimpan laporan pengeluaran.', 'warning').then(() => location.reload());
+              }
+            });
+          }).catch(() => {
+            Swal.fire('Error', 'Gagal memperbarui stok produk.', 'error');
           });
         },
         error: function (xhr) {
@@ -234,6 +250,7 @@
     }
   });
 });
+
   });
 </script>
 
