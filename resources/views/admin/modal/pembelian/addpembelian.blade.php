@@ -159,53 +159,81 @@
 
     // Submit ke API
     $('#submitPembelian').click(function () {
-      const payload = {
-        p_idSuppliers: $('#supplier').val(),
-        p_tanggal: $('#tanggal').val() + ' ' + new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
-        p_totalHarga: unformatNumber($('#totalHarga').val()),
-        p_detailPembelian: []
-      };
+  const p_idSuppliers = $('#supplier').val();
+  const p_namaSupplier = $('#supplier option:selected').text();
+  const p_tanggal = $('#tanggal').val() + ' ' + new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
 
-      $('#detailPembelianTable tbody tr').each(function () {
-        const idProduk = $(this).find('.produkSelect').val();
-        if (idProduk) {
-          payload.p_detailPembelian.push({
-            p_idProduk: idProduk,
-            p_kuantitas: parseInt($(this).find('.kuantitas').val()) || 0,
-            p_harga: parseFloat($(this).find('.harga').data('raw')) || 0,
-            p_subTotal: parseFloat($(this).find('.subtotal').data('raw')) || 0,
-          });
-        }
-      });
+  const payload = {
+    p_idSuppliers,
+    p_tanggal,
+    p_totalHarga: unformatNumber($('#totalHarga').val()),
+    p_detailPembelian: []
+  };
 
-      if (!payload.p_idSuppliers || !payload.p_tanggal || payload.p_detailPembelian.length === 0) {
-        Swal.fire('Gagal', 'Data belum lengkap.', 'warning');
-        return;
-      }
+  let namaProdukList = [];
+  let totalPengeluaran = 0;
 
-      Swal.fire({
-        title: 'Yakin ingin menambahkan pembelian?',
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonText: 'Ya, Simpan'
-      }).then(result => {
-        if (result.isConfirmed) {
+  $('#detailPembelianTable tbody tr').each(function () {
+    const idProduk = $(this).find('.produkSelect').val();
+    const namaProduk = $(this).find('.produkSelect option:selected').text();
+    if (idProduk) {
+      const p_kuantitas = parseInt($(this).find('.kuantitas').val()) || 0;
+      const p_harga = parseFloat($(this).find('.harga').data('raw')) || 0;
+      const p_subTotal = parseFloat($(this).find('.subtotal').data('raw')) || 0;
+
+      payload.p_detailPembelian.push({ p_idProduk: idProduk, p_kuantitas, p_harga, p_subTotal });
+      namaProdukList.push(namaProduk);
+      totalPengeluaran += p_subTotal;
+    }
+  });
+
+  if (!p_idSuppliers || !p_tanggal || payload.p_detailPembelian.length === 0) {
+    Swal.fire('Gagal', 'Data belum lengkap.', 'warning');
+    return;
+  }
+
+  Swal.fire({
+    title: 'Yakin ingin menambahkan pembelian?',
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Ya, Simpan'
+  }).then(result => {
+    if (result.isConfirmed) {
+      $.ajax({
+        url: 'http://localhost:1111/api/laporanPembelian',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(payload),
+        success: function (res) {
+          // Setelah pembelian sukses, kirim juga laporan pengeluaran
+          const pengeluaranPayload = {
+            p_idKategoriPengeluaran: 1,
+            p_totalPengeluaran: totalPengeluaran,
+            p_deskripsiPengeluaran: `Pembelian Produk ${namaProdukList.join(', ')} ke ${p_namaSupplier} pada ${p_tanggal}`,
+            p_tanggal: p_tanggal
+          };
+
           $.ajax({
-            url: 'http://localhost:1111/api/laporanPembelian',
+            url: 'http://localhost:1111/api/laporanPengeluaran',
             method: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify(payload),
-            success: function (res) {
+            data: JSON.stringify(pengeluaranPayload),
+            success: function () {
               Swal.fire('Berhasil', res.message, 'success').then(() => location.reload());
             },
-            error: function (xhr) {
-              const msg = xhr.responseJSON?.message || 'Gagal menyimpan pembelian';
-              Swal.fire('Error', msg, 'error');
+            error: function () {
+              Swal.fire('Error', 'Pembelian tersimpan, tapi gagal menyimpan laporan pengeluaran.', 'warning').then(() => location.reload());
             }
           });
+        },
+        error: function (xhr) {
+          const msg = xhr.responseJSON?.message || 'Gagal menyimpan pembelian';
+          Swal.fire('Error', msg, 'error');
         }
       });
-    });
+    }
+  });
+});
   });
 </script>
 
