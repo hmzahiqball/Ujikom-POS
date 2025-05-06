@@ -93,6 +93,15 @@
             $('#editpengeluaranModal').find('#tanggal_editPengeluaran').val(tglpengeluaran.substring(0, 10));
             $('#editpengeluaranModal').find('#deskripsi_editPengeluaran').val(deskripsipengeluaran);
             $('#editbutton_swal').data('nopengeluaranswal', nopengeluaran);
+
+            // 🔒 Disable semua input dan sembunyikan tombol jika kategori = 1
+            if (idkategoripengeluaran == 1) {
+                $('#editpengeluaranModal').find('input, select, textarea').prop('disabled', true);
+                $('#editbutton_swal').hide();
+            } else {
+                $('#editpengeluaranModal').find('input, select, textarea').prop('disabled', false);
+                $('#editbutton_swal').show();
+            }
         });
 
         // SweetAlert confirmation

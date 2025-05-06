@@ -50,25 +50,28 @@
                                     <td>Rp. {{ number_format($item['total_pengeluaran'], 0, ',', '.') }}</td>
                                     <td>
                                         <div class="d-flex gap-2">
-                                            <button class="btn btn-primary w-100"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#editpengeluaranModal"
-                                                    data-idpengeluaran="{{ $item['id_pengeluaran'] }}"
-                                                    data-nopengeluaran="{{ $item['kode_pengeluaran'] }}"
-                                                    data-totalHargapengeluaran="{{ number_format($item['total_pengeluaran'], 0, ',', '.') }}"
-                                                    data-deskripsipengeluaran="{{ $item['deskripsi_pengeluaran'] }}"
-                                                    data-tglpengeluaran="{{ $item['tanggal'] }}"
-                                                    data-updatedat="{{ $item['updated_at'] }}"
-                                                    data-namakategoripengeluaran="{{ $item['nama_kategori_pengeluaran'] ?? '-' }}"
-                                                    data-idkategoripengeluaran="{{ $item['id_kategori_pengeluaran'] ?? '-' }}">
-                                                Edit
-                                            </button>
-                                            <button class="btn btn-danger w-100 deleteSwal"
+                                            <button class="btn {{ $item['id_kategori_pengeluaran'] == 1 ? 'btn-secondary' : 'btn-primary' }} w-100"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#editpengeluaranModal"
                                                 data-idpengeluaran="{{ $item['id_pengeluaran'] }}"
                                                 data-nopengeluaran="{{ $item['kode_pengeluaran'] }}"
-                                                data-action="{{ route('admin.datapengeluaran.delete', $item['id_pengeluaran']) }}">
-                                                Delete
+                                                data-totalHargapengeluaran="{{ number_format($item['total_pengeluaran'], 0, ',', '.') }}"
+                                                data-deskripsipengeluaran="{{ $item['deskripsi_pengeluaran'] }}"
+                                                data-tglpengeluaran="{{ $item['tanggal'] }}"
+                                                data-updatedat="{{ $item['updated_at'] }}"
+                                                data-namakategoripengeluaran="{{ $item['nama_kategori_pengeluaran'] ?? '-' }}"
+                                                data-idkategoripengeluaran="{{ $item['id_kategori_pengeluaran'] ?? '-' }}">
+                                                {{ $item['id_kategori_pengeluaran'] == 1 ? 'View' : 'Edit' }}
                                             </button>
+
+                                            @if ($item['id_kategori_pengeluaran'] != 1)
+                                                <button class="btn btn-danger w-100 deleteSwal"
+                                                    data-idpengeluaran="{{ $item['id_pengeluaran'] }}"
+                                                    data-nopengeluaran="{{ $item['kode_pengeluaran'] }}"
+                                                    data-action="{{ route('admin.datapengeluaran.delete', $item['id_pengeluaran']) }}">
+                                                    Delete
+                                                </button>
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>
