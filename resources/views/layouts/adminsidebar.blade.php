@@ -111,6 +111,11 @@
                             <span class="ms-1 d-none d-sm-inline text-abu">Laporan
                                 Pembelian</span></a>
                     </li>
+                    <li class="w-100 h-100">
+                        <a href="{{ URL('/admin/datalaporanpengeluaran') }}" class="nav-link px-0 text-abu">
+                            <span class="ms-1 d-none d-sm-inline text-abu">Laporan
+                                Pengeluaran</span></a>
+                    </li>
                 </ul>
             </li>
         </ul>

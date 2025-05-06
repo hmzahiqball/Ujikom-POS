@@ -26,6 +26,7 @@ use App\Http\Controllers\AdminDataIzinKaryawanController;
 use App\Http\Controllers\AdminDataPembelianController;
 use App\Http\Controllers\AdminDataLaporanPembelianController;
 use App\Http\Controllers\AdminDataPengeluaranController;
+use App\Http\Controllers\AdminDataLaporanPengeluaranController;
 
 
 /*
@@ -117,6 +118,8 @@ Route::middleware(['admin'])->group(function () {
     Route::resource('admin/datalaporanpenjualan', AdminDataLaporanPenjualanController::class);
 
     Route::resource('admin/datalaporanpembelian', AdminDataLaporanPembelianController::class);
+
+    Route::resource('admin/datalaporanpengeluaran', AdminDataLaporanPengeluaranController::class);
 });
 
 // Route grup untuk kasir
