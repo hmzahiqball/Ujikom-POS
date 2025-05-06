@@ -13,7 +13,7 @@
           <div class="mb-3">
             <label for="supplier" class="form-label">Supplier</label>
             <select class="form-select" id="supplier" name="p_idSuppliers" required>
-              <option value="">-- Pilih Supplier --</option>
+              <option value="">Pilih Supplier</option>
               @foreach($supplier as $s)
                 <option value="{{ $s['id_suppliers'] }}">{{ $s['nama_suppliers'] }}</option>
               @endforeach
@@ -96,7 +96,7 @@
         <tr>
           <td>
             <select class="form-select produkSelect" required>
-              <option value="">-- Pilih Produk --</option>
+              <option value="">Pilih Produk</option>
               ${produkOptions}
             </select>
           </td>

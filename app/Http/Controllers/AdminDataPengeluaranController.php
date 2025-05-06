@@ -100,7 +100,9 @@ class AdminDataPengeluaranController extends Controller
                 'p_idKategoriPengeluaran'         => $request->kategori_addPengeluaran,
                 'p_totalPengeluaran'         => $request->total_addPengeluaran,
                 'p_deskripsiPengeluaran'         => $request->deskripsi_addPengeluaran,
-                'p_tanggal'         => $request->tanggal_addPengeluaran,
+                'p_tanggal'         => Carbon::createFromFormat('Y-m-d', $request->tanggal_addPengeluaran)
+                                        ->setTimeFromTimeString(now()->toTimeString())
+                                        ->format('Y-m-d H:i:s'),
             ];
 
             $response = Http::post(config('api.base_url') . "laporanPengeluaran/", $data);
@@ -135,7 +137,9 @@ class AdminDataPengeluaranController extends Controller
                 'p_idKategoriPengeluaran'         => $request->kategori_editPengeluaran,
                 'p_totalPengeluaran'         => $request->total_editPengeluaran,
                 'p_deskripsiPengeluaran'         => $request->deskripsi_editPengeluaran,
-                'p_tanggal'         => $request->tanggal_editPengeluaran,
+                'p_tanggal'         => Carbon::createFromFormat('Y-m-d', $request->tanggal_editPengeluaran)
+                                        ->setTimeFromTimeString(now()->toTimeString())
+                                        ->format('Y-m-d H:i:s'),
             ];
 
             $url = config('api.base_url') . "laporanPengeluaran/{$idPengeluaran}";
