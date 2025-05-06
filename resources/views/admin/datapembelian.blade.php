@@ -37,7 +37,6 @@
                                 <th>Tanggal</th>
                                 <th>Supplier</th>
                                 <th>Total Pembelian</th>
-                                <th>Status Pembelian</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -49,7 +48,6 @@
                                     <td>{{ \Carbon\Carbon::parse($item['tanggal_pembelian'])->format('d-m-Y') }}</td>
                                     <td>{{ $item['supplier']['nama_suppliers'] ?? 'Non-Member' }}</td>
                                     <td>Rp. {{ number_format($item['total_harga'], 0, ',', '.') }}</td>
-                                    <td style="background-color: {{ $item['status_pembelian'] == 'Success' ? '#C6F7D0' : ($item['status_pembelian'] == 'Pending' ? '#87CEEB' : '#FFC5C5') }}">{{ $item['status_pembelian'] }}</td>
                                     <td>
                                         <div class="d-flex gap-2">
                                             <button class="btn btn-primary w-100"
@@ -58,7 +56,6 @@
                                                     data-idpembelian="{{ $item['id_pembelian'] }}"
                                                     data-nopembelian="{{ $item['kode_pembelian'] }}"
                                                     data-totalHargapembelian="{{ number_format($item['total_harga'], 0, ',', '.') }}"
-                                                    data-statuspembelian="{{ $item['status_pembelian'] }}"
                                                     data-tglpembelian="{{ $item['tanggal_pembelian'] }}"
                                                     data-updatedat="{{ $item['updated_at'] }}"
                                                     data-supplier="{{ $item['supplier']['nama_suppliers'] ?? '-' }}"

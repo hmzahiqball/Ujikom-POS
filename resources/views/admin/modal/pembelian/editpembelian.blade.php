@@ -28,17 +28,8 @@
                                 <label for="no_editpembelian">No. Pembelian</label>
                             </div>
                         </div>
-                        <div class="col">
-                            <div class="form-floating mb-3">
-                                <select class="form-select" id="status_editpembelian" name="status_editpembelian" readonly>
-                                    <option value="Success">Success</option>
-                                    <option value="Pending">Pending</option>
-                                    <option value="Canceled">Canceled</option>
-                                </select>
-                                <label for="status_editpembelian">Status Pembelian</label>
-                            </div>
-                        </div>
-                    </div><div class="row">
+                    </div>
+                    <div class="row">
                         <div class="col">
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="basic-addon1">Rp.</span>
@@ -112,7 +103,6 @@
                 idpembelian = btn.data('idpembelian'),
                 nopembelian = btn.data('nopembelian'),
                 totalHargapembelian = btn.data('totalhargapembelian'),
-                statuspembelian = btn.data('statuspembelian'),
                 tglpembelian = btn.data('tglpembelian'),
                 supplier = btn.data('supplier'),
                 updatedat = btn.data('updatedat'),
@@ -121,7 +111,6 @@
             $('#editpembelianModal').find('#id_editpembelian').val(idpembelian);
             $('#editpembelianModal').find('#no_editpembelian').val(nopembelian);
             $('#editpembelianModal').find('#tgl_editpembelian').val(tglpembelian);
-            $('#editpembelianModal').find('#status_editpembelian').val(statuspembelian);
             $('#editpembelianModal').find('#total_editpembelian').val(totalHargapembelian);
             $('#editpembelianModal').find('#supplier_editpembelian').val(supplier);
             $('#editpembelianModal').find('#updated_editpembelian').val(updatedat);
