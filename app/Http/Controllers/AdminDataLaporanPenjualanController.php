@@ -82,6 +82,14 @@ class AdminDataLaporanPenjualanController extends Controller
                 // Buat data bulan dari Januari - Desember
                 $chart_labels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
 
+                // Lakukan mapping agar data array bulan jadi array sesuai urutan bulan
+                $chart_penjualan = [];
+
+                for ($i = 1; $i <= 12; $i++) {
+                    $key = $tahun . '-' . str_pad($i, 2, '0', STR_PAD_LEFT); // contoh: "2025-01"
+                    $chart_penjualan[] = $penjualanPerBulan[$key] ?? 0;
+                }
+
                 return view('admin.datalaporanpenjualan', [
                     'penjualan' => $data_penjualan,
                     'tanggal' => $tanggal,
@@ -92,7 +100,7 @@ class AdminDataLaporanPenjualanController extends Controller
                     'nama_produk_terlaris' => $namaProdukTerlaris,
                     'karyawan_terbaik' => $karyawanTerbaik,
                     'chart_labels' => $chart_labels,
-                    'chart_values' => array_values($penjualanPerBulan),
+                    'chart_values' => $chart_penjualan,
                     'tahun' => $tahun
                 ]);
             } else {
