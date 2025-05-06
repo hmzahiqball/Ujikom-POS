@@ -17,7 +17,7 @@ class AdminDataPetugasController extends Controller
             $karyawanResponse = Http::get(config('api.base_url') . 'karyawan/');
             $shiftsResponse = Http::get(config('api.base_url') . 'shifts/');
 
-            if ($karyawanResponse['status'] === 200 && $shiftsResponse['status'] === 200) {
+            if ($karyawanResponse['status'] === 200) {
                 return view('admin.datapetugas', [
                     'petugas' => $karyawanResponse['data'],
                     'shifts' => $shiftsResponse['data']

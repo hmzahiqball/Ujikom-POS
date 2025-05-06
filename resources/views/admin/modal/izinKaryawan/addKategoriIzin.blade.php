@@ -30,15 +30,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @forelse($kategoriIzin as $kategori)
+                                        @forelse($kategoriIzin as $key => $item)
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
-                                            <td>{{ $kategori['nama_kategori_izin'] }}</td>
+                                            <td>{{ $item['nama_kategori_izin'] }}</td>
                                             <td>
                                                 <button class="btn btn-danger w-100 deleteSwal"
-                                                    data-idKategori="{{ $kategori['id_kategori_izin'] }}"
-                                                    data-namaKategori="{{ $kategori['nama_kategori_izin'] }}"
-                                                    data-action="{{ route('admin.dataizin.deleteKategoriIzin', $kategori['nama_kategori_izin']) }}">
+                                                    data-idKategori="{{ $item['id_kategori_izin'] }}"
+                                                    data-namaKategori="{{ $item['nama_kategori_izin'] }}"
+                                                    data-action="{{ route('admin.dataizin.deleteKategoriIzin', $item['nama_kategori_izin']) }}">
                                                     Delete
                                                 </button>
                                             </td>
