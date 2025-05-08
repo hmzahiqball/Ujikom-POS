@@ -1,88 +1,135 @@
+# Point of Sale (POS) Frontend — Laravel (Web) & Electron (Desktop)
 
+Frontend untuk aplikasi kasir dan manajemen toko berbasis Laravel dan Electron, yang mengonsumsi REST API dari backend di repository: [https://github.com/putra28/Ujikom-API](https://github.com/putra28/Ujikom-API).
 
-## Tentang Aplikasi
+Proyek ini tersedia dalam dua versi:
+- Web App (Laravel frontend): `/Ujikom-POS`
+- Desktop App (Electron): `/electron-POS`
 
-Sistem Point of Sale (POS) ini dibangun menggunakan framework Laravel untuk mengelola transaksi penjualan dan inventaris. Sistem ini mendukung dua peran pengguna: admin dan kasir.
+---
 
-### Beberapa Fitur yang tersedia:
-- Panel Admin :
-  - Dashboard
-    - Menampilkan Data penjualan dan informasi akun
-  - Data Kategori
-    - Operasi CRUD untuk Kategori Produk
-  - Data Produk
-    - Operasi CRUD untuk data produk
-    - Kemampuan untuk mencetak laporan produk
-  - Data Petugas
-    - Operasi CRUD untuk akun admin dan kasir
-  - Data Penjualan
-    - Mengelola transaksi penjualan
-    - Mencetak struk penjualan
-    - Menghapus transaksi
-    - Mencetak laporan penjualan
-  - Data Member
-    - Operasi CRUD untuk data member
+## 🚀 Fitur Aplikasi
 
-- Panel Kasir :
-  - Dashboard
-    - Menampilkan Data penjualan dan informasi akun
-  - Transaksi
-    - Memungkinkan kasir melakukan transaksi penjualan dengan menambahkan produk ke keranjang
-    - Menyesuaikan jumlah data keranjang
-    - Memilih member yang membeli
-    - Memasukkan total pembayaran
-    - Mengirimkan transaksi
-  - Tambah Member
-    - Memungkinkan kasir menambahkan data member baru
-  - Data Produk
-    - Memungkinkan kasir untuk mengelola stok produk
-  - Data Penjualan
-    - Mengelola transaksi penjualan
-    - Mencetak struk penjualan
-    - Mencetak laporan penjualan
+### 👨‍💼 Admin
 
-## Instalasi
-#### Via Git
+#### Dashboard
+- Menampilkan tanggal realtime, ringkasan penjualan dan pendapatan bulanan, serta total produk
+- Menampilkan informasi pengguna
+- Menampilkan riwayat transaksi terakhir (semua pengguna)
+
+#### Master Data
+- Produk: CRUD produk dan detail
+- Kategori: CRUD kategori
+- Petugas/Karyawan: CRUD data petugas
+- Supplier: CRUD supplier
+- Member: CRUD member
+
+#### Manajemen Toko
+- Data Pembelian:
+  - Melihat data dan detail pembelian
+  - Filter berdasarkan periode
+  - Tambah pembelian produk dari supplier
+  - Ubah status pembelian
+  - Hapus data pembelian
+- Data Pengeluaran:
+  - Melihat dan filter data pengeluaran
+  - Tambah dan ubah data pengeluaran
+  - Hapus data pengeluaran tidak valid
+
+#### Karyawan
+- Shift: CRUD jadwal shift karyawan
+- Kehadiran: Lihat dan hapus data absensi
+- Izin: CRUD pengajuan izin dan ubah statusnya
+
+#### Data Transaksi
+- Riwayat transaksi per bulan dan detail transaksi
+
+#### Laporan
+- Stok: Riwayat perubahan stok produk
+- Penjualan:
+  - Ringkasan penjualan tahunan
+  - Produk terlaris
+  - Grafik penjualan bulanan
+  - Karyawan dengan penjualan terbanyak
+- Pembelian:
+  - Ringkasan pembelian tahunan
+  - Supplier aktif
+  - Produk paling sering dibeli
+  - Grafik pembelian bulanan
+- Pengeluaran:
+  - Ringkasan keuangan tahunan (pendapatan, HPP, laba bersih)
+  - Perbandingan grafik pendapatan vs pengeluaran
+
+---
+
+### 🧾 Kasir
+
+#### Dashboard
+- Ringkasan penjualan dan pendapatan bulanan
+- Transaksi terakhir (khusus kasir login)
+
+#### Transaksi
+- Penjualan produk
+
+#### Member
+- Tambah dan lihat data member beserta detail
+
+#### Produk
+- Lihat semua produk dan detailnya
+
+#### Riwayat Transaksi
+- Riwayat transaksi per kasir dan berdasarkan periode
+
+#### Pengajuan Izin
+- Ajukan, lihat, dan batalkan pengajuan izin absensi
+
+---
+
+## 📦 Cara Install
+
+### 1. Clone Repositori Ini
+
 ```bash
-git clone https://github.com/putra28/ProjekKasir.git
+git clone https://github.com/username/pos-frontend.git
+cd electron-POS
 ```
 
-### Download ZIP
-[Link](https://github.com/putra28/ProjekKasir/archive/refs/heads/main.zip)
+### 2. Install & Jalankan API Backend
+Proyek ini membutuhkan backend API yang tersedia di:
+👉 https://github.com/putra28/Ujikom-API
 
-### Setup Aplikasi
-Jalankan perintah 
+Silakan ikuti petunjuk instalasi di sana terlebih dahulu.
+
+Pastikan backend ini berjalan di http://localhost:1111 (atau sesuaikan dengan .env frontend).
+
+### 3. Install Laravel Frontend (Versi Web)
 ```bash
-composer update
-```
-atau:
-```bash
+cd Ujikom-POS
 composer install
-```
-Copy file .env dari .env.example
-```bash
 cp .env.example .env
-```
-Konfigurasi file .env
-```bash
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=ujikompos
-DB_USERNAME=root
-DB_PASSWORD=
-```
-Menjalankan aplikasi
-```bash
+php artisan key:generate
+php artisan migrate --seed
 php artisan serve
 ```
+
+### 4. Install Electron App (Versi Desktop)
 ```bash
-USERNAME ADMIN : admin
-PASSWORD ADMIN : admin123
-
-USERNAME KASIR : kasir
-PASSWORD KASIR : kasir123
+cd ../electron-POS
+npm install
+npm run start
 ```
-## License
+Electron akan secara otomatis menjalankan Laravel menggunakan perintah php artisan serve dan membuka aplikasi pada jendela desktop.
 
-[MIT license](https://opensource.org/licenses/MIT)
+## 📁 Struktur Folder
+```bash
+/electron-app
+├── /Ujikom-POS       # Laravel frontend versi web
+├── /electron-POS           # Electron desktop app
+├── .gitignore
+└── README.md
+```
+
+## 📄 Catatan
+- node_modules diabaikan melalui .gitignore, jadi pastikan jalankan npm install di electron-app.
+- Proyek ini dikembangkan untuk keperluan internal/UKK dan tidak untuk produksi langsung.
+- Silakan modifikasi .env agar sesuai dengan URL API yang kamu jalankan secara lokal.
