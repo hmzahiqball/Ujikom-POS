@@ -1,10 +1,6 @@
 # Point of Sale (POS) Frontend — Laravel (Web) & Electron (Desktop)
 
-Frontend untuk aplikasi kasir dan manajemen toko berbasis Laravel dan Electron, yang mengonsumsi REST API dari backend di repository: [https://github.com/putra28/Ujikom-API](https://github.com/putra28/Ujikom-API).
-
-Proyek ini tersedia dalam dua versi:
-- Web App (Laravel frontend): `/Ujikom-POS`
-- Desktop App (Electron): `/electron-POS`
+Ini adalah proyek frontend untuk aplikasi Point of Sale (POS) berbasis Laravel. Proyek ini mengonsumsi REST API dari backend yang tersedia di: [https://github.com/putra28/Ujikom-API](https://github.com/putra28/Ujikom-API).
 
 ---
 
@@ -90,8 +86,8 @@ Proyek ini tersedia dalam dua versi:
 ### 1. Clone Repositori Ini
 
 ```bash
-git clone https://github.com/username/pos-frontend.git
-cd electron-POS
+git clone https://github.com/putra28/Ujikom-POS
+cd Ujikom-POS
 ```
 
 ### 2. Install & Jalankan API Backend
@@ -104,7 +100,6 @@ Pastikan backend ini berjalan di http://localhost:1111 (atau sesuaikan dengan .e
 
 ### 3. Install Laravel Frontend (Versi Web)
 ```bash
-cd Ujikom-POS
 composer install
 cp .env.example .env
 php artisan key:generate
@@ -112,24 +107,23 @@ php artisan migrate --seed
 php artisan serve
 ```
 
-### 4. Install Electron App (Versi Desktop)
-```bash
-cd ../electron-POS
-npm install
-npm run start
-```
-Electron akan secara otomatis menjalankan Laravel menggunakan perintah php artisan serve dan membuka aplikasi pada jendela desktop.
-
 ## 📁 Struktur Folder
 ```bash
-/electron-app
-├── /Ujikom-POS       # Laravel frontend versi web
-├── /electron-POS           # Electron desktop app
-├── .gitignore
-└── README.md
+/ujikom-pos
+├── app/
+├── bootstrap/
+├── config/
+├── database/
+├── public/
+├── resources/
+├── routes/
+├── storage/
+├── tests/
+├── .env.example
+├── artisan
+└── composer.json
 ```
 
 ## 📄 Catatan
-- node_modules diabaikan melalui .gitignore, jadi pastikan jalankan npm install di electron-app.
 - Proyek ini dikembangkan untuk keperluan internal/UKK dan tidak untuk produksi langsung.
-- Silakan modifikasi .env agar sesuai dengan URL API yang kamu jalankan secara lokal.
+- Silakan modifikasi config/api.php dengan URL API yang kamu jalankan secara lokal.
