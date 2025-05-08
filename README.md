@@ -125,5 +125,13 @@ php artisan serve
 ```
 
 ## 📄 Catatan
+Akun Login:
+```bash
+Username:081210295730
+Password:admin
+
+Username:08123456789
+Password:kasir
+```
 - Proyek ini dikembangkan untuk keperluan internal/UKK dan tidak untuk produksi langsung.
 - Silakan modifikasi config/api.php dengan URL API yang kamu jalankan secara lokal.
