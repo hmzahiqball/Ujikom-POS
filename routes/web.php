@@ -50,7 +50,15 @@ Route::post('logout', [LoginController::class, 'logout']);
 Route::middleware(['admin'])->group(function () {
 
     // Dashboard
-    Route::resource('admin/dashboard', AdminDashboardController::class);
+    Route::resource('admin/dashboard', AdminDashboardController::class)->names([
+        'index' => 'admin.dashboard.index',
+        'create' => 'admin.dashboard.create',
+        'store' => 'admin.dashboard.store',
+        'show' => 'admin.dashboard.show',
+        'edit' => 'admin.dashboard.edit',
+        'update' => 'admin.dashboard.update',
+        'destroy' => 'admin.dashboard.destroy',
+    ]);
 
     // Master Data
     Route::resource('admin/dataproduk', AdminDataProdukController::class);
@@ -125,7 +133,15 @@ Route::middleware(['admin'])->group(function () {
 // Route grup untuk kasir
 Route::middleware(['kasir'])->group(function () {
     // Dashboard
-    Route::resource('kasir/dashboard', KasirDashboardController::class);
+    Route::resource('kasir/dashboard', KasirDashboardController::class)->names([
+        'index' => 'kasir.dashboard.index',
+        'create' => 'kasir.dashboard.create',
+        'store' => 'kasir.dashboard.store',
+        'show' => 'kasir.dashboard.show',
+        'edit' => 'kasir.dashboard.edit',
+        'update' => 'kasir.dashboard.update',
+        'destroy' => 'kasir.dashboard.destroy',
+    ]);
 
     // Transaksi
     Route::resource('kasir/transaksi', KasirTransaksiController::class);
@@ -133,19 +149,38 @@ Route::middleware(['kasir'])->group(function () {
     Route::get('kasir/riwayattransaksi/print', [KasirTransaksiController::class, 'printInvoice'])->name('print.invoice');
 
     // Member
-    Route::resource('kasir/datamember', KasirDataMemberController::class);
-    Route::post('kasir/datamember/add', [KasirDataMemberController::class, 'store']);
-    Route::post('kasir/datamember/update', [KasirDataMemberController::class, 'update']);
-    Route::post('kasir/datamember/delete', [KasirDataMemberController::class, 'destroy'])->name('admin.datamember.delete');
+    Route::resource('kasir/datamember', KasirDataMemberController::class)
+        ->only(['index', 'create', 'show', 'edit', 'destroy'])
+        ->names([
+            'index' => 'kasir.datamember.index',
+            'create' => 'kasir.datamember.create',
+            'show' => 'kasir.datamember.show',
+            'edit' => 'kasir.datamember.edit',
+            'destroy' => 'kasir.datamember.destroy',
+    ]);
+    Route::post('kasir/datamember/add', [KasirDataMemberController::class, 'store'])->name('kasir.datamember.store');
+    Route::post('kasir/datamember/update', [KasirDataMemberController::class, 'update'])->name('kasir.datamember.update');
 
     // Tabel Data
-    Route::resource('kasir/dataproduk', KasirDataTableController::class);
-    Route::resource('kasir/riwayattransaksi', KasirDataTransaksiController::class);
+    Route::resource('kasir/dataproduk', KasirDataTableController::class)
+        ->only(['index'])
+        ->names([
+            'index' => 'kasir.dataproduk.index',
+    ]);
+    Route::resource('kasir/riwayattransaksi', KasirDataTransaksiController::class)->names(['index' => 'kasir.datatransaksi.index']);
 
     // Pengajuan Izin
-    Route::resource('kasir/izinkaryawan', KasirDataIzinKaryawanController::class);
-    Route::post('kasir/izinkaryawan/add', [KasirDataIzinKaryawanController::class, 'store']);
-    Route::post('kasir/izinkaryawan/update', [KasirDataIzinKaryawanController::class, 'update']);
+    Route::resource('kasir/izinkaryawan', KasirDataIzinKaryawanController::class)
+        ->only(['index', 'create', 'show', 'edit', 'destroy'])
+        ->names([
+            'index' => 'kasir.izinkaryawan.index',
+            'create' => 'kasir.izinkaryawan.create',
+            'show' => 'kasir.izinkaryawan.show',
+            'edit' => 'kasir.izinkaryawan.edit',
+            'destroy' => 'kasir.izinkaryawan.destroy',
+    ]);
+    Route::post('kasir/izinkaryawan/add', [KasirDataIzinKaryawanController::class, 'store'])->name('kasir.izinkaryawan.store');
+    Route::post('kasir/izinkaryawan/update', [KasirDataIzinKaryawanController::class, 'update'])->name('kasir.izinkaryawan.update');
 });
 
 
