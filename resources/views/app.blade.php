@@ -122,6 +122,11 @@
     </div>
 </body>
 <script>
+    $(window).on('beforeunload', function(){
+        $('#loadingOverlay').fadeIn(200);
+    });
+</script>
+<script>
     $(document).ready(function () {
         // Tangkap semua klik pada link sidebar
         $('a.nav-load').on('click', function (e) {

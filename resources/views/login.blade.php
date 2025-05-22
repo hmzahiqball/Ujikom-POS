@@ -127,6 +127,11 @@
             });
         });
     </script>
+    <script>
+        $(window).on('beforeunload', function(){
+            $('#loadingOverlay').fadeIn(200);
+        });
+    </script>
     @if(session('error'))
     <script>
         $(document).ready(function () {

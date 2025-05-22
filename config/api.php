@@ -1,4 +1,4 @@
 <?php
     return [
-        'base_url' => 'http://localhost:1111/api/',
+        'base_url' => 'https://ujikom-api-production.up.railway.app/api/',
     ];
