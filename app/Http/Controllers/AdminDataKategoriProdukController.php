@@ -13,7 +13,7 @@ class AdminDataKategoriProdukController extends Controller
     public function index()
     {
         try {
-            $kategoriResponse = Http::get(config('api.base_url') . 'kategori/');
+            $kategoriResponse = Http::withAuth()->get(config('api.base_url') . 'kategori/');
 
             if ($kategoriResponse->successful()) {
                 return view('admin.datakategori', [
@@ -35,7 +35,7 @@ class AdminDataKategoriProdukController extends Controller
     {
         try {
             // Step 1: Add Kategori
-            $kategoriResponse = Http::post(config('api.base_url') . 'kategori/', [
+            $kategoriResponse = Http::withAuth()->post(config('api.base_url') . 'kategori/', [
                 'p_namaKategori' => $request->namaKategori_addKategoriProduk
             ]);
 
@@ -52,7 +52,7 @@ class AdminDataKategoriProdukController extends Controller
 
             // Step 2: Tambah semua subkategori
             foreach ($request->subKategori_addKategoriProduk as $subKategori) {
-                $subResponse = Http::post(config('api.base_url') . "kategori/{$kategoriId}/subkategori/", [
+                $subResponse = Http::withAuth()->post(config('api.base_url') . "kategori/{$kategoriId}/subkategori/", [
                     'p_namaSubKategori' => $subKategori
                 ]);
 
@@ -82,7 +82,7 @@ class AdminDataKategoriProdukController extends Controller
 
         try {
             // 1. Update kategori
-            $kategoriResponse = Http::put(config('api.base_url') . "kategori/$idKategori", [
+            $kategoriResponse = Http::withAuth()->put(config('api.base_url') . "kategori/$idKategori", [
                 'p_namaKategori' => $namaKategori
             ]);
 
@@ -96,7 +96,7 @@ class AdminDataKategoriProdukController extends Controller
 
                 if (!$namaSubKategori) continue; // skip kalau tidak ada nama
 
-                $subkategoriResponse = Http::put(config('api.base_url') . "kategori/$idKategori/subkategori/$idSubKategori", [
+                $subkategoriResponse = Http::withAuth()->put(config('api.base_url') . "kategori/$idKategori/subkategori/$idSubKategori", [
                     'p_namaSubKategori' => $namaSubKategori
                 ]);
 
@@ -108,7 +108,7 @@ class AdminDataKategoriProdukController extends Controller
             // 3. Menambah subkategori baru
             foreach ($subKategoriBaruList as $namaSubKategori) {
                 if ($namaSubKategori) {
-                    $subkategoriResponse = Http::post(config('api.base_url') . "kategori/$idKategori/subkategori", [
+                    $subkategoriResponse = Http::withAuth()->post(config('api.base_url') . "kategori/$idKategori/subkategori", [
                         'p_namaSubKategori' => $namaSubKategori
                     ]);
 
@@ -130,6 +130,7 @@ class AdminDataKategoriProdukController extends Controller
      */
     public function destroy(Request $request)
     {
+        $token = session('jwt_token');
         $request->validate([
             'id_deleteKategori' => 'required|numeric',
         ]);
@@ -138,6 +139,7 @@ class AdminDataKategoriProdukController extends Controller
 
         try {
             $response = Http::withHeaders([
+                'authorization' => 'Bearer ' . $token,
                 'Accept' => 'application/json',
             ])->delete(config('api.base_url') . "kategori/{$idKategori}");
 

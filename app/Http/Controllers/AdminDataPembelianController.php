@@ -46,10 +46,10 @@ class AdminDataPembelianController extends Controller
 
             // 3. Ambil data dari API
             $url = config('api.base_url') . 'laporanpembelian';
-            $supplierResponse = Http::get(config('api.base_url') . 'suppliers/');
-            $produkResponse = Http::get(config('api.base_url') . 'produk/');
+            $supplierResponse = Http::withAuth()->get(config('api.base_url') . 'suppliers/');
+            $produkResponse = Http::withAuth()->get(config('api.base_url') . 'produk/');
 
-            $response = Http::get($url, [
+            $response = Http::withAuth()->get($url, [
                 'tanggal' => $tanggal
             ]);
 
@@ -106,7 +106,7 @@ class AdminDataPembelianController extends Controller
             ];
             // dd($data, $url);
 
-            $response = Http::put($url, $data);
+            $response = Http::withAuth()->put($url, $data);
 
             if ($response['status'] === 200) {
                 return redirect('admin/datapembelian')->with('success', $response['message']);
@@ -123,6 +123,7 @@ class AdminDataPembelianController extends Controller
      */
     public function destroy(Request $request)
     {
+        $token = session('jwt_token');
         $request->validate([
             'id_deletepembelian' => 'required|numeric',
         ]);
@@ -131,6 +132,7 @@ class AdminDataPembelianController extends Controller
 
         try {
             $response = Http::withHeaders([
+                'authorization' => 'Bearer ' . $token,
                 'Accept' => 'application/json',
             ])->delete(config('api.base_url') . "laporanpembelian/{$idPembelian}");
 

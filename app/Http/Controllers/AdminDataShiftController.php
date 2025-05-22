@@ -14,7 +14,7 @@ class AdminDataShiftController extends Controller
     {
         try {
             // Ambil data customer dari API eksternal
-            $response = Http::get(config('api.base_url') . 'shifts/');
+            $response = Http::withAuth()->get(config('api.base_url') . 'shifts/');
 
             if ($response['status'] === 200) {
                 $get_shift = $response['data']; // ambil array data dari JSON
@@ -51,7 +51,7 @@ class AdminDataShiftController extends Controller
                 'p_endTime'         => $request->endTime_addshift . ':00',
             ];
 
-            $response = Http::post(config('api.base_url') . 'shifts/', $data);
+            $response = Http::withAuth()->post(config('api.base_url') . 'shifts/', $data);
 
             if ($response['status'] === 200) {
                 return redirect('admin/datashift')->with('success', 'Jadwal berhasil ditambahkan.');
@@ -104,7 +104,7 @@ class AdminDataShiftController extends Controller
                 'p_endTime'         => $endTime,
             ];
 
-            $response = Http::put($url, $data);
+            $response = Http::withAuth()->put($url, $data);
 
             if ($response['status'] === 200) {
                 return redirect('admin/datashift')->with('success', 'Jadwal berhasil diperbarui.');
@@ -121,6 +121,7 @@ class AdminDataShiftController extends Controller
      */
     public function destroy(Request $request)
     {
+        $token = session('jwt_token');
         $request->validate([
             'id_deleteshift' => 'required|numeric',
         ]);
@@ -129,6 +130,7 @@ class AdminDataShiftController extends Controller
 
         try {
             $response = Http::withHeaders([
+                'authorization' => 'Bearer ' . $token,
                 'Accept' => 'application/json',
             ])->delete(config('api.base_url') . "shifts/{$idShift}");
 

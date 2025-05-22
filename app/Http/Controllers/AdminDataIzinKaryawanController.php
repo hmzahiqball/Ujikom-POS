@@ -13,8 +13,8 @@ class AdminDataIzinKaryawanController extends Controller
     public function index()
     {
         try {
-            $izinResponse = Http::get(config('api.base_url') . 'laporanIzinKaryawan/');
-            $kategoriResponse = Http::get(config('api.base_url') . 'kategoriIzin/');
+            $izinResponse = Http::withAuth()->get(config('api.base_url') . 'laporanIzinKaryawan/');
+            $kategoriResponse = Http::withAuth()->get(config('api.base_url') . 'kategoriIzin/');
 
             if ($izinResponse['status'] === 200 && $kategoriResponse['status'] === 200) {
                 return view('admin.dataizin', [
@@ -49,7 +49,7 @@ class AdminDataIzinKaryawanController extends Controller
                 'p_namaKategoriIzin'     => $request->input('kategoriIzin_addIzin'),
             ];
 
-            $response = Http::post(config('api.base_url') . 'kategoriIzin/', $data);
+            $response = Http::withAuth()->post(config('api.base_url') . 'kategoriIzin/', $data);
 
             if ($response['status'] === 200) {
                 return redirect('admin/dataizinkaryawan')->with('success', 'Kategori Izin berhasil ditambahkan.');
@@ -76,7 +76,7 @@ class AdminDataIzinKaryawanController extends Controller
                 'p_status'     => $request->input('statusIzin_editIzin'),
             ];
 
-            $response = Http::put($url, $data);
+            $response = Http::withAuth()->put($url, $data);
 
             if ($response['status'] === 200) {
                 return redirect('admin/dataizinkaryawan')->with('success', $response['message']);
@@ -93,6 +93,7 @@ class AdminDataIzinKaryawanController extends Controller
      */
     public function destroy(Request $request)
     {
+        $token = session('jwt_token');
         $request->validate([
             'id_deletemember' => 'required|numeric',
         ]);
@@ -101,6 +102,7 @@ class AdminDataIzinKaryawanController extends Controller
 
         try {
             $response = Http::withHeaders([
+                'authorization' => 'Bearer ' . $token,
                 'Accept' => 'application/json',
             ])->delete(config('api.base_url') . "laporanIzinKaryawan/{$idCustomers}");
 

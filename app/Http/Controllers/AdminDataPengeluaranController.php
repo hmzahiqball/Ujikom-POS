@@ -46,9 +46,9 @@ class AdminDataPengeluaranController extends Controller
 
             // 3. Ambil data dari API
             $url = config('api.base_url') . "laporanPengeluaran";
-            $kategoriResponse = Http::get(config('api.base_url') . "kategoriPengeluaran/");
+            $kategoriResponse = Http::withAuth()->get(config('api.base_url') . "kategoriPengeluaran/");
 
-            $response = Http::get($url, [
+            $response = Http::withAuth()->get($url, [
                 'tanggal' => $tanggal
             ]);
 
@@ -105,7 +105,7 @@ class AdminDataPengeluaranController extends Controller
                                         ->format('Y-m-d H:i:s'),
             ];
 
-            $response = Http::post(config('api.base_url') . "laporanPengeluaran/", $data);
+            $response = Http::withAuth()->post(config('api.base_url') . "laporanPengeluaran/", $data);
 
             if ($response['status'] === 200) {
                 return redirect('admin/datapengeluaran')->with('success', 'Data berhasil ditambahkan.');
@@ -144,7 +144,7 @@ class AdminDataPengeluaranController extends Controller
 
             $url = config('api.base_url') . "laporanPengeluaran/{$idPengeluaran}";
 
-            $response = Http::put($url, $data);
+            $response = Http::withAuth()->put($url, $data);
 
             if ($response['status'] === 200) {
                 return redirect('admin/datapengeluaran')->with('success', 'Data berhasil diubah.');
@@ -161,6 +161,7 @@ class AdminDataPengeluaranController extends Controller
      */
     public function destroy(Request $request)
     {
+        $token = session('jwt_token');
         $request->validate([
             'id_deletePengeluaran' => 'required|numeric',
         ]);
@@ -169,6 +170,7 @@ class AdminDataPengeluaranController extends Controller
 
         try {
             $response = Http::withHeaders([
+                'authorization' => 'Bearer ' . $token,
                 'Accept' => 'application/json',
             ])->delete(config('api.base_url') . "laporanpengeluaran/{$idPengeluaran}");
 

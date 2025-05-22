@@ -14,8 +14,8 @@ class AdminDataPetugasController extends Controller
     public function index()
     {
         try {
-            $karyawanResponse = Http::get(config('api.base_url') . 'karyawan/');
-            $shiftsResponse = Http::get(config('api.base_url') . 'shifts/');
+            $karyawanResponse = Http::withAuth()->get(config('api.base_url') . 'karyawan/');
+            $shiftsResponse = Http::withAuth()->get(config('api.base_url') . 'shifts/');
 
             if ($karyawanResponse['status'] === 200) {
                 return view('admin.datapetugas', [
@@ -103,7 +103,7 @@ class AdminDataPetugasController extends Controller
             $idUser = $request->idUser_editpetugas;
 
             // 1. Update ke endpoint Karyawan
-            $karyawanResponse = Http::put(config('api.base_url') . "karyawan/{$idKaryawan}", [
+            $karyawanResponse = Http::withAuth()->put(config('api.base_url') . "karyawan/{$idKaryawan}", [
                 'p_posisiKaryawan' => $request->posisi_editpetugas,
                 'p_gajiKaryawan'   => $request->gaji_editpetugas,
                 'p_alamatKaryawan' => $request->alamat_editpetugas,
@@ -138,6 +138,7 @@ class AdminDataPetugasController extends Controller
 
     public function destroy(Request $request)
     {
+        $token = session('jwt_token');
         $request->validate([
             'id_deletepetugas' => 'required|numeric',
         ]);
@@ -146,6 +147,7 @@ class AdminDataPetugasController extends Controller
 
         try {
             $response = Http::withHeaders([
+                'authorization' => 'Bearer ' . $token,
                 'Accept' => 'application/json',
             ])->delete(config('api.base_url') . "karyawan/{$idPetugas}");
 

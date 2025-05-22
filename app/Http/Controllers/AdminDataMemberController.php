@@ -14,7 +14,7 @@ class AdminDataMemberController extends Controller
     {
         try {
             // Ambil data customer dari API eksternal
-            $response = Http::get(config('api.base_url') . 'customer/');
+            $response = Http::withAuth()->get(config('api.base_url') . 'customer/');
 
             if ($response['status'] === 200) {
                 $get_member = $response['data']; // ambil array data dari JSON
@@ -56,7 +56,7 @@ class AdminDataMemberController extends Controller
                 'p_alamatCustomers'   => $request->input('alamat_addmember'),
             ];
 
-            $response = Http::post(config('api.base_url') . 'customer/', $data);
+            $response = Http::withAuth()->post(config('api.base_url') . 'customer/', $data);
 
             if ($response['status'] === 200) {
                 return redirect('admin/datamember')->with('success', 'Customer berhasil ditambahkan.');
@@ -101,7 +101,7 @@ class AdminDataMemberController extends Controller
             ];
             // dd($data, $url);
 
-            $response = Http::put($url, $data);
+            $response = Http::withAuth()->put($url, $data);
 
             if ($response['status'] === 200) {
                 return redirect('admin/datamember')->with('success', $response['message']);
@@ -118,6 +118,7 @@ class AdminDataMemberController extends Controller
      */
     public function destroy(Request $request)
     {
+        $token = session('jwt_token');
         $request->validate([
             'id_deletemember' => 'required|numeric',
         ]);
@@ -126,6 +127,7 @@ class AdminDataMemberController extends Controller
 
         try {
             $response = Http::withHeaders([
+                'authorization' => 'Bearer ' . $token,
                 'Accept' => 'application/json',
             ])->delete(config('api.base_url') . "customer/{$idCustomers}");
 

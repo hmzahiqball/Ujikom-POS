@@ -12,8 +12,8 @@ class AdminDataProdukController extends Controller
     public function index()
     {
         try {
-            $produkResponse = Http::get(config('api.base_url') . 'produk/');
-            $kategoriResponse = Http::get(config('api.base_url') . 'kategori/notfiltered/');
+            $produkResponse = Http::withAuth()->get(config('api.base_url') . 'produk/');
+            $kategoriResponse = Http::withAuth()->get(config('api.base_url') . 'kategori/notfiltered/');
 
             if ($produkResponse['status'] === 200 && $kategoriResponse->successful()) {
                 return view('admin.dataproduk', [
@@ -74,7 +74,10 @@ class AdminDataProdukController extends Controller
             'p_statusProduk'       => $request->status_addproduk,
         ];
 
-        $response = Http::attach(
+        $token = session('jwt_token');
+        $response = Http::withHeaders([
+            'authorization' => 'Bearer ' . $token
+        ])->attach(
             'p_gambarProduk',
             fopen($image->getPathname(), 'r'),
             $image->getClientOriginalName()
@@ -141,6 +144,7 @@ class AdminDataProdukController extends Controller
 
     public function destroy(Request $request)
     {
+        $token = session('jwt_token');
         $request->validate([
             'id_deleteproduk' => 'required|numeric',
         ]);
@@ -149,6 +153,7 @@ class AdminDataProdukController extends Controller
 
         try {
             $response = Http::withHeaders([
+                'authorization' => 'Bearer ' . $token,
                 'Accept' => 'application/json',
             ])->delete(config('api.base_url') . "produk/{$idProduk}");
 

@@ -13,7 +13,7 @@ class AdminDataSupplierController extends Controller
     public function index()
     {
         try {
-            $supplierResponse = Http::get(config('api.base_url') . 'suppliers/');
+            $supplierResponse = Http::withAuth()->get(config('api.base_url') . 'suppliers/');
 
             if ($supplierResponse['status'] === 200) {
                 return view('admin.datasupplier', [
@@ -57,7 +57,7 @@ class AdminDataSupplierController extends Controller
                 'p_emailSuppliers'         => $request->email_addsupplier,
                 'p_alamatSuppliers'         => $request->alamat_addsupplier,
             ];
-            $response = Http::post(config('api.base_url') . 'suppliers/', $data);
+            $response = Http::withAuth()->post(config('api.base_url') . 'suppliers/', $data);
 
             if ($response['status'] === 200) {
                 return redirect('admin/datasupplier')->with('success', 'Supplier berhasil ditambahkan.');
@@ -110,7 +110,7 @@ class AdminDataSupplierController extends Controller
             'p_alamatSuppliers'         => $request->alamat_editSupplier,
         ];
 
-        $response = Http::put($url, $data);
+        $response = Http::withAuth()->put($url, $data);
 
         if ($response['status'] === 200) {
             return redirect('admin/datasupplier')->with('success', 'Supplier berhasil diperbarui.');
@@ -124,6 +124,7 @@ class AdminDataSupplierController extends Controller
      */
     public function destroy(Request $request)
     {
+        $token = session('jwt_token');
         $request->validate([
             'id_deletesupplier' => 'required|numeric',
         ]);
@@ -132,6 +133,7 @@ class AdminDataSupplierController extends Controller
 
         try {
             $response = Http::withHeaders([
+                'authorization' => 'Bearer ' . $token,
                 'Accept' => 'application/json',
             ])->delete(config('api.base_url') . "suppliers/{$idSupplier}");
 

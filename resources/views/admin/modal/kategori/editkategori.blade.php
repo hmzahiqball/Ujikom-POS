@@ -109,9 +109,13 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Kirim DELETE ke API
+                    const token = '{{ session("jwt_token") }}';
                     $.ajax({
                         url: `http://localhost:1111/api/kategori/${idKategori}/subkategori/${idSubkategori}`,
                         type: 'DELETE',
+                        headers: {
+                            'authorization': 'Bearer ' + `${token}`
+                        },
                         success: function (response) {
                             Swal.fire('Sukses!', 'Subkategori berhasil dihapus.', 'success');
                             row.remove(); // Hapus baris dari tabel

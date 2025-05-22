@@ -36,9 +36,9 @@ class AdminDataLaporanPengeluaranController extends Controller
             $tanggal = $startDate . '_' . $endDate;
 
             // Fetch API
-            $penjualanRes = Http::get(config('api.base_url') . 'laporanPenjualan', ['tanggal' => $tanggal]);
-            $pembelianRes = Http::get(config('api.base_url') . 'laporanPembelian');
-            $pengeluaranRes = Http::get(config('api.base_url') . 'laporanPengeluaran');
+            $penjualanRes = Http::withAuth()->get(config('api.base_url') . 'laporanPenjualan', ['tanggal' => $tanggal]);
+            $pembelianRes = Http::withAuth()->get(config('api.base_url') . 'laporanPembelian');
+            $pengeluaranRes = Http::withAuth()->get(config('api.base_url') . 'laporanPengeluaran');
 
             // Check success
             if (!$penjualanRes->successful() || !$pembelianRes->successful() || !$pengeluaranRes->successful()) {

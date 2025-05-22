@@ -18,15 +18,15 @@ class KasirTransaksiController extends Controller
     {
         try {
             // Ambil data kategori dari API
-            $kategoriResponse = Http::get(config('api.base_url') . 'kategori/');
+            $kategoriResponse = Http::withAuth()->get(config('api.base_url') . 'kategori/');
             $data_kategori = $kategoriResponse->successful() ? $kategoriResponse->json('data') : [];
 
             // Ambil data produk dari API
-            $produkResponse = Http::get(config('api.base_url') . 'produk/');
+            $produkResponse = Http::withAuth()->get(config('api.base_url') . 'produk/');
             $data_produk = $produkResponse->successful() ? $produkResponse->json('data') : [];
 
             // Ambil data member/customer dari API
-            $memberResponse = Http::get(config('api.base_url') . 'customer/');
+            $memberResponse = Http::withAuth()->get(config('api.base_url') . 'customer/');
             $data_member = $memberResponse->successful() ? $memberResponse->json('data') : [];
 
             return view('kasir.transaksi', [
@@ -97,7 +97,7 @@ class KasirTransaksiController extends Controller
             ];
 
             // Kirim ke API
-            $response = Http::post(config('api.base_url') . 'laporanPenjualan/', $body);
+            $response = Http::withAuth()->post(config('api.base_url') . 'laporanPenjualan/', $body);
 
             if ($response->successful()) {
                 $kode_penjualan = $response->json()['data']['kode_penjualan'] ?? null;

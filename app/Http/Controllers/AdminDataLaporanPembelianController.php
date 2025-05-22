@@ -23,7 +23,7 @@ class AdminDataLaporanPembelianController extends Controller
 
         $url = config('api.base_url') . 'laporanPembelian';
 
-        $response = Http::get($url, [
+        $response = Http::withAuth()->get($url, [
             'tanggal' => $tanggal
         ]);
 

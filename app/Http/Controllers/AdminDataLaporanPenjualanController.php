@@ -25,7 +25,7 @@ class AdminDataLaporanPenjualanController extends Controller
 
             $url = config('api.base_url') . 'laporanPenjualan';
 
-            $response = Http::get($url, [
+            $response = Http::withAuth()->get($url, [
                 'tanggal' => $tanggal
             ]);
 

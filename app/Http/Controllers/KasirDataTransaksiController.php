@@ -48,7 +48,7 @@ class KasirDataTransaksiController extends Controller
             // 3. Ambil data dari API
             $url = config('api.base_url') . 'laporanPenjualan';
 
-            $response = Http::get($url, [
+            $response = Http::withAuth()->get($url, [
                 'tanggal' => $tanggal
             ]);
 

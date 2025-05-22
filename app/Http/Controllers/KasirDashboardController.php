@@ -21,18 +21,18 @@ class KasirDashboardController extends Controller
             $tanggal = $startDate . '_' . $endDate;
 
             // Ambil data produk
-            $produkResponse = Http::get(config('api.base_url') . 'produk/');
+            $produkResponse = Http::withAuth()->get(config('api.base_url') . 'produk/');
             $get_produk = $produkResponse->successful() ? $produkResponse->json('data') : [];
 
             // Ambil data kategori
-            $kategoriResponse = Http::get(config('api.base_url') . 'kategori/');
+            $kategoriResponse = Http::withAuth()->get(config('api.base_url') . 'kategori/');
             $get_kategori = $kategoriResponse->successful() ? collect($kategoriResponse->json('data')) : collect([]);
 
             // Filter kategori unik berdasarkan id_kategori
             $kategori_unik = $get_kategori->unique('id_kategori');
 
             // Ambil data penjualan (periode hari ini default)
-            $penjualanResponse = Http::get(config('api.base_url') . 'laporanPenjualan', [
+            $penjualanResponse = Http::withAuth()->get(config('api.base_url') . 'laporanPenjualan', [
                 'idpetugas' => $id_petugas,
                 'tanggal' => $tanggal
             ]);

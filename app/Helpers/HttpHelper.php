@@ -9,6 +9,7 @@ class HttpHelper
 {
     public static function postMultipart($url, array $formFields, $fileField = null, UploadedFile $file = null)
     {
+        $token = session('jwt_token');
         $multipart = [];
 
         // Tambahkan form fields ke multipart
@@ -29,6 +30,7 @@ class HttpHelper
         }
 
         return Http::withHeaders([
+            'authorization' => 'Bearer ' . $token,
             'Accept' => 'application/json',
         ])->send('POST', $url, [
             'multipart' => $multipart,
@@ -37,6 +39,7 @@ class HttpHelper
 
     public static function putMultipart($url, array $formFields, $fileField = null, UploadedFile $file = null)
     {
+        $token = session('jwt_token');
         $multipart = [];
 
         // Tambahkan form fields ke multipart
@@ -57,6 +60,7 @@ class HttpHelper
         }
 
         return Http::withHeaders([
+            'authorization' => 'Bearer ' . $token,
             'Accept' => 'application/json',
         ])->send('PUT', $url, [
             'multipart' => $multipart,

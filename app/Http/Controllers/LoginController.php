@@ -38,6 +38,7 @@ class LoginController extends Controller
 
                     // Simpan data user ke session
                     Session::put('tb_petugas', $data);
+                    Session::put('jwt_token', str_replace('Bearer ', '', $result['token']));
                     Session::put('foto_petugas', $data['gambar_user']);
 
                     // Clock-in

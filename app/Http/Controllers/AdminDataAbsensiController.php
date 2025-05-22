@@ -13,7 +13,7 @@ class AdminDataAbsensiController extends Controller
     public function index()
     {
         try {
-            $absensiResponse = Http::get(config('api.base_url') . 'laporanabsen/');
+            $absensiResponse = Http::withAuth()->get(config('api.base_url') . 'laporanabsen/');
 
             if ($absensiResponse['status'] === 200) {
                 return view('admin.dataabsensi', [
@@ -49,6 +49,7 @@ class AdminDataAbsensiController extends Controller
      */
     public function destroy(Request $request)
     {
+        $token = session('jwt_token');
         $request->validate([
             'id_deleteabsensi' => 'required',
         ]);
@@ -57,6 +58,7 @@ class AdminDataAbsensiController extends Controller
 
         try {
             $response = Http::withHeaders([
+                'authorization' => 'Bearer ' . $token,
                 'Accept' => 'application/json',
             ])->delete(config('api.base_url') . "laporanabsen/{$id}");
 

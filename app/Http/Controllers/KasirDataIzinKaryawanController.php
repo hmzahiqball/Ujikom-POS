@@ -16,8 +16,8 @@ class KasirDataIzinKaryawanController extends Controller
         try {
             // Ambil ID petugas dari session
             $id_petugas = Session::get('tb_petugas')['data_user']['id_karyawan'];
-            $izinResponse = Http::get(config('api.base_url') . 'laporanIzinKaryawan/' . $id_petugas);
-            $kategoriResponse = Http::get(config('api.base_url') . 'kategoriIzin/');
+            $izinResponse = Http::withAuth()->get(config('api.base_url') . 'laporanIzinKaryawan/' . $id_petugas);
+            $kategoriResponse = Http::withAuth()->get(config('api.base_url') . 'kategoriIzin/');
 
             if ($izinResponse['status'] === 200 && $kategoriResponse['status'] === 200) {
                 return view('kasir.dataizin', [
@@ -49,7 +49,7 @@ class KasirDataIzinKaryawanController extends Controller
             ];
             // dd($data);
 
-            $response = Http::post(config('api.base_url') . 'laporanIzinKaryawan/', $data);
+            $response = Http::withAuth()->post(config('api.base_url') . 'laporanIzinKaryawan/', $data);
 
             if ($response['status'] === 200) {
                 return redirect('kasir/izinkaryawan')->with('success', 'Pengajuan Izin berhasil dikirimkan.');
@@ -76,7 +76,7 @@ class KasirDataIzinKaryawanController extends Controller
                 'p_status'     => $request->input('statusIzin_editIzin'),
             ];
 
-            $response = Http::put($url, $data);
+            $response = Http::withAuth()->put($url, $data);
 
             if ($response['status'] === 200) {
                 return redirect('kasir/izinkaryawan')->with('success', $response['message']);
