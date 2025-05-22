@@ -1,4 +1,4 @@
-# Point of Sale (POS) Frontend — Laravel (Web) & Electron (Desktop)
+# Point of Sale (POS) Frontend — Laravel (Web)
 
 Ini adalah proyek frontend untuk aplikasi Point of Sale (POS) berbasis Laravel. Proyek ini mengonsumsi REST API dari backend yang tersedia di: [https://github.com/putra28/Ujikom-API](https://github.com/putra28/Ujikom-API).
 
