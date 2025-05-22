@@ -105,7 +105,6 @@ Pastikan backend ini berjalan di http://localhost:1111 (atau sesuaikan dengan .e
 composer install
 cp .env.example .env
 php artisan key:generate
-php artisan migrate --seed
 php artisan serve
 ```
 
@@ -129,7 +128,7 @@ php artisan serve
 ## 📄 Catatan
 Akun Login:
 ```bash
-Username:081210295730
+Username:081234567890
 Password:admin
 
 Username:08123456789
