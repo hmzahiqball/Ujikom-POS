@@ -201,6 +201,7 @@
         confirmButtonText: 'Ya, Simpan'
       }).then(result => {
         if (result.isConfirmed) {
+          $('#loadingOverlay').fadeIn(200);
           $.ajax({
             url: 'http://localhost:1111/api/laporanPembelian',
             method: 'POST',

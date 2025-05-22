@@ -90,6 +90,7 @@
             confirmButtonText: 'Ya, Tambah Data!'
         }).then((result) => {
             if (result.isConfirmed) {
+                $('#loadingOverlay').fadeIn(200);
                 $('#total_addPengeluaran').val(unformatNumber($('#total_addPengeluaran').val()));
                 // Jika user menekan "Yes, delete it!", submit form
                 $('#addpengeluaranModal form').submit();

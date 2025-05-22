@@ -103,6 +103,7 @@
                 confirmButtonText: 'Ya, Ubah!'
             }).then((result) => {
                 if (result.isConfirmed) {
+                    $('#loadingOverlay').fadeIn(200);
                     $('#editIzinModal form').submit();
                 }
             });
@@ -121,6 +122,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $('#statusIzin_editIzin').val('Canceled'); // ubah status
+                    $('#loadingOverlay').fadeIn(200);
                     $('#editIzinModal form').submit(); // kirim form
                 }
             });

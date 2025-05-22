@@ -111,6 +111,7 @@
                 confirmButtonText: 'Ya, Ubah!'
             }).then((result) => {
                 if (result.isConfirmed) {
+                    $('#loadingOverlay').fadeIn(200);
                     $('#editIzinModal form').submit();
                 }
             });

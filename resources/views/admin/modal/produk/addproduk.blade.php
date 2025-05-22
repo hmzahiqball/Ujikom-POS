@@ -204,6 +204,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Unformat dulu sebelum submit
+                    $('#loadingOverlay').fadeIn(200);
                     $('#hargaModal_addproduk').val(unformatNumber($('#hargaModal_addproduk').val()));
                     $('#hargaJual_addproduk').val(unformatNumber($('#hargaJual_addproduk').val()));
                     $('#diskon_addproduk').val(unformatNumber($('#diskon_addproduk').val()));

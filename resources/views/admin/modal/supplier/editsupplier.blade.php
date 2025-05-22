@@ -91,6 +91,7 @@
                 confirmButtonText: 'Ya, Ubah Data!'
             }).then((result) => {
                 if (result.isConfirmed) {
+                    $('#loadingOverlay').fadeIn(200);
                     $('#editsupplierModal form').submit();
                 }
             });

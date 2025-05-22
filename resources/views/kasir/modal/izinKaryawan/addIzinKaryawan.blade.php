@@ -60,6 +60,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Jika user menekan "Yes, delete it!", submit form
+                    $('#loadingOverlay').fadeIn(200);
                     $('#addIzinModal form').submit();
                 }
             });

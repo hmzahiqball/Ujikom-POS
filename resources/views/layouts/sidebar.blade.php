@@ -6,13 +6,13 @@
         </a>
         <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
             <li class="nav-item">
-                <a href="{{ URL('/kasir/dashboard') }}" class="nav-link align-middle px-0">
+                <a href="{{ URL('/kasir/dashboard') }}" class="nav-link nav-load align-middle px-0">
                     <i class="fs-4 bi-speedometer2 text-abu"></i> <span
                         class="ms-1 d-none d-sm-inline text-abu">Dashboard</span>
                 </a>
             </li>
             <li>
-                <a href="{{ URL('/kasir/transaksi') }}" class="nav-link px-0 align-middle">
+                <a href="{{ URL('/kasir/transaksi') }}" class="nav-link nav-load px-0 align-middle">
                     <i class="fs-4 bi-cart text-abu"></i> <span
                         class="ms-1 d-none d-sm-inline text-abu">Transaksi</span></a>
             </li>
@@ -21,12 +21,12 @@
                     <i class="fa-solid fa-users text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Member</span></a>
                 <ul class="collapse nav flex-column ms-4" id="submenuMember" data-bs-parent="#menu">
                     <li>
-                        <a href="#" class="nav-link px-0 align-middle" data-bs-toggle="modal" data-bs-target="#addmemberModal">
+                        <a href="#" class="nav-link nav-load px-0 align-middle" data-bs-toggle="modal" data-bs-target="#addmemberModal">
                             <span class="ms-1 d-none d-sm-inline text-abu">Tambah
                                 Member</span></a>
                     </li>
                     <li>
-                        <a href="{{ URL('/kasir/datamember') }}" class="nav-link px-0 text-abu">
+                        <a href="{{ URL('/kasir/datamember') }}" class="nav-link nav-load px-0 text-abu">
                             <span class="ms-1 d-none d-sm-inline text-abu">Data Member</span></a>
                     </li>
                 </ul>
@@ -37,12 +37,12 @@
                         Data</span></a>
                 <ul class="collapse nav flex-column ms-4" id="submenutabel" data-bs-parent="#menu">
                     <li class="w-100">
-                        <a href="{{ URL('/kasir/dataproduk') }}" class="nav-link px-0 text-abu">
+                        <a href="{{ URL('/kasir/dataproduk') }}" class="nav-link nav-load px-0 text-abu">
                             <span class="ms-1 d-none d-sm-inline text-abu">Data
                                 Produk</span></a>
                     </li>
                     <li>
-                        <a href="{{ URL('/kasir/riwayattransaksi') }}" class="nav-link px-0 text-abu">
+                        <a href="{{ URL('/kasir/riwayattransaksi') }}" class="nav-link nav-load px-0 text-abu">
                             <span class="ms-1 d-none d-sm-inline text-abu">Riwayat Transaksi</span></a>
                     </li>
                 </ul>
@@ -52,7 +52,7 @@
                     <i class="fa-solid fa-file-pen text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Pengajuan Izin</span></a>
                 <ul class="collapse nav flex-column ms-4" id="submenuIzin" data-bs-parent="#menu">
                     <li class="w-100">
-                        <a href="{{ URL('/kasir/izinkaryawan') }}" class="nav-link px-0 text-abu">
+                        <a href="{{ URL('/kasir/izinkaryawan') }}" class="nav-link nav-load px-0 text-abu">
                             <span class="ms-1 d-none d-sm-inline text-abu">Izin
                                 Karyawan</span></a>
                     </li>

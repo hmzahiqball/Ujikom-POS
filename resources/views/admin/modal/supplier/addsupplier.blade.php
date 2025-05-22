@@ -70,6 +70,7 @@
                 confirmButtonText: 'Ya, Tambah Data!'
             }).then((result) => {
                 if (result.isConfirmed) {
+                    $('#loadingOverlay').fadeIn(200);
                     $('#addsupplierModal form').submit();
                 }
             });

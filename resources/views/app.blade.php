@@ -74,10 +74,36 @@
 
     <!-- ZingChart JS -->
     <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+    <style>
+        #loadingOverlay {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+            display: flex;
+        }
+
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+        }
+    </style>
 </head>
 @yield('styles')
 
 <body>
+    <div id="loadingOverlay" style="display: none;">
+       <div class="spinner-border text-light" role="status">
+           <span class="visually-hidden">Loading...</span>
+       </div>
+    </div>
     <div class="container-fluid">
         <div class="row flex-nowrap">
 
@@ -95,6 +121,19 @@
         </div>
     </div>
 </body>
+<script>
+    $(document).ready(function () {
+        // Tangkap semua klik pada link sidebar
+        $('a.nav-load').on('click', function (e) {
+            const href = $(this).attr('href');
+
+            // Cek apakah ini bukan # atau javascript:void(0)
+            if (href && href !== '#' && !href.startsWith('javascript')) {
+                $('#loadingOverlay').fadeIn(200);
+            }
+        });
+    });
+</script>
 <script>
     @if (session('success'))
         Swal.fire({

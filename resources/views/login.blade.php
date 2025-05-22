@@ -30,9 +30,38 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- zingchart JS -->
     <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+
+    <style>
+        #loadingOverlay {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+            display: flex;
+        }
+
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+        }
+    </style>
+
 </head>
 
 <body class="bg-dark">
+    <div id="loadingOverlay" style="display: none;">
+       <div class="spinner-border text-light" role="status">
+           <span class="visually-hidden">Loading...</span>
+       </div>
+    </div>
+
     <!-- Login 1 - Bootstrap Brain Component -->
     <div class="bg-dark py-3 py-md-5">
         <div class="container">
@@ -91,6 +120,13 @@
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function () {
+            $('form').on('submit', function () {
+                $('#loadingOverlay').fadeIn(200);
+            });
+        });
+    </script>
     @if(session('error'))
     <script>
         $(document).ready(function () {

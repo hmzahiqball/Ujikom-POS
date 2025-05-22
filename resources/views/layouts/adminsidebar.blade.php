@@ -6,7 +6,7 @@
         </a>
         <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
             <li class="nav-item">
-                <a href="{{ URL('/admin/dashboard') }}" class="nav-link align-middle px-0">
+                <a href="{{ URL('/admin/dashboard') }}" class="nav-link nav-load align-middle px-0">
                     <i class="fs-4 bi-speedometer2 text-abu"></i> <span
                         class="ms-1 d-none d-sm-inline text-abu">Dashboard</span>
                 </a>
@@ -17,27 +17,27 @@
                         Data</span></a>
                 <ul class="collapse nav flex-column ms-4" id="submenuMasterData" data-bs-parent="#menu">
                     <li class="w-100 h-100">
-                        <a href="{{ URL('/admin/dataproduk') }}" class="nav-link px-0 text-abu">
+                        <a href="{{ URL('/admin/dataproduk') }}" class="nav-link nav-load px-0 text-abu">
                             <span class="ms-1 d-none d-sm-inline text-abu">Data
                                 Produk</span></a>
                     </li>
                     <li class="w-100 h-100">
-                        <a href="{{ URL('/admin/datakategori') }}" class="nav-link px-0 text-abu">
+                        <a href="{{ URL('/admin/datakategori') }}" class="nav-link nav-load px-0 text-abu">
                             <span class="ms-1 d-none d-sm-inline text-abu">Data
                                 Kategori</span></a>
                     </li>
                     <li class="w-100 h-100">
-                        <a href="{{ URL('/admin/datapetugas') }}" class="nav-link px-0 text-abu">
+                        <a href="{{ URL('/admin/datapetugas') }}" class="nav-link nav-load px-0 text-abu">
                             <span class="ms-1 d-none d-sm-inline text-abu">Data
                                 Petugas</span></a>
                     </li>
                     <li class="w-100 h-100">
-                        <a href="{{ URL('/admin/datasupplier') }}" class="nav-link px-0 text-abu">
+                        <a href="{{ URL('/admin/datasupplier') }}" class="nav-link nav-load px-0 text-abu">
                             <span class="ms-1 d-none d-sm-inline text-abu">Data
                                 Supplier</span></a>
                     </li>
                     <li class="w-100 h-100">
-                        <a href="{{ URL('/admin/datamember') }}" class="nav-link px-0 text-abu">
+                        <a href="{{ URL('/admin/datamember') }}" class="nav-link nav-load px-0 text-abu">
                             <span class="ms-1 d-none d-sm-inline text-abu">Data
                                 Member</span></a>
                     </li>
@@ -49,12 +49,12 @@
                         Toko</span></a>
                 <ul class="collapse nav flex-column ms-4" id="submenuManajemenToko" data-bs-parent="#menu">
                     <li class="w-100 h-100">
-                        <a href="{{ URL('/admin/datapembelian') }}" class="nav-link px-0 text-abu">
+                        <a href="{{ URL('/admin/datapembelian') }}" class="nav-link nav-load px-0 text-abu">
                             <span class="ms-1 d-none d-sm-inline text-abu">Data
                                 Pembelian</span></a>
                     </li>
                     <li class="w-100 h-100">
-                        <a href="{{ URL('/admin/datapengeluaran') }}" class="nav-link px-0 text-abu">
+                        <a href="{{ URL('/admin/datapengeluaran') }}" class="nav-link nav-load px-0 text-abu">
                             <span class="ms-1 d-none d-sm-inline text-abu">Data
                                 Pengeluaran</span></a>
                     </li>
@@ -65,17 +65,17 @@
                     <i class="fa-solid fa-user-shield text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Karyawan</span></a>
                 <ul class="collapse nav flex-column ms-4" id="submenuKaryawan" data-bs-parent="#menu">
                     <li class="w-100 h-100">
-                        <a href="{{ URL('/admin/datashift') }}" class="nav-link px-0 text-abu">
+                        <a href="{{ URL('/admin/datashift') }}" class="nav-link nav-load px-0 text-abu">
                             <span class="ms-1 d-none d-sm-inline text-abu">Shift
                                 Karyawan</span></a>
                     </li>
                     <li class="w-100 h-100">
-                        <a href="{{ URL('/admin/dataabsensi') }}" class="nav-link px-0 text-abu">
+                        <a href="{{ URL('/admin/dataabsensi') }}" class="nav-link nav-load px-0 text-abu">
                             <span class="ms-1 d-none d-sm-inline text-abu">Absensi
                                 Karyawan</span></a>
                     </li>
                     <li class="w-100 h-100">
-                        <a href="{{ URL('/admin/dataizinkaryawan') }}" class="nav-link px-0 text-abu">
+                        <a href="{{ URL('/admin/dataizinkaryawan') }}" class="nav-link nav-load px-0 text-abu">
                             <span class="ms-1 d-none d-sm-inline text-abu">Izin
                                 Karyawan</span></a>
                     </li>
@@ -86,7 +86,7 @@
                     <i class="fa-solid fa-cart-shopping text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Data Transaksi</span></a>
                 <ul class="collapse nav flex-column ms-4" id="submenuTransaksi" data-bs-parent="#menu">
                     <li class="w-100 h-100">
-                        <a href="{{ URL('/admin/datapenjualan') }}" class="nav-link px-0 text-abu">
+                        <a href="{{ URL('/admin/datapenjualan') }}" class="nav-link nav-load px-0 text-abu">
                             <span class="ms-1 d-none d-sm-inline text-abu">Data
                                 Transaksi</span></a>
                     </li>
@@ -97,22 +97,22 @@
                     <i class="fa-solid fa-file-lines text-abu"></i> <span class="ms-1 d-none d-sm-inline text-abu">Laporan</span></a>
                 <ul class="collapse nav flex-column ms-4" id="submenuLaporan" data-bs-parent="#menu">
                     <li class="w-100 h-100">
-                        <a href="{{ URL('/admin/datastokproduk') }}" class="nav-link px-0 text-abu">
+                        <a href="{{ URL('/admin/datastokproduk') }}" class="nav-link nav-load px-0 text-abu">
                             <span class="ms-1 d-none d-sm-inline text-abu">Laporan
                                 Stok</span></a>
                     </li>
                     <li class="w-100 h-100">
-                        <a href="{{ URL('/admin/datalaporanpenjualan') }}" class="nav-link px-0 text-abu">
+                        <a href="{{ URL('/admin/datalaporanpenjualan') }}" class="nav-link nav-load px-0 text-abu">
                             <span class="ms-1 d-none d-sm-inline text-abu">Laporan
                                 Penjualan</span></a>
                     </li>
                     <li class="w-100 h-100">
-                        <a href="{{ URL('/admin/datalaporanpembelian') }}" class="nav-link px-0 text-abu">
+                        <a href="{{ URL('/admin/datalaporanpembelian') }}" class="nav-link nav-load px-0 text-abu">
                             <span class="ms-1 d-none d-sm-inline text-abu">Laporan
                                 Pembelian</span></a>
                     </li>
                     <li class="w-100 h-100">
-                        <a href="{{ URL('/admin/datalaporanpengeluaran') }}" class="nav-link px-0 text-abu">
+                        <a href="{{ URL('/admin/datalaporanpengeluaran') }}" class="nav-link nav-load px-0 text-abu">
                             <span class="ms-1 d-none d-sm-inline text-abu">Laporan
                                 Pengeluaran</span></a>
                     </li>

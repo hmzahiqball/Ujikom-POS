@@ -80,6 +80,7 @@
             confirmButtonText: 'Ya, Tambah Data!'
         }).then((result) => {
             if (result.isConfirmed) {
+                $('#loadingOverlay').fadeIn(200);
                 // Jika user menekan "Yes, delete it!", submit form
                 $('#addmemberModal form').submit();
             }

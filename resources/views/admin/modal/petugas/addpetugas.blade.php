@@ -154,6 +154,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Jika user menekan "Yes, delete it!", submit form
+                    $('#loadingOverlay').fadeIn(200);
                     $('#gaji_addpetugas').val(unformatNumber($('#gaji_addpetugas').val()));
                     $('#addpetugasModal form').submit();
                 }

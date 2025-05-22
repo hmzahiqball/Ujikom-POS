@@ -143,6 +143,7 @@
                 confirmButtonText: 'Ya, Simpan!'
             }).then((result) => {
                 if (result.isConfirmed) {
+                    $('#loadingOverlay').fadeIn(200);
                     $('#form_editKategoriProduk').submit();
                 }
             });

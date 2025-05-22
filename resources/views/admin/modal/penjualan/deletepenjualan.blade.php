@@ -17,6 +17,7 @@
                 confirmButtonText: 'Ya, Hapus Data!'
             }).then((result) => {
                 if (result.isConfirmed) {// Membuat form untuk mengirim data
+                    $('#loadingOverlay').fadeIn(200);
                     var form = $('<form>', {
                         'method': 'POST',
                         'action': action,

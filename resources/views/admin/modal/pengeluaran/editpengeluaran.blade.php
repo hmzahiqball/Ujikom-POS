@@ -120,6 +120,7 @@
                 confirmButtonText: 'Ya, Ubah Data!'
             }).then((result) => {
                 if (result.isConfirmed) {
+                    $('#loadingOverlay').fadeIn(200);
                     $('#total_editPengeluaran').val(unformatNumber($('#total_editPengeluaran').val()));
                     // Jika user menekan "Yes, delete it!", submit form
                     $('#editpengeluaranModal form').submit();
