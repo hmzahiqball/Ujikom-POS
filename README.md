@@ -1,106 +1,106 @@
 # Point of Sale (POS) Frontend — Laravel (Web)
 
-Ini adalah proyek frontend untuk aplikasi Point of Sale (POS) berbasis Laravel. Proyek ini mengonsumsi REST API dari backend yang tersedia di: [https://github.com/putra28/Ujikom-API](https://github.com/putra28/Ujikom-API).
+This is the frontend project for a Laravel-based Point of Sale (POS) application. It consumes a REST API provided by the backend available at: [https://github.com/putra28/Ujikom-API](https://github.com/putra28/Ujikom-API).
 
 ![Screenshot](public/images/screenshot.png)
 
 ---
 
-## 🚀 Fitur Aplikasi
+## 🚀 Application Features
 
-### 👨‍💼 Admin
+### 👨‍💼 Admin Panel
 
 #### Dashboard
-- Menampilkan tanggal realtime, ringkasan penjualan dan pendapatan bulanan, serta total produk
-- Menampilkan informasi pengguna
-- Menampilkan riwayat transaksi terakhir (semua pengguna)
+- Displays real-time date, monthly sales summary, revenue, and total products
+- Shows user information
+- Displays latest transaction history (all users)
 
-#### Master Data
-- Produk: CRUD produk dan detail
-- Kategori: CRUD kategori
-- Petugas/Karyawan: CRUD data petugas
-- Supplier: CRUD supplier
-- Member: CRUD member
+#### Master Data Management
+- Products: Full CRUD operations for products and their details
+- Categories: Manage product categories
+- Staff: Manage employee data
+- Suppliers: Add, update, and delete suppliers
+- Members: Manage customer membership records
 
-#### Manajemen Toko
-- Data Pembelian:
-  - Melihat data dan detail pembelian
-  - Filter berdasarkan periode
-  - Tambah pembelian produk dari supplier
-  - Ubah status pembelian
-  - Hapus data pembelian
-- Data Pengeluaran:
-  - Melihat dan filter data pengeluaran
-  - Tambah dan ubah data pengeluaran
-  - Hapus data pengeluaran tidak valid
+#### Store Management
+- Purchases:
+  - View purchase records and details
+  - Filter by date range
+  - Add new product purchases from suppliers
+  - Update purchase status
+  - Delete purchase records
+- Expenses:
+  - View and filter expense data
+  - Add or update expense records
+  - Delete invalid expenses
 
-#### Karyawan
-- Shift: CRUD jadwal shift karyawan
-- Kehadiran: Lihat dan hapus data absensi
-- Izin: CRUD pengajuan izin dan ubah statusnya
+#### Employee Management
+- Shifts: Manage staff schedules
+- Attendance: View and delete attendance records
+- Leave Requests: Submit, update, and manage leave applications
 
-#### Data Transaksi
-- Riwayat transaksi per bulan dan detail transaksi
+#### Transaction Data
+- Monthly transaction history and detailed views
 
-#### Laporan
-- Stok: Riwayat perubahan stok produk
-- Penjualan:
-  - Ringkasan penjualan tahunan
-  - Produk terlaris
-  - Grafik penjualan bulanan
-  - Karyawan dengan penjualan terbanyak
-- Pembelian:
-  - Ringkasan pembelian tahunan
-  - Supplier aktif
-  - Produk paling sering dibeli
-  - Grafik pembelian bulanan
-- Pengeluaran:
-  - Ringkasan keuangan tahunan (pendapatan, HPP, laba bersih)
-  - Perbandingan grafik pendapatan vs pengeluaran
+#### Reports
+- Stock: Track changes in product stock
+- Sales Reports:
+  - Annual sales summary
+  - Best-selling products
+  - Monthly sales chart
+  - Top-performing employees
+- Purchase Reports:
+  - Yearly purchase summary
+  - Most active suppliers
+  - Most frequently purchased products
+  - Monthly purchase charts
+- Expense Reports:
+  - Annual financial summary (revenue, COGS, net profit)
+  - Income vs. expense comparison charts
+    
+---
+
+### 🧾 Cashier Panel
+
+#### Dashboard
+- Monthly sales summary
+- Latest transactions (specific to logged-in cashier)
+
+#### Transactions
+- Handle product sales
+
+#### Member Management
+- Add and view member data with details
+
+#### Product List
+- Browse all products and details
+
+#### Transaction History
+- View cashier-specific transaction history by date
+
+#### Leave Requests
+- Submit, view, and cancel leave requests
 
 ---
 
-### 🧾 Kasir
+## 📦 Installation Guide
 
-#### Dashboard
-- Ringkasan penjualan dan pendapatan bulanan
-- Transaksi terakhir (khusus kasir login)
-
-#### Transaksi
-- Penjualan produk
-
-#### Member
-- Tambah dan lihat data member beserta detail
-
-#### Produk
-- Lihat semua produk dan detailnya
-
-#### Riwayat Transaksi
-- Riwayat transaksi per kasir dan berdasarkan periode
-
-#### Pengajuan Izin
-- Ajukan, lihat, dan batalkan pengajuan izin absensi
-
----
-
-## 📦 Cara Install
-
-### 1. Clone Repositori Ini
+### 1. Clone This Repository
 
 ```bash
 git clone https://github.com/putra28/Ujikom-POS
 cd Ujikom-POS
 ```
 
-### 2. Install & Jalankan API Backend
-Proyek ini membutuhkan backend API yang tersedia di:
-👉 https://github.com/putra28/Ujikom-API
+### 2. Install & Run the API Backend
+This project requires the backend API available at:
+👉 [https://github.com/putra28/Ujikom-API](https://github.com/putra28/Ujikom-API)
 
-Silakan ikuti petunjuk instalasi di sana terlebih dahulu.
+Follow the installation instructions in that repository first.
 
-Pastikan backend ini berjalan di http://localhost:1111 (atau sesuaikan dengan .env frontend).
+Make sure the backend runs at http://localhost:1111 (or adjust the .env file in this frontend project accordingly).
 
-### 3. Install Laravel Frontend (Versi Web)
+### 3. Install Laravel Frontend (Web Version)
 ```bash
 composer install
 cp .env.example .env
@@ -108,7 +108,7 @@ php artisan key:generate
 php artisan serve
 ```
 
-## 📁 Struktur Folder
+## 📁 Folder Structure
 ```bash
 /ujikom-pos
 ├── app/
@@ -125,8 +125,8 @@ php artisan serve
 └── composer.json
 ```
 
-## 📄 Catatan
-Akun Login:
+## 📄 Notes
+Login Accounts:
 ```bash
 Username:081234567890
 Password:admin
@@ -134,5 +134,5 @@ Password:admin
 Username:08123456789
 Password:kasir
 ```
-- Proyek ini dikembangkan untuk keperluan internal/UKK dan tidak untuk produksi langsung.
-- Silakan modifikasi config/api.php dengan URL API yang kamu jalankan secara lokal.
+- This project was developed for internal use/academic assessment and is not intended for direct production use.
+- Be sure to update config/api.php with the API URL you're using locally.
