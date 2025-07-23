@@ -16,6 +16,7 @@ use App\Http\Controllers\AdminDataProdukController;
 use App\Http\Controllers\AdminDataPetugasController;
 use App\Http\Controllers\AdminDataLaporanPenjualanController;
 use App\Http\Controllers\AdminDataMemberController;
+use App\Http\Controllers\AdminDataPromoController;
 use App\Http\Controllers\AdminDataSupplierController;
 use App\Http\Controllers\AdminDataKategoriProdukController;
 use App\Http\Controllers\AdminDataLaporanStokController;
@@ -85,6 +86,11 @@ Route::middleware(['admin'])->group(function () {
     Route::post('admin/datamember/add', [AdminDataMemberController::class, 'store']);
     Route::post('admin/datamember/update', [AdminDataMemberController::class, 'update']);
     Route::post('admin/datamember/delete', [AdminDataMemberController::class, 'destroy'])->name('admin.datamember.delete');
+    
+    Route::resource('admin/datapromo', AdminDataPromoController::class);
+    Route::post('admin/datapromo/add', [AdminDataPromoController::class, 'store']);
+    Route::post('admin/datapromo/update', [AdminDataPromoController::class, 'update']);
+    Route::post('admin/datapromo/delete', [AdminDataPromoController::class, 'destroy'])->name('admin.datapromo.delete');
 
     // Manajemen Toko
     Route::resource('admin/datapembelian', AdminDataPembelianController::class);

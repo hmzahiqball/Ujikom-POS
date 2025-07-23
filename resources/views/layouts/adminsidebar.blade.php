@@ -41,6 +41,11 @@
                             <span class="ms-1 d-none d-sm-inline text-abu">Data
                                 Member</span></a>
                     </li>
+                    <li class="w-100 h-100">
+                        <a href="{{ URL('/admin/datapromo') }}" class="nav-link nav-load px-0 text-abu">
+                            <span class="ms-1 d-none d-sm-inline text-abu">Data
+                                Promo</span></a>
+                    </li>
                 </ul>
             </li>
             <li>
