@@ -12,6 +12,9 @@
     <div class="col-md-8">
         <h3>Produk</h3>
         <hr>
+        <div class="mb-3">
+            <input type="text" class="form-control" id="searchProduct" placeholder="Cari produk atau barcode...">
+        </div>
         <div class="row row-cols-1 row-cols-md-4 g-4" id="productContainer">
             @foreach ($data_produk as $key => $item)
                 @php
@@ -24,7 +27,7 @@
                         <img src="{{ $item['gambar_produk'] }}" class="card-img-top"
                             alt="{{ $item['nama_produk'] }}" height="200">
                         <div class="card-body">
-                            <h5 class="card-title product-name">{{ $item['nama_produk'] }}</h5>
+                            <h5 class="card-title product-name" data-barcode="{{ $item['barcode_produk'] }}">{{ $item['nama_produk'] }}</h5>
                         </div>
                         <ul class="list-group list-group-flush">
                             @if($diskon > 0)
@@ -112,7 +115,7 @@
     </div>
 </div>
 
-    @extends('kasir.modal.member.addmember')
+@include('kasir.modal.member.addmember')
 @endsection
 @section('scripts')
     <script>
@@ -293,6 +296,21 @@
                 });
 
                 resetCartItems();
+            });
+
+            $('#searchProduct').on('input', function () {
+                const keyword = $(this).val().toLowerCase();
+                        
+                $('#productContainer .col').each(function () {
+                    const nama = $(this).find('.product-name').text().toLowerCase();
+                    const barcode = $(this).find('.product-name').data('barcode')?.toLowerCase() || '';
+                
+                    if (nama.includes(keyword) || barcode.includes(keyword) || keyword === '') {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
             });
         });
     </script>

@@ -63,8 +63,8 @@
             </div>
         </div>
     </div>
-    @extends('kasir.modal.izinKaryawan.addIzinKaryawan')
-    @extends('kasir.modal.izinKaryawan.editIzinKaryawan')
+    @include('kasir.modal.izinKaryawan.addIzinKaryawan')
+    @include('kasir.modal.izinKaryawan.editIzinKaryawan')
 @endsection
 @section('scripts')
     <script>

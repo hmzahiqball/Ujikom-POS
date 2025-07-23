@@ -11,7 +11,7 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center">
             <h3>Data Kategori Produk</h3>
-            <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addkategoriModal">Add Data Produk</button>
+            <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addkategoriModal">Add Data Kategori</button>
         </div>
         <div class="card">
             <div class="card-body">

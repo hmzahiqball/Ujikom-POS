@@ -61,8 +61,8 @@
             </div>
         </div>
     </div>
-    @extends('kasir.modal.member.addmember')
-    @extends('kasir.modal.member.editmember')
+    @include('kasir.modal.member.addmember')
+    @include('kasir.modal.member.editmember')
 @endsection
 @section('scripts')
     <script>

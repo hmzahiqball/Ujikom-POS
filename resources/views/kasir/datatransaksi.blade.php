@@ -76,8 +76,8 @@
             </div>
         </div>
     </div>
-    @extends('kasir.modal.member.addmember')
-    @extends('kasir.modal.penjualan.viewpenjualan')
+@include('kasir.modal.member.addmember')
+@include('kasir.modal.penjualan.viewpenjualan')
 @endsection
 @section('scripts')
     <script>
