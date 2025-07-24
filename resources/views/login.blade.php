@@ -66,7 +66,7 @@
     <div class="bg-dark py-3 py-md-5">
         <div class="container">
             <div class="row justify-content-md-center">
-                <div class="col-12 col-md-8 col-lg-8 col-xl-7 col-xxl-6">
+                <div class="col-12 col-md-6 col-lg-4 col-xl-6">
                     <div class="bg-white p-4 p-md-5 rounded shadow-sm">
                         <div class="row">
                             <div class="col-12">

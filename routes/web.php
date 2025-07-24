@@ -88,6 +88,7 @@ Route::middleware(['admin'])->group(function () {
     Route::post('admin/datamember/delete', [AdminDataMemberController::class, 'destroy'])->name('admin.datamember.delete');
     
     Route::resource('admin/datapromo', AdminDataPromoController::class);
+    Route::post('admin/datapromo/setpajak', [AdminDataPromoController::class, 'setpajak']);
     Route::post('admin/datapromo/add', [AdminDataPromoController::class, 'store']);
     Route::post('admin/datapromo/update', [AdminDataPromoController::class, 'update']);
     Route::post('admin/datapromo/delete', [AdminDataPromoController::class, 'destroy'])->name('admin.datapromo.delete');

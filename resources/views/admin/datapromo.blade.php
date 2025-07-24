@@ -13,13 +13,22 @@
             <h3>Data Promo</h3>
             <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addpromoModal">Add Data Promo</button>
         </div>
-        <div class="d-flex justify-content-between align-items-center">
-            <div class="input-group mb-3">
-                <input type="number" class="form-control" placeholder="Pajak" aria-label="Pajak" aria-describedby="button-set-pajak">
-                <span class="input-group-text" id="basic-addon1">%</span>
-                <button class="btn btn-primary" type="button" id="button-set-pajak">Set Pajak</button>
+        <form action="/admin/datapromo/setpajak" method="POST" id="setPajakForm">
+            @csrf
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="input-group mb-3">
+                   @if(isset($tax[0]['id_settings']))
+                        <input type="hidden" name="idsetting" value="{{ $tax[0]['id_settings'] }}">
+                    @else
+                        <input type="hidden" name="idsetting" value="999">
+                    @endif
+                    <input type="number" class="form-control" placeholder="Pajak" aria-label="Pajak" aria-describedby="button-set-pajak" id="pajak" name="pajak" 
+                           @if(isset($tax[0]['value'])) value="{{ $tax[0]['value'] }}" @endif>
+                    <span class="input-group-text" id="basic-addon1">%</span>
+                    <button class="btn btn-primary" type="button" id="button-set-pajak">Set Pajak</button>
+                </div>
             </div>
-        </div>
+        </form>
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive">
@@ -85,6 +94,23 @@
 @endsection
 @section('scripts')
     <script>
+        $('#button-set-pajak').click(function() {
+            Swal.fire({
+                title: 'Set Pajak?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Unformat dulu sebelum submit
+                    $('#loadingOverlay').fadeIn(200);
+
+                    $('#setPajakForm').submit();
+                }
+            });
+        });
         $(document).ready(function() {
             const d = new Date();
             const tanggal = `Data Promo-${('0' + d.getDate()).slice(-2)}${('0' + (d.getMonth() + 1)).slice(-2)}${d.getFullYear()}`;

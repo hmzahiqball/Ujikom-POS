@@ -14,10 +14,12 @@ class AdminDataPromoController extends Controller
     {
         try {
             $promoResponse = Http::withAuth()->get(config('api.base_url') . 'promo/');
+            $taxResponse = Http::withAuth()->get(config('api.base_url') . 'promo/setting/');
 
             if ($promoResponse['status'] === 200) {
                 return view('admin.datapromo', [
-                    'promos' => $promoResponse['data']
+                    'promos' => $promoResponse['data'],
+                    'tax' => $taxResponse['data']
                 ]);
             }
         } catch (\Exception $e) {
@@ -40,48 +42,48 @@ class AdminDataPromoController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-{
-    try {
-        $request->validate([
-            'namaPromo_addpromo' => 'required|string|max:255',
-            'kodePromo_addpromo' => 'required|string|max:100',
-            'tipePromo_addpromo' => 'required|in:persen,nominal',
-            'totalPromo_addpromo' => 'required|numeric',
-            'kuotaPromo_addpromo' => 'required|numeric',
-            'tanggalMulai_addpromo' => 'required|date',
-            'tanggalAkhir_addpromo' => 'required|date|after_or_equal:tanggalMulai_addpromo',
-            'minBelanja_addpromo' => 'required|numeric',
-            'statusPromo_addpromo' => 'required|in:aktif,nonaktif',
-        ]);
+    {
+        try {
+            $request->validate([
+                'namaPromo_addpromo' => 'required|string|max:255',
+                'kodePromo_addpromo' => 'required|string|max:100',
+                'tipePromo_addpromo' => 'required|in:persen,nominal',
+                'totalPromo_addpromo' => 'required|numeric',
+                'kuotaPromo_addpromo' => 'required|numeric',
+                'tanggalMulai_addpromo' => 'required|date',
+                'tanggalAkhir_addpromo' => 'required|date|after_or_equal:tanggalMulai_addpromo',
+                'minBelanja_addpromo' => 'required|numeric',
+                'statusPromo_addpromo' => 'required|in:aktif,nonaktif',
+            ]);
 
-        $url = config('api.base_url') . 'promo';
+            $url = config('api.base_url') . 'promo';
 
-        $data = [
-            'p_namaPromo' => $request->namaPromo_addpromo,
-            'p_kodePromo' => $request->kodePromo_addpromo,
-            'p_tipePromo' => $request->tipePromo_addpromo,
-            'p_totalPromo' => $request->totalPromo_addpromo,
-            'p_kuotaPromo' => $request->kuotaPromo_addpromo,
-            'p_tanggalMulai' => $request->tanggalMulai_addpromo,
-            'p_tanggalAkhir' => $request->tanggalAkhir_addpromo,
-            'p_minBelanja' => $request->minBelanja_addpromo,
-            'p_statusPromo' => $request->statusPromo_addpromo,
-        ];
+            $data = [
+                'p_namaPromo' => $request->namaPromo_addpromo,
+                'p_kodePromo' => $request->kodePromo_addpromo,
+                'p_tipePromo' => $request->tipePromo_addpromo,
+                'p_totalPromo' => $request->totalPromo_addpromo,
+                'p_kuotaPromo' => $request->kuotaPromo_addpromo,
+                'p_tanggalMulai' => $request->tanggalMulai_addpromo,
+                'p_tanggalAkhir' => $request->tanggalAkhir_addpromo,
+                'p_minBelanja' => $request->minBelanja_addpromo,
+                'p_statusPromo' => $request->statusPromo_addpromo,
+            ];
 
-        $response = Http::withAuth()->post($url, $data);
+            $response = Http::withAuth()->post($url, $data);
 
-        if ($response->successful()) {
-            return redirect('admin/datapromo')->with('success', 'Promo berhasil ditambahkan.');
-        } else {
-            return response()->json([
-                'status' => 'error',
-                'message' => $response->json()['message'] ?? 'Gagal menambahkan promo.'
-            ], $response->status());
+            if ($response->successful()) {
+                return redirect('admin/datapromo')->with('success', 'Promo berhasil ditambahkan.');
+            } else {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => $response->json()['message'] ?? 'Gagal menambahkan promo.'
+                ], $response->status());
+            }
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => 'Server error: ' . $e->getMessage()], 500);
         }
-    } catch (\Exception $e) {
-        return response()->json(['status' => 'error', 'message' => 'Server error: ' . $e->getMessage()], 500);
     }
-}
 
 
     /**
@@ -146,6 +148,34 @@ class AdminDataPromoController extends Controller
             return redirect()->back()->with('error', 'Gagal memperbarui promo: ' . $response->json()['message'] ?? 'Unknown error');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Terjadi kesalahan saat memperbarui promo: ' . $e->getMessage());
+        }
+    }
+
+    public function setpajak(Request $request)
+    {
+        try {
+            $request->validate([
+                'pajak' => 'required|numeric',
+            ]);
+
+            $id = $request->idsetting ?? 999; // pake 0 kalau belum ada idsetting
+            $url = config('api.base_url') . "promo/setting/{$id}";
+
+            // dd($url, $request->all());
+
+            $data = [
+                'p_value' => $request->pajak,
+            ];
+
+            $response = Http::withAuth()->put($url, $data);
+
+            if ($response['status'] === 200) {
+                return redirect('admin/datapromo')->with('success', 'Data berhasil diperbarui.');
+            }
+
+            return redirect()->back()->with('error', 'Gagal memperbarui Data: ' . $response->json()['message'] ?? 'Unknown error');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat memperbarui Data: ' . $e->getMessage());
         }
     }
 
