@@ -57,24 +57,37 @@
             }
 
             Swal.fire({
-                title: 'Lanjutkan Pembayaran?',
-                text: `Metode: ${selected}`,
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonText: 'Ya, Bayar!',
-                cancelButtonText: 'Batal',
-                confirmButtonColor: '#198754',
-                cancelButtonColor: '#6c757d'
-            }).then((result) => {
-                if (result.isConfirmed) {
+    title: 'Lanjutkan Pembayaran?',
+    text: `Metode: ${selected}`,
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Ya, Bayar!',
+    cancelButtonText: 'Batal',
+    confirmButtonColor: '#198754',
+    cancelButtonColor: '#6c757d'
+}).then((result) => {
+    if (result.isConfirmed) {
+        // Tampilkan lagi verifikasi manual
+        Swal.fire({
+            title: 'Silakan Selesaikan Pembayaran',
+            text: `Selesaikan pembayaran secara manual via metode: ${selected}`,
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonText: 'Sudah Dibayar',
+            cancelButtonText: 'Batal',
+            confirmButtonColor: '#198754',
+            cancelButtonColor: '#6c757d'
+        }).then((confirmManual) => {
+            if (confirmManual.isConfirmed) {
+                // Inject payment type ke form utama
+                $('#inputPaymentType').val(selected);
 
-                    // Inject payment type ke form utama
-                    $('#inputPaymentType').val(selected);
-
-                    // Submit form utama, bukan form modal
-                    $('#checkoutForm').submit();
-                }
-            });
+                // Submit form utama
+                $('#checkoutForm').submit();
+            }
+        });
+    }
+});
         });
     });
 </script>

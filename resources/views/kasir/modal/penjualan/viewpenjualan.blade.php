@@ -33,7 +33,24 @@
                                 <label for="status_viewtransaksi">Status Transaksi</label>
                             </div>
                         </div>
-                    </div><div class="row">
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="namapromo_viewtransaksi"
+                                    placeholder="Nama Promo" name="namapromo_viewtransaksi" readonly>
+                                <label for="namapromo_viewtransaksi">Nama Promo</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="kodepromo_viewtransaksi"
+                                    placeholder="Kode Promo" name="kodepromo_viewtransaksi" readonly>
+                                <label for="kodepromo_viewtransaksi">Kode Promo</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col">
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="basic-addon1">Rp.</span>
@@ -120,6 +137,11 @@
         $('#viewpenjualanModal').on('show.bs.modal', function(event) {
             var btn = $(event.relatedTarget),
                 idtransaksi = btn.data('idtransaksi'),
+                namapromo = btn.data('namapromo'),
+                kodepromo = btn.data('kodepromo'),
+                persenpajak = btn.data('persenpajak'),
+                totalpajak = btn.data('totalpajak'),
+                tipepembayaran = btn.data('tipepembayaran'),
                 notransaksi = btn.data('notransaksi'),
                 namapetugas = btn.data('namapetugas'),
                 tgltransaksi = btn.data('tgltransaksi'),
@@ -132,6 +154,8 @@
 
             $('#viewpenjualanModal').find('#id_viewtransaksi').val(idtransaksi);
             $('#viewpenjualanModal').find('#no_viewtransaksi').val(notransaksi);
+            $('#viewpenjualanModal').find('#namapromo_viewtransaksi').val(namapromo);
+            $('#viewpenjualanModal').find('#kodepromo_viewtransaksi').val(kodepromo);
             $('#viewpenjualanModal').find('#petugas_viewtransaksi').val(namapetugas);
             $('#viewpenjualanModal').find('#tgl_viewtransaksi').val(tgltransaksi);
             $('#viewpenjualanModal').find('#member_viewtransaksi').val(namamember);

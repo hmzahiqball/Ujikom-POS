@@ -25,7 +25,7 @@
                 <div class="col">
                     <div class="card h-100" id="cardproduct">
                         <img src="{{ $item['gambar_produk'] }}" class="card-img-top"
-                            alt="{{ $item['nama_produk'] }}" height="200">
+                            alt="{{ $item['nama_produk'] }}" width="200">
                         <div class="card-body">
                             <h5 class="card-title product-name" data-barcode="{{ $item['barcode_produk'] }}">{{ $item['nama_produk'] }}</h5>
                         </div>
@@ -79,7 +79,7 @@
                     <div class="form-floating mb-3">
                         <input type="hidden" name="promo_id" id="promoId">
                         <select class="form-select" id="promoSelect">
-                            <option value="">-- Tidak Pakai Promo --</option>
+                            <option value="0">-- Tidak Pakai Promo --</option>
                             @foreach ($data_promo as $promo)
                                 <option value="{{ $promo['id_promo'] }}"
                                     data-tipe="{{ $promo['tipe_promo'] }}"

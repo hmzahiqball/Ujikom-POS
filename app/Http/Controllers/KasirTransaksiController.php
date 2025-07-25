@@ -109,10 +109,10 @@ class KasirTransaksiController extends Controller
                 'p_totalHarga' => $total_harga,
                 'p_totalBayar' => $total_bayar,
                 'p_totalKembalian' => $total_kembalian,
-                'p_diskon' => $totalPromo, // total promo
-                'p_pajak' => $taxPercent, // total promo
-                'p_totalpajak' => $totalTax, // tambahin field ini kalau backend support
-                'p_tipePembayaran' => $paymentType, // tambahin field ini juga
+                'p_diskon' => $totalPromo,
+                'p_pajak' => $taxPercent,
+                'p_totalpajak' => $totalTax,
+                'p_tipePembayaran' => $paymentType,
                 'p_tanggal' => $tanggal,
                 'p_detailPenjualan' => $detailPenjualan
             ];
