@@ -144,8 +144,62 @@
 
 @include('kasir.modal.member.addmember')
 @include('kasir.modal.transaksi.tipePembayaran')
+@include('kasir.modal.transaksi.viewpenjualan')
 @endsection
+
 @section('scripts')
+
+@section('scripts')
+@if (session('data_transaksi'))
+<script>
+    function formatRupiah(angka) {
+        return new Intl.NumberFormat('id-ID', {
+            minimumFractionDigits: 0
+        }).format(angka);
+    }
+
+    function isiModalPenjualan(data) {
+    // isi data utama
+    $('#id_viewtransaksi').val(data.id_penjualan);
+    $('#no_viewtransaksi').val(data.kode_penjualan);
+    $('#metode_viewtransaksi').val(data.tipe_pembayaran);
+    $('#namapromo_viewtransaksi').val(data.nama_promo);
+    $('#kodepromo_viewtransaksi').val(data.kode_promo);
+    $('#petugas_viewtransaksi').val(data.karyawan?.nama_user ?? '-');
+    $('#tgl_viewtransaksi').val(data.tanggal_penjualan);
+    $('#member_viewtransaksi').val(data.customers?.nama_customers ?? '-');
+    $('#totbay_viewtransaksi').val(data.total_bayar);
+    $('#kembalian_viewtransaksi').val(data.total_kembalian);
+    $('#total_viewtransaksi').val(data.total_harga);
+    $('#status_viewtransaksi').val(data.status_pembayaran);
+
+    // isi table detail
+    let details = data.detail_penjualan;
+
+    if (Array.isArray(details)) {
+        $('#product-details').empty();
+        details.forEach(item => {
+            $('#product-details').append(`
+                <tr>
+                    <td>${item.produk?.nama_produk ?? '-'}</td>
+                    <td>${item.kuantitas ?? 0}</td>
+                    <td>Rp. ${formatRupiah(item.harga ?? 0)}</td>
+                    <td>${item.diskon_produk ?? 0}</td>
+                </tr>
+            `);
+        });
+    } else {
+        console.warn("❌ detail_penjualan bukan array:", details);
+    }
+}
+
+    $(document).ready(function () {
+        const data = @json(session('data_transaksi'));
+        isiModalPenjualan(data);
+        $('#viewpenjualanModal').modal('show');
+    });
+</script>
+@endif
     <script>
         function formatNumber(num) {
             return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");

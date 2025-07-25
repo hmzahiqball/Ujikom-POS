@@ -134,7 +134,36 @@ class KasirTransaksiController extends Controller
                         'p_alasanPerubahan' => 'Penjualan Produk',
                     ]);
                 }
-                return redirect()->back()->with('success', 'Transaksi berhasil!');
+                if ($response->successful()) {
+    $kode_penjualan = $response->json()['data']['kode_penjualan'] ?? null;
+
+    // Simpen laporan stok (gak berubah)
+    foreach ($detailPenjualan as $item) {
+        Http::post(config('api.base_url') . 'laporanStok', [
+            'p_kodeLaporan' => $kode_penjualan,
+            'p_idProduk' => $item['p_idProduk'],
+            'p_namaKaryawan' => $sessionUser['nama_user'],
+            'p_perubahanStok' => -abs($item['p_kuantitas']),
+            'p_alasanPerubahan' => 'Penjualan Produk',
+        ]);
+    }
+
+    // GET detail lengkap dari laporanPenjualan/{kodePenjualan}
+    $getDetail = Http::withAuth()->get(config('api.base_url') . "laporanPenjualan/kode/$kode_penjualan");
+
+    if ($getDetail->successful()) {
+        return redirect()->back()->with([
+            'success' => 'Transaksi berhasil!',
+            'data_transaksi' => $getDetail->json()['data'] ?? null
+        ]);
+    } else {
+        return response()->json([
+            'success' => false,
+            'message' => 'Gagal mengambil data laporan penjualan: ' . $getDetail->body()
+        ]);
+    }
+}
+
             } else {
                 return redirect()->back()->with('error', 'Gagal menyimpan transaksi: ' . $response->body());
             }

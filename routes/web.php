@@ -154,6 +154,8 @@ Route::middleware(['kasir'])->group(function () {
     Route::resource('kasir/transaksi', KasirTransaksiController::class);
     Route::post('kasir/transaksi/add', [KasirTransaksiController::class, 'store']);
     Route::get('kasir/riwayattransaksi/print', [KasirTransaksiController::class, 'printInvoice'])->name('print.invoice');
+    Route::get('kasir/transaksi/nota/{kode_penjualan}', [KasirTransaksiController::class, 'nota'])->name('transaksi.nota');
+
 
     // Member
     Route::resource('kasir/datamember', KasirDataMemberController::class)

@@ -8,7 +8,7 @@
     <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
         <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
             <img src="{{ URL::asset('images/logo/favicon.png') }}" alt="Logo_Kasir" height="50" width="70">
-            <span class="fs-3 d-none d-sm-inline text-abu"><b>PKK SALE</b></span>
+            <span class="fs-3 d-none d-sm-inline text-abu"><b>Point Of Sale</b></span>
         </a>
         <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
             <li class="nav-item">
