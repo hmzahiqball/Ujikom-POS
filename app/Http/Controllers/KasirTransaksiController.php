@@ -21,6 +21,12 @@ class KasirTransaksiController extends Controller
             $kategoriResponse = Http::withAuth()->get(config('api.base_url') . 'kategori/');
             $data_kategori = $kategoriResponse->successful() ? $kategoriResponse->json('data') : [];
 
+            // Ambil data promo dari API
+            $promoResponse = Http::withAuth()->get(config('api.base_url') . 'promo/');
+            $taxResponse = Http::withAuth()->get(config('api.base_url') . 'promo/setting/');
+            $data_promo = $promoResponse->successful() ? $promoResponse->json('data') : [];
+            $data_pajak = $taxResponse->successful() ? $taxResponse->json('data') : [];
+
             // Ambil data produk dari API
             $produkResponse = Http::withAuth()->get(config('api.base_url') . 'produk/');
             $data_produk = $produkResponse->successful() ? $produkResponse->json('data') : [];
@@ -32,13 +38,17 @@ class KasirTransaksiController extends Controller
             return view('kasir.transaksi', [
                 'data_kategori' => $data_kategori,
                 'data_produk' => $data_produk,
-                'data_member' => $data_member
+                'data_member' => $data_member,
+                'data_promo' => $data_promo,
+                'data_pajak' => $data_pajak
             ]);
         } catch (\Exception $e) {
             return view('kasir.transaksi', [
                 'data_kategori' => [],
                 'data_produk' => [],
                 'data_member' => [],
+                'data_promo' => [],
+                'data_pajak' => [],
                 'error' => 'Gagal mengambil data produk: ' . $e->getMessage()
             ]);
         }
@@ -70,6 +80,13 @@ class KasirTransaksiController extends Controller
             $total_kembalian = (int) $request->input('kembalian_transaksi');
             $cartData = json_decode($request->input('cartData'), true);
 
+            $promoId = (int) $request->input('promo_id');
+            $totalPromo = (int) $request->input('total_promo_discount');
+            $taxPercent = (int) $request->input('taxPercent');
+            $totalTax = (int) $request->input('total_tax');
+            $paymentType = $request->input('payment_type');
+
+
             // Buat tanggal sekarang
             $tanggal = Carbon::now()->format('Y-m-d H:i:s');
 
@@ -88,13 +105,18 @@ class KasirTransaksiController extends Controller
             $body = [
                 'p_idCustomers' => $id_customer,
                 'p_idKaryawan' => $id_karyawan,
+                'p_idPromo' => $promoId,
                 'p_totalHarga' => $total_harga,
                 'p_totalBayar' => $total_bayar,
                 'p_totalKembalian' => $total_kembalian,
-                'p_diskon' => 0,
+                'p_diskon' => $totalPromo, // total promo
+                'p_pajak' => $taxPercent, // total promo
+                'p_totalpajak' => $totalTax, // tambahin field ini kalau backend support
+                'p_tipePembayaran' => $paymentType, // tambahin field ini juga
                 'p_tanggal' => $tanggal,
                 'p_detailPenjualan' => $detailPenjualan
             ];
+            // dd($body);
 
             // Kirim ke API
             $response = Http::withAuth()->post(config('api.base_url') . 'laporanPenjualan/', $body);

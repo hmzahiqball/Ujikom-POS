@@ -106,7 +106,7 @@
                 if (result.isConfirmed) {
                     // Unformat dulu sebelum submit
                     $('#loadingOverlay').fadeIn(200);
-
+ 
                     $('#setPajakForm').submit();
                 }
             });
